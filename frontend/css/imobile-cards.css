@@ -1,0 +1,179 @@
+.imobile-cards {
+  display: flex;
+  gap: 2em;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 2em 0;
+}
+
+.imobil-card {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(67,17,100,0.10);
+  overflow: hidden;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s, transform 0.2s;
+  border: 1.5px solid #e2d6f3;
+}
+
+.imobil-card:hover {
+  box-shadow: 0 8px 32px rgba(67,17,100,0.18);
+  transform: translateY(-4px) scale(1.02);
+}
+
+.imobil-card-img {
+  position: relative;
+  height: 180px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0.7em 0.7em 0 0.7em;
+}
+
+.imobil-card-labels {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4em;
+  position: absolute;
+  left: 0.7em;
+  top: 0.7em;
+  z-index: 2;
+}
+
+.imobil-pret {
+  background: #431164;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.3em 0.8em;
+  border-radius: 8px 8px 8px 2px;
+  font-size: 1.1em;
+  margin-bottom: 0.2em;
+  box-shadow: 0 2px 8px rgba(67,17,100,0.10);
+}
+
+.imobil-tip {
+  background: #e2d6f3;
+  color: #431164;
+  font-weight: 600;
+  padding: 0.2em 0.7em;
+  border-radius: 8px 8px 8px 2px;
+  font-size: 0.95em;
+  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
+}
+
+.imobil-like-btn {
+  position: absolute;
+  top: 0.7em;
+  right: 0.7em;
+  background: rgba(255,255,255,0.85);
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 1.3em;
+  color: #431164;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(67,17,100,0.10);
+  transition: background 0.2s, color 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.imobil-like-btn:hover {
+  background: #431164;
+  color: #fff;
+}
+
+.imobil-card-body {
+  background: #f7f3fa;
+  padding: 1.2em 1.2em 1.2em 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7em;
+}
+
+.imobil-locatie {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  color: #7d5fa7;
+  font-size: 1em;
+  font-weight: 500;
+  margin-bottom: 0.2em;
+}
+
+.icon-locatie {
+  font-size: 1.2em;
+  color: #adadaf;
+}
+
+.imobil-titlu {
+  font-size: 1.25em;
+  font-weight: 700;
+  color: #431164;
+  margin-bottom: 0.2em;
+}
+
+.imobil-info {
+  display: flex;
+  gap: 0.7em;
+  margin-bottom: 0.5em;
+}
+
+.imobil-mp {
+  background: #e2d6f3;
+  color: #431164;
+  border-radius: 16px;
+  padding: 0.25em 1em;
+  font-size: 1em;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
+}
+
+.imobil-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.5em;
+}
+
+.imobil-detalii-btn {
+  background: #431164;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5em 1.2em;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
+}
+.imobil-detalii-btn:hover {
+  background: #adadaf;
+  color: #431164;
+  border: 1.4px solid #431164;
+}
+
+.imobil-id {
+  color: #adadaf;
+  font-size: 0.98em;
+  font-weight: 500;
+  margin-left: 1em;
+}
+
+/* Responsive pentru mobil */
+@media (max-width: 1000px) {
+  .imobile-cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em;
+  }
+  .imobil-card {
+    width: 95vw;
+    max-width: 400px;
+  }
+}

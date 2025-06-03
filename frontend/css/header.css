@@ -1,0 +1,44 @@
+body, input, select, button, textarea, .layer-chip {
+  font-family: 'Open Sans', sans-serif;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  background-color: #431164;
+  color: white;
+  padding: 1px;
+  text-align: center;
+  box-shadow: #555;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header-spacer {
+  width: 32px; 
+  height: 32px;
+  display: block;
+}
+
+header h1 {
+  color:  white;
+  font-size: 1.5em;
+  margin-top: 0.5em;
+  box-shadow: #555;
+}
+
+#profilBtn svg {
+  color: white;
+  background: #431164;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #fff;
+}
+
+#profilBtn:hover svg {
+  color:#30074c;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 0 4px #30074c;
+}
