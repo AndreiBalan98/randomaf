@@ -6,7 +6,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 1100;
-  background-color: #431164;
+  background-color: #431164c2;
   color: white;
   padding: 1px;
   text-align: center;
@@ -31,14 +31,14 @@ header h1 {
 
 #profilBtn svg {
   color: white;
-  background: #431164;
+  background: #431164c2;
   border-radius: 50%;
   box-shadow: 0 0 4px #fff;
 }
 
 #profilBtn:hover svg {
-  color:#30074c;
+  color:#431164c2;
   background: white;
   border-radius: 50%;
-  box-shadow: 0 0 4px #30074c;
+  box-shadow: 0 0 4px #431164c2;
 }

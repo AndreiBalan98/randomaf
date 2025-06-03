@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="css/header.css">
   <link rel="stylesheet" href="css/imobile-cards.css">
   <script src="index.js"></script>
+  <script src="js/navbar.js"></script>
 </head>
 <body>
   <header>
@@ -32,7 +33,7 @@
   <nav id="navbar">
     <ul>
       <li>
-        <a class="home active" href="index.html" id="homeBtn" id="Btn">
+        <a class="home active" href="index.html" id="Btn">
         <svg class="icon-home" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28" style="vertical-align:middle; margin-right:8px;">
           <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21a1.5 1.5 0 001.5 1.5h3.75a1.5 1.5 0 001.5-1.5v-4.5a1.5 1.5 0 011.5-1.5h1.5a1.5 1.5 0 011.5 1.5V21a1.5 1.5 0 001.5 1.5H19.5a1.5 1.5 0 001.5-1.5V10.5" />
         </svg>
@@ -96,22 +97,22 @@
     <div class="filters-inner">
   <form id="filtersForm" class="filters-form-flex">
   <input type="text" placeholder="Cuvânt cheie, ex: 3 camere, central..." name="search">
-  <input type="number" placeholder="Preț minim" name="minPrice">
-  <input type="number" placeholder="Preț maxim" name="maxPrice">
-  <select name="tip">
+  <input class="pret" type="number" placeholder="Preț minim" name="minPrice">
+  <input class="pret" type="number" placeholder="Preț maxim" name="maxPrice">
+  <select class="tip" name="tip">
     <option value="">Tip imobil</option>
     <option value="apartament">Apartament</option>
     <option value="casa">Casă</option>
     <option value="teren">Teren</option>
     <option value="spații comerciale">Spații comerciale</option>
   </select>
-  <select name="stare">
+  <select class="stare" name="stare">
     <option value="">Stare</option>
     <option value="nou">Nou</option>
     <option value="renovat">Renovat</option>
     <option value="vechi">Vechi</option>
   </select>
-  <select name="oferta">
+  <select class="oferta" name="oferta">
     <option value="">Tip ofertă</option>
     <option value="vanzare">De vânzare</option>
     <option value="inchiriere">De închiriat</option>
@@ -229,7 +230,7 @@
     <div class="imobil-card-img" style="background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80');">
       <div class="imobil-card-labels">
         <span class="imobil-pret">120.000 €</span>
-        <span class="imobil-tip">Vânzare</span>
+        <span class="imobil-tip">De vânzare</span>
       </div>
       <button class="imobil-like-btn" title="Apreciază">&#10084;</button>
     </div>
@@ -252,7 +253,7 @@
     <div class="imobil-card-img" style="background-image: url('https://images.unsplash.com/photo-1460518451285-97b6aa326961?auto=format&fit=crop&w=400&q=80');">
       <div class="imobil-card-labels">
         <span class="imobil-pret">450 €</span>
-        <span class="imobil-tip">Închiriere</span>
+        <span class="imobil-tip">De închiriat</span>
       </div>
       <button class="imobil-like-btn" title="Apreciază">&#10084;</button>
     </div>
@@ -275,7 +276,7 @@
     <div class="imobil-card-img" style="background-image: url('https://images.unsplash.com/photo-1507089947368-19c1da9775ae?auto=format&fit=crop&w=400&q=80');">
       <div class="imobil-card-labels">
         <span class="imobil-pret">900 €</span>
-        <span class="imobil-tip">Închiriere</span>
+        <span class="imobil-tip">De închiriat</span>
       </div>
       <button class="imobil-like-btn" title="Apreciază">&#10084;</button>
     </div>
@@ -299,7 +300,7 @@
     <div class="imobil-card-img" style="background-image: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?auto=format&fit=crop&w=400&q=80');">
       <div class="imobil-card-labels">
         <span class="imobil-pret">250.000 €</span>
-        <span class="imobil-tip">Vânzare</span>
+        <span class="imobil-tip">De vânzare</span>
       </div>
       <button class="imobil-like-btn" title="Apreciază">&#10084;</button>
     </div>
@@ -323,7 +324,7 @@
     <div class="imobil-card-img" style="background-image: url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80');">
       <div class="imobil-card-labels">
         <span class="imobil-pret">150.000 €</span>
-        <span class="imobil-tip">Vânzare</span>
+        <span class="imobil-tip">De vânzare</span>
       </div>
       <button class="imobil-like-btn" title="Apreciază">&#10084;</button>
     </div>
@@ -347,7 +348,7 @@
     <div class="imobil-card-img" style="background-image: url('https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?auto=format&fit=crop&w=400&q=80');">
       <div class="imobil-card-labels">
         <span class="imobil-pret">300.000 €</span>
-        <span class="imobil-tip">Vânzare</span>
+        <span class="imobil-tip">De vânzare</span>
       </div>
       <button class="imobil-like-btn" title="Apreciază">&#10084;</button>
     </div>

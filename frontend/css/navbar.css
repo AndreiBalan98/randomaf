@@ -34,7 +34,7 @@ nav li a {
   justify-content: center;
   padding-left: 44px;
   color: #fff;
-  background: rgba(67,17,100,0.85);
+  background: #431164c2;
   border-radius: 8px;
   margin: 8px 12px;
   padding: 12px 20px 12px 44px;
@@ -66,7 +66,16 @@ nav li a.active .icon-add,
 nav li a.active .icon-favorites,
 nav li a.active .icon-chat,
 nav li a.active .icon-profile {
-  color: #431164;
+  color: #431164c2;
+}
+
+nav li a:hover .icon-home,
+nav li a:hover .icon-map,
+nav li a:hover .icon-add,
+nav li a:hover .icon-favorites,
+nav li a:hover .icon-chat,
+nav li a:hover .icon-profile {
+  color: #431164c2;
 }
 
 #profilBtn {
@@ -90,12 +99,13 @@ nav li a.active .icon-profile {
 }
 
 
+
 #menuBtn {
   position: fixed;
   top: 8px;
   left: 10px;
   z-index: 1200;
-  background: #30074c;
+  background: #43116473;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -105,10 +115,11 @@ nav li a.active .icon-profile {
 
 #menuBtn:hover {
   background: #adadaf;
-  box-shadow: 0 0 4px #30074c;
+  box-shadow: 0 0 4px #431164c2;
   
 }
 
 #menuBtn:hover svg rect {
-  fill:#30074c;
+  fill:#431164c2;
 }
+
