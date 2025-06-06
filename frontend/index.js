@@ -90,4 +90,54 @@ window.addEventListener('DOMContentLoaded', function() {
     // ...
   });
 
+
+  fetch('http://localhost:3001/api/imobile')
+    .then(res => res.json())
+    .then(anunturi => {
+      const container = document.querySelector('.imobile-cards');
+      if (!container) return;
+      container.innerHTML = '';
+      anunturi.forEach(card => {
+        console.log(card.imagine);
+        console.log(card.tranzactie);
+        container.innerHTML += `
+          <div class="imobil-card">
+            <div class="imobil-card-img" style="background-image:url('http://localhost:3001/${card.imagine ? card.imagine : 'uploads/default.jpg'}');">
+              <button class="imobil-like-btn" title="Favorite">&#10084;</button>
+              <div class="imobil-card-labels">
+                <div class="imobil-pret">${card.pret ? card.pret + ' €' : ''}</div>
+                <div class="imobil-tip">${card.tranzactie === 'vanzare' ? 'De vânzare' : card.tranzactie === 'inchiriat' ? 'De închiriat' : ''}</div>
+              </div>
+            </div>
+            <div class="imobil-card-body">
+              <div class="imobil-titlu">${card.titlu}</div>
+              <div class="imobil-locatie">
+                <span class="icon-locatie">📍</span>
+                ${card.locatie}
+              </div>
+              <div class="imobil-info">
+                <span class="imobil-mp">${card.suprafata || '-'} mp</span>
+                <span class="imobil-id">ID: ${card.id}</span>
+              </div>
+              <button class="imobil-detalii-btn">Vezi detalii</button>
+            </div>
+          </div>
+        `;
+
+        container.querySelectorAll('.imobil-detalii-btn').forEach((btn, idx) => {
+      btn.addEventListener('click', function() {
+        const cardId = anunturi[idx].id;
+        window.location.href = `html/detalii.html?id=${cardId}`;
+      });
+    });
+      });
+    })
+    .catch(err => {
+      const container = document.querySelector('.imobile-cards');
+      if (container) container.innerHTML = '<p style="color:red">Eroare la încărcarea anunțurilor!</p>';
+      console.error(err);
+    });
+
+
+
 });

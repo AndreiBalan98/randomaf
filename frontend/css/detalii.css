@@ -1,0 +1,7 @@
+.detalii-card { background: #fff; border-radius: 12px; padding: 24px; margin-bottom: 32px; box-shadow: 0 2px 8px #0001; }
+.galerie { display: flex; gap: 8px; margin-bottom: 16px; }
+.galerie-img { border-radius: 6px; border: 1px solid #ccc; }
+#galerie-modal { display: none; align-items: center; justify-content: center; }
+.imobil-card { display: inline-block; width: 220px; margin: 8px; background: #fafafa; border-radius: 8px; box-shadow: 0 1px 4px #0001; }
+.imobil-card-img { height: 120px; background-size: cover; background-position: center; border-radius: 8px 8px 0 0; }
+.imobil-card-body { padding: 12px; }

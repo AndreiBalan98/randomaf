@@ -1,4 +1,636 @@
-body {
+body
+{
   margin: 0;
   padding: 0;
+  font-family: 'Open Sans', sans-serif;
 }
+
+form {
+  max-width: 600px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border: 1px solid #431164c2;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+form input[type="text"],
+form input[type="email"],
+form input[type="number"],
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+}
+
+form button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #431164c2; /* Purple color */
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+form button:hover {
+  background-color: #431164;
+}
+
+form label {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 5px;
+  display: block;
+}
+
+/*******/
+.property-type-selection {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  margin: 20px 0;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  padding: 15px;
+}
+
+.property-type-option {
+  flex: 1;
+  text-align: center;
+}
+
+.property-type-option input[type="radio"] {
+  display: none;  /* Hide the radio button */
+}
+
+.property-type-option label {
+  color: #431164c2;  /* Purple color for the label */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 15px 10px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.icon-container {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  color: #431164c2;  /* Purple color for the icon */
+}
+
+.property-type-option label:hover {
+  background-color: #f0f0f0;
+  color: #431164;  /* Purple color on hover */
+}
+
+.property-type-option label:hover .icon-container {
+  color: #431164;  /* Change icon color on hover */
+}
+
+.property-type-option input[type="radio"]:checked + label {
+  background-color: #f3eeff;  /* Light purple background */
+  border: 2px solid #431164c2;  /* Purple border */
+  box-shadow: 0 2px 8px rgba(67, 17, 100, 0.2);
+  color: #431164;
+}
+
+.property-type-option input[type="radio"]:checked + label .icon-container
+{
+  color: #431164;
+}
+
+
+
+.teren-extra-options {
+  margin-top: -40px !important;
+  display: flex;
+  flex-direction: column;   /* vertical pentru containerul mare */
+  gap: 10px;
+  margin: 20px 0 30px 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-left: 30px;
+}
+
+.teren-extra-options .teren-radio-row {
+  margin-top: -15px;
+  margin-bottom: -10px;
+  display: flex;
+  flex-direction: row;      /* orizontal pentru opțiuni */
+  gap: 10px;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.teren-radio-row{
+  margin-top: 10px !important;
+}
+
+.teren-extra-options label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 2px solid transparent;
+  border-radius: 6px;
+  padding: 10px 18px;
+  font-size: 16px;
+  color: #431164c2;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.teren-extra-options label:hover {
+  background: #f0f0f0;
+  color: #431164;
+}
+.teren-extra-options label:has(input[type="radio"]:checked) {
+  background: #f3eeff;
+  border: 2px solid #431164c2;
+  color: #431164;
+  font-weight: bold;
+  transition: all 0.2s;
+}
+
+.teren-extra-options input[type="radio"] {
+  accent-color: #5d307a;
+  width: 18px;
+  height: 18px;
+  margin: 0 4px 0 0;
+  cursor: pointer;
+}
+
+
+/* Pentru a arăta frumos textul după radio */
+.teren-extra-options label span {
+  display: inline-block;
+  transition: color 0.2s;
+}
+
+.teren-titlu-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+  margin-bottom: -10px;
+  width: 100%;
+  max-width: 400px;
+}
+
+.teren-titlu-row label {
+  font-size: 15px;
+  font-weight: 600;
+  margin-left: -20px;
+  margin-bottom: -13px;
+}
+
+.teren-titlu-row label,
+.teren-titlu-row label:hover {
+  background: none !important;
+  color: #431164c2 !important;
+  cursor: default !important;
+  font-weight: 600;
+}
+
+.teren-titlu-row input[type="text"] {
+  padding: 8px 12px;
+  border: 1.5px solid #43116440;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.teren-titlu-row input[type="text"]:focus {
+  border-color: #431164;
+  outline: none;
+}
+
+.teren-imagini-section {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.teren-imagini-info {
+  color: #431164c2;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 4px;
+  margin-bottom: -3px;
+}
+
+.teren-imagini-dropzone {
+  border: 2px dashed #43116480;
+  border-radius: 8px;
+  background: #faf6ff;
+  padding: 24px 12px;
+  text-align: center;
+  color: #431164c2;
+  font-size: 15px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+
+.teren-imagini-dropzone.dragover {
+  border-color: #431164;
+  background: #f3eeff;
+}
+
+.teren-imagini-dropzone .icon-img {
+  margin-bottom: 4px;
+  display: block;
+  margin-left: 215px;
+}
+
+.teren-imagini-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.teren-imagini-thumb {
+  position: relative;
+  width: 90px;
+  height: 90px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 2px solid #43116440;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: grab;
+}
+
+.teren-imagini-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.teren-imagini-thumb .delete-btn {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  background: #fff;
+  border: none;
+  color: #c00;
+  font-size: 18px;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  box-shadow: 0 1px 4px #0001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transition: background 0.2s;
+}
+.teren-imagini-thumb .delete-btn:hover {
+  background: #ffeaea;
+}
+
+
+
+.teren-tip-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 14px;
+  margin-bottom: 8px;
+  width: 100%;
+  max-width: 400px;
+}
+
+
+.teren-field label,
+.teren-field label:hover,
+.teren-tip-label,
+.teren-tip-label:hover {
+  font-size: 15px !important;
+  font-weight: 600 !important;
+  background: none !important;
+  color: #431164c2 !important;
+  cursor: default !important;
+  margin-bottom: -15px !important;
+  margin-left: -20px !important;
+}
+
+.teren-tip-select {
+  padding: 8px 12px;
+  border: 1.5px solid #43116440;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #431164;
+  background: #faf6ff;
+  transition: border-color 0.2s;
+}
+
+.teren-tip-select:focus {
+  border-color: #431164;
+  outline: none;
+}
+
+.teren-fields-row {
+  display: flex;
+  gap: 32px;
+  margin: 18px 0 10px 0;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+}
+
+
+
+.teren-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 180px;
+  max-width: 220px;
+  flex: 1 1 180px;
+  margin-bottom: -40px;
+}
+
+.teren-field label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #431164c2;
+  margin-bottom: 2px;
+  margin-bottom:-3px;
+}
+
+.teren-field input[type="number"] {
+  padding: 8px 2px;
+  border: 1.5px solid #43116440;
+  border-radius: 6px;
+  font-size: 15px;
+  transition: border-color 0.2s;
+}
+
+.teren-field input[type="number"]:focus {
+  border-color: #431164;
+  outline: none;
+}
+
+.input-suffix-wrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+}
+
+.input-suffix-wrapper input[type="number"] {
+  border-radius: 12px 0 0 12px;
+  border: 1.5px solid #43116440;
+  border-right: none;
+  padding: 9px 12px;
+  font-size: 16px;
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  background: #fff;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.input-suffix-wrapper input[type="number"]:focus {
+  border-color: #431164;
+  border-right: none;
+  z-index: 1;
+}
+
+.input-suffix {
+  display: flex;
+  align-items: center;
+  background: #e5e3e6;
+  color: #6b6b6b;
+  font-size: 16px;
+  padding: 0 18px;
+  border-radius: 0 12px 12px 0;
+  border: 1.5px solid #43116440;
+  border-left: none;
+  min-width: 44px;
+  height: 40px;
+  justify-content: center;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+
+.input-suffix-wrapper:focus-within .input-suffix {
+  border-color: #431164;
+}
+
+/* Pentru wrapperul cu input, sufix și select Da/Nu */
+.teren-comision-field .input-suffix-wrapper {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
+  min-width: 120px;
+}
+
+/* Inputul de comision */
+.teren-comision-field input[type="number"] {
+  border-radius: 12px 0 0 12px;
+  border: 1.5px solid #43116440;
+  border-right: none;
+  padding: 9px 12px;
+  font-size: 16px;
+  width: 100%;
+  height: 40px;
+  box-sizing: border-box;
+  background: #fff;
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+/* Sufixul % */
+.teren-comision-field .input-suffix {
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  min-width: 38px;
+  height: 40px;
+  padding: 0 10px;
+  background: #e5e3e6;
+  color: #6b6b6b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  border: 1.5px solid #43116440;
+  border-left: none;
+  border-right: none;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* Selectul Da/Nu */
+.comision-select {
+  border-radius: 0 12px 12px 0;
+  border: 1.5px solid #43116440;
+  border-left: none;
+  font-size: 16px;
+  background: #e5e3e6;
+  color: #431164;
+  height: 40px;
+  padding: 0 14px;
+  outline: none;
+  transition: border-color 0.2s;
+  min-width: 60px;
+  cursor: pointer;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+}
+
+.comision-select:focus {
+  border-color: #431164;
+}
+
+/* Disabled input pentru comision */
+.teren-comision-field input[disabled] {
+  background: #f3eeff;
+  color: #a1a1a1;
+  cursor: not-allowed;
+}
+
+.localizare-row input[type="text"] {
+  background: #fff;
+}
+
+ .localizare-row, .space-row
+{
+  margin-top: 30px !important;
+}
+
+.an-row{
+  margin-top: 40px !important;
+}
+
+.mp{
+  margin-top: -50px !important;
+  margin-bottom: -10px !important;
+}
+
+.mp-row
+ {
+  margin-top: 15px !important;
+ }
+
+.teren-field.last
+{
+  margin-top: 40px !important;
+}
+
+.descriere-row {
+  max-width: 500px;   /* sau 600px */
+  width: 100%;
+}
+
+.descriere-row textarea {
+  padding: 8px 12px;
+  border: 1.5px solid #43116440;
+  border-radius: 6px;
+  font-size: 15px;
+  color: #431164;
+  background: #fff;
+  transition: border-color 0.2s;
+  resize: vertical;
+  min-height: 80px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.descriere-row textarea:focus {
+  border-color: #431164;
+  outline: none;
+}
+
+.camere-row{
+  margin-top: 10px;
+}
+
+/* Micșorează spațiul de sub "Suprafață utilă" DOAR pentru spațiu comercial */
+.teren-field[data-property-type="spatiu-comercial"] {
+  margin-bottom: -130px !important;
+}
+
+
+#imobileCardsContainer {
+  position: relative;
+  top: -20px; /* Ajustează această valoare pentru a poziționa corect cardurile */
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  background: transparent;
+  z-index: 10; /* mai mic decât header-ul */
+}
+
+nav {
+  z-index: 1000;
+  position: relative;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 2000; /* sau mai mare decât orice altceva din pagină */
+}
+
+
+.imobil-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.7em;
+  margin-bottom: 0.5em;
+}
+
+.imobil-id {
+  margin-left: 0;
+  color: #adadaf;
+  font-size: 0.98em;
+  font-weight: 500;
+}
+
+#mainContent {
+  position: relative;
+  max-width: 600px;
+  margin-left: 425px;
+  transition: margin-left 0.3s, left 0.3s;
+}
+
+#mainContent.menu-active {
+  transition: margin-left 0.3s, left 0.3s;
+  margin-left: 325px;
+}
+
