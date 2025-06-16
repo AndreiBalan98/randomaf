@@ -2,3 +2,15 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.main-content {
+  margin-left: 15%;
+  height: calc(100vh - 60px);
+  width: calc(100vw - 15%);
+  padding-top: 60px;
+}
+
+#map {
+  height: 500px;
+  width: 100%;
+}
