@@ -313,29 +313,36 @@ document.getElementById('confirmaCardBtn').onclick = function() {
   .then(res => res.json())
   .then(data => {
     if (data.status === 'ok' && data.id) {
-      // Upload imagine dacă există în terenImages
-      if (window.terenImages && window.terenImages.length > 0) {
-        const formData = new FormData();
-        formData.append('imobil_id', data.id);
-        formData.append('imagine', window.terenImages[0]); // doar prima imagine
+  // Upload toate imaginile din terenImages
+  if (window.terenImages && window.terenImages.length > 0) {
+    let uploads = [];
+    for (let i = 0; i < window.terenImages.length; i++) {
+      const formData = new FormData();
+      formData.append('imobil_id', data.id);
+      formData.append('imagine', window.terenImages[i]);
+      uploads.push(
         fetch('http://localhost:3001/api/upload-imagine', {
           method: 'POST',
           body: formData
         })
-        .then(res => res.json())
-        .then(imgData => {
-          alert('Anunț și imagine încărcate cu succes!');
-          sessionStorage.removeItem('draftImobilCard');
-          window.location.href = '../index.html';
-        });
-      } else {
-        alert('Anunț adăugat fără imagine!');
+      );
+    }
+    Promise.all(uploads)
+      .then(() => {
+        alert('Anunț și imagini încărcate cu succes!');
         sessionStorage.removeItem('draftImobilCard');
         window.location.href = '../index.html';
-      }
-    } else {
-      alert('Eroare la adăugare!');
-    }
+      })
+      .catch(() => {
+        alert('Anunț adăugat, dar unele imagini nu au putut fi încărcate!');
+        window.location.href = '../index.html';
+      });
+  } else {
+    alert('Anunț adăugat fără imagine!');
+    sessionStorage.removeItem('draftImobilCard');
+    window.location.href = '../index.html';
+  }
+}
   });
 };
   }
