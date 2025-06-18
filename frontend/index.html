@@ -1,234 +1,92 @@
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Real Estate Manager</title>
-  <link rel="stylesheet" href="index.css">
-  <link rel="stylesheet" href="css/navbar.css">
-  <link rel="stylesheet" href="css/header.css">
-  <link rel="stylesheet" href="css/imobile-cards.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Manager</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="to be deleted/home2.css">
 </head>
 <body>
-  <header>
-    <span class="header-spacer"></span>
-    <h1>Real Estate Manager</h1>
-    <a href="html/profile.html" id="profilBtn" >
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="32" height="32" style="vertical-align:middle;">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-      </svg>
-    </a>
-  </header>
+    <!-- Header -->
+    <header>
+        <span class="header-spacer"></span>
+        <h1>Real Estate Manager</h1>
+        <a onclick="loadContent('html/profile.html');" id="profilBtn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="32" height="32" style="vertical-align:middle;">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+            </svg>
+        </a>
+    </header>
 
-  <button id="menuBtn" aria-label="Deschide meniul">
-  <svg width="24" height="20" viewBox="0 0 24 24" fill="none">
-    <rect y="3" width="30" height="4" rx="0.5" fill="#adadaf"/>
-    <rect y="11.5" width="30" height="4" rx="0.5" fill="#adadaf"/>
-    <rect y="20" width="30" height="4" rx="0.5" fill="#adadaf"/>
-  </svg>
-  </button>
-
-  <nav id="navbar">
-    <ul>
-      <li>
-        <a class="home active" href="index.html" id="Btn">
-        <svg class="icon-home" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28" style="vertical-align:middle; margin-right:8px;">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21a1.5 1.5 0 001.5 1.5h3.75a1.5 1.5 0 001.5-1.5v-4.5a1.5 1.5 0 011.5-1.5h1.5a1.5 1.5 0 011.5 1.5V21a1.5 1.5 0 001.5 1.5H19.5a1.5 1.5 0 001.5-1.5V10.5" />
+    <!-- Menu button -->
+    <button id="menuBtn" aria-label="Deschide meniul">
+        <svg width="24" height="20" viewBox="0 0 24 24" fill="none">
+            <rect y="3" width="30" height="4" rx="0.5" fill="#adadaf"/>
+            <rect y="11.5" width="30" height="4" rx="0.5" fill="#adadaf"/>
+            <rect y="20" width="30" height="4" rx="0.5" fill="#adadaf"/>
         </svg>
-          Home
-        </a>
-      </li>
-      <li>
-        <a class="map" href="html/map.html" id="mapBtn">
-        <svg class="icon-map" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18" stroke-width="1.5" stroke="currentColor" style="vertical-align:middle; margin-right:6px;">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-          <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
-        </svg>
-        Hartă
-      </a>
-      </li>
-      <li>
-       <a class="add" href="html/add-imobile.html" id="addBtn">
-         <svg class="icon-add" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="vertical-align:middle;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
-        </svg>
-        Adaugă imobil
-        </a>
-      </li>
-      <li>
-        <a class="chat" href="html/my-chat.html" id="chatBtn">
-          <svg class="icon-chat" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18" stroke-width="1.5" stroke="currentColor" style="vertical-align:middle;">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
-          </svg>
-          Mesajele mele
-        </a>
-      </li>
-      <li>
-        <a class="favorites" href="html/favorites.html" id="favoritesBtn">
-          <svg class="icon-favorites" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
-          </svg>
+    </button>
 
-          Favorite
-        </a>
-      </li>
-      <li>
-        <a class="profile" href="html/profile.html" id="profileBtn">
-          <svg class="icon-profile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-          </svg>
-          Profil
-        </a>
-      </li>
-    </ul>
-  </nav>    
+    <!-- Navigation bar -->
+    <nav id="navbar">
+        <ul>
+            <li>
+                <a class="home" onclick="loadContent('html/home.html');" id="homeBtn">
+                    <svg class="icon-home" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="28" height="28" style="vertical-align:middle; margin-right:8px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 12l9-9 9 9M4.5 10.5V21a1.5 1.5 0 001.5 1.5h3.75a1.5 1.5 0 001.5-1.5v-4.5a1.5 1.5 0 011.5-1.5h1.5a1.5 1.5 0 011.5 1.5V21a1.5 1.5 0 001.5 1.5H19.5a1.5 1.5 0 001.5-1.5V10.5" />
+                    </svg>
+                    Home
+                </a>
+            </li>
+            <li>
+                <a class="map" onclick="loadContent('html/map.html');" id="mapBtn">
+                    <svg class="icon-map" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18" stroke-width="1.5" stroke="currentColor" style="vertical-align:middle; margin-right:6px;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0Z" />
+                    </svg>
+                    Hartă
+                </a>
+            </li>
+            <li>
+                <a class="add" onclick="loadContent('html/add-imobile.html');" id="addBtn">
+                    <svg class="icon-add" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="18" height="18" style="vertical-align:middle;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                    </svg>
+                    Adaugă imobil
+                </a>
+            </li>
+            <li>
+                <a class="chat" onclick="loadContent('html/my-chat.html');" id="chatBtn">
+                    <svg class="icon-chat" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" width="18" height="18" stroke-width="1.5" stroke="currentColor" style="vertical-align:middle;">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 12a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H8.25m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m4.125 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0h-.375M21 12c0 4.556-4.03 8.25-9 8.25a9.764 9.764 0 0 1-2.555-.337A5.972 5.972 0 0 1 5.41 20.97a5.969 5.969 0 0 1-.474-.065 4.48 4.48 0 0 0 .978-2.025c.09-.457-.133-.901-.467-1.226C3.93 16.178 3 14.189 3 12c0-4.556 4.03-8.25 9-8.25s9 3.694 9 8.25Z" />
+                    </svg>
+                    Mesajele mele
+                </a>
+            </li>
+            <li>
+                <a class="favorites" onclick="loadContent('html/favorites.html');" id="favoritesBtn">
+                    <svg class="icon-favorites" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                    </svg>
+                    Favorite
+                </a>
+            </li>
+            <li>
+                <a class="profile" onclick="loadContent('html/profile.html');" id="profileBtn">
+                    <svg class="icon-profile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                    </svg>
+                    Profil
+                </a>
+            </li>
+        </ul>
+    </nav>    
 
-<div style="margin-left:15%;padding:1px 16px;height:auto;">
-  <!-- FILTRE -->
-  <section class="filters">
-    <div class="filters-title">
-      <svg class=  "icon-filter" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
-      </svg>
-      <h2>Filtrează imobile</h2>
-    </div>
-    <div class="filters-inner">
-  <form id="filtersForm" class="filters-form-flex">
-  <input type="text" placeholder="Cuvânt cheie, ex: 3 camere, central..." name="search">
-  <input class="pret" type="number" placeholder="Preț minim" name="minPrice">
-  <input class="pret" type="number" placeholder="Preț maxim" name="maxPrice">
-  <select class="tip" name="tip">
-    <option value="">Tip imobil</option>
-    <option value="apartament">Apartament</option>
-    <option value="casa">Casă</option>
-    <option value="teren">Teren</option>
-    <option value="spații comerciale">Spații comerciale</option>
-  </select>
-  <select class="stare" name="stare">
-    <option value="">Stare</option>
-    <option value="nou">Nou</option>
-    <option value="renovat">Renovat</option>
-    <option value="vechi">Vechi</option>
-  </select>
-  <select class="oferta" name="oferta">
-    <option value="">Tip ofertă</option>
-    <option value="vanzare">De vânzare</option>
-    <option value="inchiriat">De închiriat</option>
-  </select>
-  <div class="zona-filter">
-  <select id="orasSelect" name="oras">
-    <option value="">Alege orașul</option>
-    <option value="alba-iulia">Alba Iulia</option>
-<option value="arad">Arad</option>
-<option value="bacau">Bacău</option>
-<option value="baia-mare">Baia Mare</option>
-<option value="bistrita">Bistrița</option>
-<option value="botosani">Botoșani</option>
-<option value="braila">Brăila</option>
-<option value="brasov">Brașov</option>
-<option value="bucuresti">București</option>
-<option value="buzau">Buzău</option>
-<option value="calafat">Calafat</option>
-<option value="calarași">Călărași</option>
-<option value="campina">Câmpina</option>
-<option value="campulung">Câmpulung</option>
-<option value="cluj-napoca">Cluj-Napoca</option>
-<option value="constanta">Constanța</option>
-<option value="craiova">Craiova</option>
-<option value="deva">Deva</option>
-<option value="drobeta-turnu-severin">Drobeta-Turnu Severin</option>
-<option value="focsani">Focșani</option>
-<option value="galati">Galați</option>
-<option value="giurgiu">Giurgiu</option>
-<option value="iasi">Iași</option>
-<option value="medias">Mediaș</option>
-<option value="miercurea-ciuc">Miercurea Ciuc</option>
-<option value="oradea">Oradea</option>
-<option value="petrosani">Petroșani</option>
-<option value="piatra-neamt">Piatra Neamț</option>
-<option value="pitesti">Pitești</option>
-<option value="ploiesti">Ploiești</option>
-<option value="ramnicu-valcea">Râmnicu Vâlcea</option>
-<option value="ramnicu-sarat">Râmnicu Sărat</option>
-<option value="reghin">Reghin</option>
-<option value="resita">Reșița</option>
-<option value="roman">Roman</option>
-<option value="rosiorii-de-vede">Roșiorii de Vede</option>
-<option value="satu-mare">Satu Mare</option>
-<option value="sibiu">Sibiu</option>
-<option value="sighetu-marmatiei">Sighetu Marmației</option>
-<option value="slatina">Slatina</option>
-<option value="slobozia">Slobozia</option>
-<option value="suceava">Suceava</option>
-<option value="targoviste">Târgoviște</option>
-<option value="targu-jiu">Târgu Jiu</option>
-<option value="targu-mures">Târgu Mureș</option>
-<option value="targu-neamt">Târgu Neamț</option>
-<option value="targu-secuiesc">Târgu Secuiesc</option>
-<option value="timisoara">Timișoara</option>
-<option value="turda">Turda</option>
-<option value="turnu-magurele">Turnu Măgurele</option>
-<option value="urziceni">Urziceni</option>
-<option value="vaslui">Vaslui</option>
-<option value="zalau">Zalău</option>
-<option value="zarnesti">Zărnești</option>
-    <!-- Adaugă alte orașe -->
-  </select>
-</div>
-<div class="zona-filter">
-  <select id="localitateSelect" name="localitate" disabled>
-    <option value="">Alege localitatea</option>
-    <!-- Se populează dinamic -->
-  </select>
-</div>
-  <button type="submit" class="aplica-filtre-btn">Aplică filtre</button>
+    <!-- Main content loaded dinamicaly -->
+    <main id="content"></main>
 
-</form>
-    </div>
-</section>
-
-  <!-- STRATURI SUPLIMENTARE -->
-  <section class="layers">
-  <div class="layers-title">
-    <!-- Iconița SVG pentru straturi -->
-     <svg class="icon-layers" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-    </svg>
-    <h2>Straturi suplimentare pe hartă</h2>
-  </div>
-  <input type="checkbox" id="poluare" name="poluare" hidden>
-  <label for="poluare" class="layer-chip">Poluare</label>
-  <input type="checkbox" id="aglomeratie" name="aglomeratie" hidden>
-  <label for="aglomeratie" class="layer-chip">Aglomerație</label>
-  <input type="checkbox" id="jafuri" name="jafuri" hidden>
-  <label for="jafuri" class="layer-chip">Jafuri</label>
-  <input type="checkbox" id="cost_trai" name="cost_trai" hidden>
-  <label for="cost_trai" class="layer-chip">Cost mediu de trai</label>
-  <input type="checkbox" id="temperatura" name="temperatura" hidden>
-  <label for="temperatura" class="layer-chip">Temperatura medie anuală</label>
-  <input type="checkbox" id="parcari" name="parcari" hidden>
-  <label for="parcari" class="layer-chip">Parcări</label>
-  <input type="checkbox" id="magazine" name="magazine" hidden>
-  <label for="magazine" class="layer-chip">Magazine</label>
-</section>
-
-  <!-- LISTĂ DE IMOBILE -->
-  
-    
-    <div class="imobile-title">
-      <svg class="icon-imobile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
-      </svg>
-      <h1>Imobile disponibile</h1>
-    </div>
-
-    <div class="imobile-cards"></div>
-
-
-</div>
-
-  <!-- <script type="module" src="main.js"></script> -->
-  <script src="index.js"></script>
-  <script src="js/navbar.js"></script>
+    <script src="index.js"></script>
+    <script src="to be deleted/home2.js"></script>
 </body>
 </html>

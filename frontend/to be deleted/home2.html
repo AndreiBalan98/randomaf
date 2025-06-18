@@ -1,0 +1,135 @@
+<!-- FILTRE -->
+<section class="filters">
+  <div class="filters-title">
+    <svg class="icon-filter" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" />
+    </svg>
+    <h2>Filtrează imobile</h2>
+  </div>
+  <div class="filters-inner">
+    <form id="filtersForm" class="filters-form-flex">
+      <input type="text" placeholder="Cuvânt cheie, ex: 3 camere, central..." name="search">
+      <input class="pret" type="number" placeholder="Preț minim" name="minPrice">
+      <input class="pret" type="number" placeholder="Preț maxim" name="maxPrice">
+      <select class="tip" name="tip">
+        <option value="">Tip imobil</option>
+        <option value="apartament">Apartament</option>
+        <option value="casa">Casă</option>
+        <option value="teren">Teren</option>
+        <option value="spații comerciale">Spații comerciale</option>
+      </select>
+      <select class="stare" name="stare">
+        <option value="">Stare</option>
+        <option value="nou">Nou</option>
+        <option value="renovat">Renovat</option>
+        <option value="vechi">Vechi</option>
+      </select>
+      <select class="oferta" name="oferta">
+        <option value="">Tip ofertă</option>
+        <option value="vanzare">De vânzare</option>
+        <option value="inchiriat">De închiriat</option>
+      </select>
+      <div class="zona-filter">
+        <select id="orasSelect" name="oras">
+          <option value="">Alege orașul</option>
+          <option value="alba-iulia">Alba Iulia</option>
+          <option value="arad">Arad</option>
+          <option value="bacau">Bacău</option>
+          <option value="baia-mare">Baia Mare</option>
+          <option value="bistrita">Bistrița</option>
+          <option value="botosani">Botoșani</option>
+          <option value="braila">Brăila</option>
+          <option value="brasov">Brașov</option>
+          <option value="bucuresti">București</option>
+          <option value="buzau">Buzău</option>
+          <option value="calafat">Calafat</option>
+          <option value="calarași">Călărași</option>
+          <option value="campina">Câmpina</option>
+          <option value="campulung">Câmpulung</option>
+          <option value="cluj-napoca">Cluj-Napoca</option>
+          <option value="constanta">Constanța</option>
+          <option value="craiova">Craiova</option>
+          <option value="deva">Deva</option>
+          <option value="drobeta-turnu-severin">Drobeta-Turnu Severin</option>
+          <option value="focsani">Focșani</option>
+          <option value="galati">Galați</option>
+          <option value="giurgiu">Giurgiu</option>
+          <option value="iasi">Iași</option>
+          <option value="medias">Mediaș</option>
+          <option value="miercurea-ciuc">Miercurea Ciuc</option>
+          <option value="oradea">Oradea</option>
+          <option value="petrosani">Petroșani</option>
+          <option value="piatra-neamt">Piatra Neamț</option>
+          <option value="pitesti">Pitești</option>
+          <option value="ploiesti">Ploiești</option>
+          <option value="ramnicu-valcea">Râmnicu Vâlcea</option>
+          <option value="ramnicu-sarat">Râmnicu Sărat</option>
+          <option value="reghin">Reghin</option>
+          <option value="resita">Reșița</option>
+          <option value="roman">Roman</option>
+          <option value="rosiorii-de-vede">Roșiorii de Vede</option>
+          <option value="satu-mare">Satu Mare</option>
+          <option value="sibiu">Sibiu</option>
+          <option value="sighetu-marmatiei">Sighetu Marmației</option>
+          <option value="slatina">Slatina</option>
+          <option value="slobozia">Slobozia</option>
+          <option value="suceava">Suceava</option>
+          <option value="targoviste">Târgoviște</option>
+          <option value="targu-jiu">Târgu Jiu</option>
+          <option value="targu-mures">Târgu Mureș</option>
+          <option value="targu-neamt">Târgu Neamț</option>
+          <option value="targu-secuiesc">Târgu Secuiesc</option>
+          <option value="timisoara">Timișoara</option>
+          <option value="turda">Turda</option>
+          <option value="turnu-magurele">Turnu Măgurele</option>
+          <option value="urziceni">Urziceni</option>
+          <option value="vaslui">Vaslui</option>
+          <option value="zalau">Zalău</option>
+          <option value="zarnesti">Zărnești</option>
+        </select>
+      </div>
+      <div class="zona-filter">
+        <select id="localitateSelect" name="localitate" disabled>
+          <option value="">Alege localitatea</option>
+          <!-- Se populează dinamic -->
+        </select>
+      </div>
+      <button type="submit" class="aplica-filtre-btn">Aplică filtre</button>
+    </form>
+  </div>
+</section>
+
+<!-- STRATURI SUPLIMENTARE -->
+<section class="layers">
+  <div class="layers-title">
+    <!-- Iconița SVG pentru straturi -->
+    <svg class="icon-layers" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+    </svg>
+    <h2>Straturi suplimentare pe hartă</h2>
+  </div>
+  <input type="checkbox" id="poluare" name="poluare" hidden>
+  <label for="poluare" class="layer-chip">Poluare</label>
+  <input type="checkbox" id="aglomeratie" name="aglomeratie" hidden>
+  <label for="aglomeratie" class="layer-chip">Aglomerație</label>
+  <input type="checkbox" id="jafuri" name="jafuri" hidden>
+  <label for="jafuri" class="layer-chip">Jafuri</label>
+  <input type="checkbox" id="cost_trai" name="cost_trai" hidden>
+  <label for="cost_trai" class="layer-chip">Cost mediu de trai</label>
+  <input type="checkbox" id="temperatura" name="temperatura" hidden>
+  <label for="temperatura" class="layer-chip">Temperatura medie anuală</label>
+  <input type="checkbox" id="parcari" name="parcari" hidden>
+  <label for="parcari" class="layer-chip">Parcări</label>
+  <input type="checkbox" id="magazine" name="magazine" hidden>
+  <label for="magazine" class="layer-chip">Magazine</label>
+</section>
+
+<!-- LISTĂ DE IMOBILE -->
+<div class="imobile-title">
+  <svg class="icon-imobile" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
+  </svg>
+  <h1>Imobile disponibile</h1>
+</div>
+
+<div class="imobile-cards"></div>

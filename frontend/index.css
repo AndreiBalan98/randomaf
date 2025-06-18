@@ -1,4 +1,18 @@
-body, input, select, button, textarea, .layer-chip {
+/* Variabile CSS */
+:root {
+  --primary-color: #431164c2;      /* Header, buton profil, link-uri nav */
+  --primary-solid: #431164;        /* Text hover nav, iconuri hover */
+  --secondary-color: #adadaf;      /* Hover states, borduri */
+  --background-light: rgb(231, 231, 231); /* Fundal navigație */
+  --text-white: #ffffff;           /* Text header, link-uri nav */
+  --text-dark: #431164;            /* Text hover navigație */
+  --shadow-light: rgba(67,17,100,0.07);   /* Umbră link-uri nav */
+  --shadow-medium: rgba(67,17,100,0.10);  /* Umbră container nav */
+  --shadow-dark: rgba(67,17,100,0.15);    /* Umbră hover nav */
+}
+
+/* Setări generale */
+body, input, select, button, textarea {
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -6,216 +20,160 @@ body {
   margin: 0;
 }
 
-.icon-imobile,
-.icon-filter{
-  top: 0%;
-  transform: translateY(-0%);
-  margin-top: 20px;
+/* Header */
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  background-color: var(--primary-color);
+  color: var(--text-white);
+  padding: 1px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+header h1 {
+  color: var(--text-white);
+  font-size: 1.5em;
+  margin-top: 0.5em;
+}
+
+.header-spacer {
+  width: 32px; 
+  height: 32px;
+  display: block;
+}
+
+/* Buton profil header */
+#profilBtn svg {
+  color: var(--text-white);
+  background: var(--primary-color);
+  border-radius: 50%;
+  box-shadow: 0 0 4px var(--text-white);
+}
+
+#profilBtn:hover svg {
+  color: var(--primary-color);
+  background: var(--text-white);
+  border-radius: 50%;
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+/* Buton meniu */
+#menuBtn {
+  position: fixed;
+  top: 8px;
+  left: 10px;
+  z-index: 1200;
+  background: #43116473;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  padding: 8px;
+  transition: background 0.2s;
+}
+
+#menuBtn:hover {
+  background: var(--secondary-color);
+  box-shadow: 0 0 4px var(--primary-color);
+}
+
+#menuBtn:hover svg rect {
+  fill: var(--primary-color);
+}
+
+/* Navigație - container */
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 15%;
+  background: var(--background-light);
+  position: fixed;
+  height: 100%;
+  box-shadow: 2px 0 16px var(--shadow-medium);
+  border-right: 2px solid var(--secondary-color);
+}
+
+nav li {
+  text-align: center;
+  border: none;
+  margin-bottom: 8px;
+}
+
+/* Link-uri navigație */
+nav li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px 12px 44px;
+  color: var(--text-white);
+  background: var(--primary-color);
+  border-radius: 8px;
+  margin: 8px 12px;
+  font-weight: 500;
+  font-size: 1.1em;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px var(--shadow-light);
+  position: relative;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  text-decoration: none;
+}
+
+nav li a:hover,
+nav li a.active {
+  background: var(--secondary-color);
+  color: var(--text-dark);
+  box-shadow: 0 4px 16px var(--shadow-dark);
+}
+
+/* Iconuri navigație */
+.icon-profile,
+.icon-favorites,
+.icon-chat,
+.icon-home,
+.icon-map,
+.icon-add {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
   width: 20px;  
   height: 20px;
-  color: #431164;
+  color: var(--text-white);
   transition: color 0.2s;
 }
 
-
-.filters-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  margin-bottom: 1em;
+nav li a:hover .icon-home,
+nav li a:hover .icon-map,
+nav li a:hover .icon-add,
+nav li a:hover .icon-favorites,
+nav li a:hover .icon-chat,
+nav li a:hover .icon-profile,
+nav li a.active .icon-home,
+nav li a.active .icon-map,
+nav li a.active .icon-add,
+nav li a.active .icon-favorites,
+nav li a.active .icon-chat,
+nav li a.active .icon-profile {
+  color: var(--primary-color);
 }
 
-.filters-title .icon-filter {
-  margin: 0;
-  width: 24px;
-  height: 24px;
-  color: #431164;
+/* Conținut principal */
+main {
+  margin-left: 15%;
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+  min-height: calc(100vh - 60px);
 }
 
-.filters-title h2 {
-  margin: 0;
-  font-size: 1.3em;
-  color: #431164;
-  font-weight: 700;
+main.menu-hidden {
+  margin-left: 0;
 }
 
-.layers-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  margin-bottom: 1em;
-}
-
-.icon-layers {
-  margin:0;
-  width: 24px;
-  height: 24px;
-  color: #431164;
-}
-
-.layers-title h2 {
-  margin: 0;
-  font-size: 1.3em;
-  color: #431164;
-  font-weight: 700;
-}
-
-.filters, .layers {
-  border-left-style: solid;
-  border-width: 5px;
-  border-color: #431164;
-  background: #f7f3fa;
-  border-radius: 3px;
-  padding: 1em 2em;
-  margin: 1em 0;
-  box-shadow: 0 2px 8px rgba(90, 89, 90, 0.279);
-}
-
-
-.filters-inner {
-  display: flex;
-  flex-direction: column;
-  border: 1.5px solid #969696;
-  background: #adadaf92;
-  border-radius: 5px;
-  box-shadow: 0 4px 24px rgba(67, 17, 100, 0.16);
-  padding: 1.0em 1.3em 1.0em 1.3em;
-  margin-top: 0.5em;
-  gap: 1.2em;
-}
-
-
-.filters-form-flex {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1.2em 2em;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.filters-form-flex .pret {
-  width: 120px; 
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.filters-form-flex .tip {
-  width: 160px; 
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.filters-form-flex .stare {
-  width: 100px; 
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.filters-form-flex .oferta {
-  width: 120px; 
-  min-width: 0;
-  max-width: 100%;
-  box-sizing: border-box;
-}
-
-.filters form {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1em;
-  align-items: center;
-}
-
-
-.filters input, .filters select, .filters button {
-  padding: 0.5em 0.5em;
-  border-radius: 6px;
-  border: 1.5px solid #969696;
-  background: #f1f1f1;
-  font-size: 1em;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
-}
-
-.filters input:hover,
-.filters input:focus,
-.filters select:hover,
-.filters select:focus,
-.filters button:hover,
-.filters button:focus {
-  border: 1.5px solid #431164c2;
-  outline: none;
-}
-
-.filters button {
-  background: #431164c2;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-.filters button:hover {
-  background: #adadaf7e;
-  color:  #431164;
-}
-.layers label {
-  margin-right: 1.5em;
-  font-size: 1em;
-}
-
-
-.layer-chip {
-  display: inline-block;
-  padding: 0.5em 1.2em;
-  margin: 0.3em 0.6em 0.3em 0;
-  border-radius: 5px;
-  background: #fff;
-  color: #000000;
-  padding: 0.45em 0.95em;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
-  border: 1.5px solid #adadaf;
-  font-size: 1em;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s, border-color 0.2s;
-  user-select: none;
-}
-
-input[type="checkbox"]:checked + .layer-chip {
-  background: #431164c2;;
-  color: #f1f1f1;
-  border-color: #431164c2;;
-}
-
-.layer-chip:hover {
-  background: #e2d6f3;
-  color: #431164;
-  border-color: #431164c2;;
-}
-
-.imobile-title {
-  display: flex;
-  align-items: center;
-  gap: 0.5em;
-  margin-bottom: 1em;
-}
-
-.imobile-title .icon-imobile {
-  margin: 0;
-  width: 40px;
-  height: 40px;
-  color: #431164;
-  margin-top: 25px;
-}
-
-.imobile-title h1 {
-  margin: 0;
-  margin-top: 25px;
-  font-size: 1.9em;
-  color: #431164;
-  font-weight: 700;
-}
-
+/* Responsive */
 @media (max-width: 600px) {
   main {
     padding: 1em;

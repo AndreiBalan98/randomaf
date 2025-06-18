@@ -1,0 +1,270 @@
+/* ========================================
+   VARIABILE CSS PENTRU CONSISTENȚA STILURILOR
+   ======================================== */
+:root {
+  --primary-color: #431164;
+  --primary-alpha: #431164c2;
+  --secondary-color: #adadaf;
+  --background-light: #f7f3fa;
+  --background-input: #f1f1f1;
+  --background-secondary: #adadaf92;
+  --text-white: #ffffff;
+  --text-dark: #000000;
+  --border-color: #969696;
+  --border-primary: #431164c2;
+  --shadow-light: rgba(67, 17, 100, 0.07);
+  --shadow-medium: rgba(67, 17, 100, 0.16);
+  --shadow-dark: rgba(90, 89, 90, 0.279);
+  --hover-background: #e2d6f3;
+  --transition-speed: 0.2s;
+}
+
+/* ========================================
+   STILURI COMUNE PENTRU SECȚIUNI
+   ======================================== */
+.filters,
+.layers,
+.imobile-section {
+  border-left: 5px solid var(--primary-color);
+  background: var(--background-light);
+  border-radius: 3px;
+  padding: 1em 2em;
+  margin: 1em 0;
+  box-shadow: 0 2px 8px var(--shadow-dark);
+}
+
+.section-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 1em;
+}
+
+.section-icon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary-color);
+  flex-shrink: 0;
+}
+
+.section-title h1,
+.section-title h2 {
+  margin: 0;
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.section-title h1 {
+  font-size: 1.9em;
+}
+
+.section-title h2 {
+  font-size: 1.3em;
+}
+
+/* ========================================
+   STILURI PENTRU SECȚIUNEA FILTRE
+   ======================================== */
+.filters-container {
+  display: flex;
+  flex-direction: column;
+  border: 1.5px solid var(--border-color);
+  background: var(--background-secondary);
+  border-radius: 5px;
+  box-shadow: 0 4px 24px var(--shadow-medium);
+  padding: 1.3em;
+  margin-top: 0.5em;
+}
+
+.filters-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.2em 2em;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Stiluri pentru input-uri și select-uri */
+.search-input,
+.price-input,
+.select-input,
+.apply-filters-btn {
+  padding: 0.5em;
+  border-radius: 6px;
+  border: 1.5px solid var(--border-color);
+  background: var(--background-input);
+  font-size: 1em;
+  box-shadow: 0 2px 8px var(--shadow-light);
+  transition: border-color var(--transition-speed);
+}
+
+/* Dimensiuni specifice pentru input-uri */
+.search-input {
+  min-width: 200px;
+  flex: 1;
+}
+
+.price-input {
+  width: 120px;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.select-input {
+  min-width: 120px;
+  box-sizing: border-box;
+}
+
+.select-input[name="tip"] {
+  width: 160px;
+}
+
+.select-input[name="stare"] {
+  width: 100px;
+}
+
+.select-input[name="oferta"] {
+  width: 120px;
+}
+
+/* Hover și focus pentru input-uri */
+.search-input:hover,
+.search-input:focus,
+.price-input:hover,
+.price-input:focus,
+.select-input:hover,
+.select-input:focus {
+  border-color: var(--border-primary);
+  outline: none;
+}
+
+/* Stiluri pentru butonul de aplicare filtre */
+.apply-filters-btn {
+  background: var(--primary-alpha);
+  color: var(--text-white);
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 0.6em 1.2em;
+  transition: background var(--transition-speed), color var(--transition-speed);
+}
+
+.apply-filters-btn:hover {
+  background: var(--secondary-color);
+  color: var(--primary-color);
+}
+
+/* ========================================
+   STILURI PENTRU SECȚIUNEA STRATURI
+   ======================================== */
+.layers-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6em 1em;
+  margin-top: 0.5em;
+}
+
+.layer-chip {
+  display: inline-block;
+  padding: 0.45em 0.95em;
+  border-radius: 5px;
+  background: var(--text-white);
+  color: var(--text-dark);
+  box-shadow: 0 2px 8px var(--shadow-light);
+  border: 1.5px solid var(--secondary-color);
+  font-size: 1em;
+  cursor: pointer;
+  transition: background var(--transition-speed), 
+              color var(--transition-speed), 
+              border-color var(--transition-speed);
+  user-select: none;
+}
+
+.layer-chip:hover {
+  background: var(--hover-background);
+  color: var(--primary-color);
+  border-color: var(--border-primary);
+}
+
+.layer-chip.active {
+  background: var(--primary-alpha);
+  color: var(--background-input);
+  border-color: var(--primary-alpha);
+}
+
+/* Ascundem checkbox-urile pentru straturi */
+.layer-checkbox {
+  display: none;
+}
+
+/* ========================================
+   STILURI PENTRU SECȚIUNEA IMOBILE
+   ======================================== */
+.imobile-section .section-icon {
+  width: 40px;
+  height: 40px;
+  margin-top: 5px;
+}
+
+.imobile-section .section-title h1 {
+  margin-top: 5px;
+}
+
+.imobile-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5em;
+  margin-top: 1em;
+}
+
+/* ========================================
+   RESPONSIVE DESIGN
+   ======================================== */
+@media (max-width: 768px) {
+  .filters,
+  .layers,
+  .imobile-section {
+    padding: 0.8em 1.2em;
+    margin: 0.8em 0;
+  }
+  
+  .filters-form {
+    gap: 1em;
+  }
+  
+  .search-input {
+    min-width: 100%;
+  }
+  
+  .price-input,
+  .select-input {
+    min-width: 100%;
+    width: 100%;
+  }
+  
+  .layers-container {
+    gap: 0.5em;
+  }
+  
+  .imobile-cards {
+    grid-template-columns: 1fr;
+    gap: 1em;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3em;
+  }
+  
+  .section-title h1 {
+    font-size: 1.5em;
+  }
+  
+  .section-title h2 {
+    font-size: 1.1em;
+  }
+}
