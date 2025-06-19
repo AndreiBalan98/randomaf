@@ -102,7 +102,7 @@ const LOCALITIES_BY_CITY = {
 /**
  * Inițializează aplicația când DOM-ul este încărcat
  */
-function initializeApp() {
+function initializeHome() {
   console.log('Inițializare aplicație home...');
   
   // Inițializează componentele
@@ -202,19 +202,20 @@ function initializeFormHandlers() {
 /**
  * Încarcă datele imobilelor de la server
  */
-async function loadImobileData() {
+async function loadImobileData(filters = {}) {
   console.log('Încărcare date imobile...');
-  
+ 
   try {
-    const response = await fetch(`${API_BASE_URL}/api/imobile`);
-    
+    const queryParams = new URLSearchParams(filters).toString();
+    const response = await fetch(`${API_BASE_URL}/api/imobile?${queryParams}`);
+   
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    
+   
     const imobileData = await response.json();
     renderImobileCards(imobileData);
-    
+   
   } catch (error) {
     console.error('Eroare la încărcarea imobilelor:', error);
     displayError('Eroare la încărcarea anunțurilor!');
@@ -374,7 +375,7 @@ function handleLayerChange(event) {
  */
 function handleFormSubmit(event) {
   event.preventDefault();
-  
+ 
   const formData = new FormData(event.target);
   const filters = {
     search: formData.get('search') || '',
@@ -386,16 +387,7 @@ function handleFormSubmit(event) {
     oras: formData.get('oras') || '',
     localitate: formData.get('localitate') || ''
   };
-  
+ 
   console.log('Filtre aplicate:', filters);
-  // Aici ar trebui să implementezi logica de filtrare
-  // Pentru moment, doar reîncarcă datele
-  loadImobileData();
+  loadImobileData(filters);
 }
-
-// ========================================
-// INIȚIALIZARE
-// ========================================
-
-// Inițializează aplicația când DOM-ul este gata
-document.addEventListener('DOMContentLoaded', initializeApp);

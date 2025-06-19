@@ -9,6 +9,11 @@ function loadContent(file) {
     .then(res => res.text())
     .then(html => {
       document.getElementById("content").innerHTML = html;
+
+      // Execută inițializarea după încărcarea HTML-ului
+      if (file.includes('home.html')) {
+        initializeHome();
+      }
     })
     .catch(err => console.error("Eroare la încărcarea fișierului:", err));
 }

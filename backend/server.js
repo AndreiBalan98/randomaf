@@ -5,8 +5,8 @@ const path = require('path');
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
-  database: 'REM',
-  password: 'Federica1234',
+  database: 'rem',
+  password: 'cosmonet',
   port: 5432,
 });
 
@@ -14,6 +14,8 @@ const http = require('http');
 const PORT = 3001;
 
 const server = http.createServer((req, res) => {
+  console.log('Cerere primită:', req.method, req.url)
+  
   // CORS
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
@@ -27,7 +29,7 @@ const server = http.createServer((req, res) => {
   }
 
   // Servește imaginile din uploads
-  if (req.method === 'GET' && req.url.startsWith('/uploads/')) {
+  if (req.method === 'GET' && req.url.startsWith('/images/')) {
     const filePath = path.join(__dirname, req.url);
     fs.readFile(filePath, (err, data) => {
       if (err) {
@@ -170,27 +172,44 @@ const server = http.createServer((req, res) => {
     });
     return;
   }
-// ...existing code...
+  
+  if (req.method === 'GET' && req.url.startsWith('/api/imobile')) {
+    const query = new URL(req.url, `http://${req.headers.host}`).searchParams;
+ 
+    let sql = 'SELECT * FROM anunturi WHERE 1=1';
+    const params = [];
+    let paramIndex = 1;
+ 
+    if (query.get('minPrice')) {
+      sql += ` AND pret >= $${paramIndex}`;
+      params.push(parseInt(query.get('minPrice')));
+      paramIndex++;
+    }
+    
+    if (query.get('maxPrice')) {
+      sql += ` AND pret <= $${paramIndex}`;
+      params.push(parseInt(query.get('maxPrice')));
+      paramIndex++;
+    }
+    
+    if (query.get('tip')) {
+      sql += ` AND tip_imobil = $${paramIndex}`;
+      params.push(query.get('tip'));
+      paramIndex++;
+    }
+    
+    if (query.get('oferta')) {
+      sql += ` AND tip_oferta = $${paramIndex}`;
+      params.push(query.get('oferta'));
+      paramIndex++;
+    }
+    
+    console.log('SQL Query:', sql);
+    console.log('Params:', params);
 
-  // Returnează imobilele cu prima imagine
-  // ...existing code...
-if (req.method === 'GET' && req.url === '/api/imobile') {
-    const query = `
-      SELECT i.*,
-        img.url AS imagine,
-        COALESCE(a.suprafata_utila, c.suprafata_utila, t.suprafata_teren, s.suprafata_utila) AS suprafata
-      FROM imobile i
-      LEFT JOIN LATERAL (
-        SELECT url FROM imagini_imobil WHERE imobil_id = i.id ORDER BY id ASC LIMIT 1
-      ) img ON true
-      LEFT JOIN apartamente a ON a.imobil_id = i.id
-      LEFT JOIN casee c ON c.imobil_id = i.id
-      LEFT JOIN terenuri t ON t.imobil_id = i.id
-      LEFT JOIN spatii_comerciale s ON s.imobil_id = i.id
-      ORDER BY i.id DESC
-    `;
-    pool.query(query, (err, result) => {
+    pool.query(sql, params, (err, result) => {
       if (err) {
+        console.error('Eroare SQL:', err);
         res.writeHead(500, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ status: 'error', mesaj: 'Eroare la citire din baza de date!' }));
         return;
@@ -198,22 +217,24 @@ if (req.method === 'GET' && req.url === '/api/imobile') {
       res.writeHead(200, { 'Content-Type': 'application/json' });
       res.end(JSON.stringify(result.rows));
     });
+
     return;
   }
 
   if (req.method === 'GET' && req.url.startsWith('/api/imagini/')) {
-  const id = req.url.split('/').pop();
-  pool.query('SELECT url FROM imagini_imobil WHERE imobil_id = $1 ORDER BY id ASC', [id], (err, result) => {
-    if (err) {
-      res.writeHead(500, { 'Content-Type': 'application/json' });
-      res.end(JSON.stringify([]));
-      return;
-    }
+    const id = req.url.split('/').pop();
+    pool.query('SELECT url FROM imagini_imobil WHERE imobil_id = $1 ORDER BY id ASC', [id], (err, result) => {
+      if (err) {
+        res.writeHead(500, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify([]));
+        return;
+      }
     res.writeHead(200, { 'Content-Type': 'application/json' });
     res.end(JSON.stringify(result.rows));
-  });
+    });
+
   return;
-}
+  }
 
   // 404 fallback
   res.writeHead(404, { 'Content-Type': 'application/json' });

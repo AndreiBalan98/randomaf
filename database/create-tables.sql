@@ -1,95 +1,65 @@
--- Baza de date: REM (Real Estate Management)
+-- =========================
+-- BAZA DE DATE ANUNTURI IMOBILIARE
+-- =========================
 
--- Tabela principală pentru toate imobilele
-CREATE TABLE imobile (
+-- TABELA PRINCIPALA: ANUNTURI
+CREATE TABLE anunturi (
     id SERIAL PRIMARY KEY,
-    titlu VARCHAR(255) NOT NULL,
-    pret DECIMAL(12,2) NOT NULL,
-    locatie VARCHAR(255) NOT NULL,
+    tip_imobil VARCHAR(20) NOT NULL CHECK (tip_imobil IN ('apartament', 'casa', 'teren', 'spatiu_comercial')),
+    tip_oferta VARCHAR(10) NOT NULL CHECK (tip_oferta IN ('vanzare', 'cumparare')),
+    titlu TEXT NOT NULL,
+    pret NUMERIC(12, 2) NOT NULL,
+    comision NUMERIC(5, 2),
+    localizare TEXT,
     descriere TEXT,
-    tip VARCHAR(50) NOT NULL, -- 'apartament', 'casa'/'casee', 'teren', 'spatiu-comercial'
-    tranzactie VARCHAR(20) NOT NULL -- 'vanzare', 'inchiriere'
+    data_publicare TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabela pentru apartamente (detalii specifice)
-CREATE TABLE apartamente (
+-- TABELA IMAGINI (MAXIM 16 IMAGINI / ANUNT)
+CREATE TABLE imagini (
     id SERIAL PRIMARY KEY,
-    imobil_id INTEGER REFERENCES imobile(id) ON DELETE CASCADE,
-    suprafata_utila DECIMAL(8,2),
+    anunt_id INTEGER NOT NULL REFERENCES anunturi(id) ON DELETE CASCADE,
+    url TEXT NOT NULL,
+    ordine INTEGER NOT NULL CHECK (ordine >= 1 AND ordine <= 16),
+    UNIQUE(anunt_id, ordine)
+);
+
+-- TABELA SPECIFICA: APARTAMENTE
+CREATE TABLE apartamente (
+    anunt_id INTEGER PRIMARY KEY REFERENCES anunturi(id) ON DELETE CASCADE,
     nr_camere INTEGER,
     nr_bai INTEGER,
-    compartimentare VARCHAR(100), -- 'decomandat', 'semidecomandat', 'circular'
-    confort VARCHAR(50), -- 'lux', '1', '2', '3'
+    compartimentare VARCHAR(50),
+    confort VARCHAR(50),
     etaj INTEGER,
-    an_constructie INTEGER
+    an_constructie INTEGER,
+    suprafata_utila NUMERIC(10,2)
 );
 
--- Tabela pentru case (detalii specifice)
+-- TABELA SPECIFICA: CASE
 CREATE TABLE casee (
-    id SERIAL PRIMARY KEY,
-    imobil_id INTEGER REFERENCES imobile(id) ON DELETE CASCADE,
-    suprafata_utila DECIMAL(8,2),
-    suprafata_teren DECIMAL(8,2),
+    anunt_id INTEGER PRIMARY KEY REFERENCES anunturi(id) ON DELETE CASCADE,
     nr_camere INTEGER,
     nr_bai INTEGER,
     an_constructie INTEGER,
-    alte_dotari TEXT -- garaj, gradina, piscina, etc.
+    suprafata_utila NUMERIC(10,2),
+    suprafata_teren NUMERIC(10,2)
 );
 
--- Tabela pentru terenuri (detalii specifice)
+-- TABELA SPECIFICA: TERENURI
 CREATE TABLE terenuri (
-    id SERIAL PRIMARY KEY,
-    imobil_id INTEGER REFERENCES imobile(id) ON DELETE CASCADE,
-    suprafata_teren DECIMAL(8,2),
-    tip_teren VARCHAR(50), -- 'constructie', 'agricol', 'industrial'
-    clasificare VARCHAR(50), -- 'intravilan', 'extravilan'
-    front_stradal DECIMAL(8,2) -- metri front la strada
+    anunt_id INTEGER PRIMARY KEY REFERENCES anunturi(id) ON DELETE CASCADE,
+    suprafata_teren NUMERIC(10,2),
+    tip_teren VARCHAR(50),
+    clasificare VARCHAR(50),
+    front_stradal NUMERIC(10,2)
 );
 
--- Tabela pentru spatii comerciale (detalii specifice)
+-- TABELA SPECIFICA: SPATII COMERCIALE
 CREATE TABLE spatii_comerciale (
-    id SERIAL PRIMARY KEY,
-    imobil_id INTEGER REFERENCES imobile(id) ON DELETE CASCADE,
-    suprafata_utila DECIMAL(8,2),
-    alte_dotari TEXT -- parcare, vitrina, depozit, etc.
+    anunt_id INTEGER PRIMARY KEY REFERENCES anunturi(id) ON DELETE CASCADE,
+    suprafata_utila NUMERIC(10,2),
+    nr_camere INTEGER,
+    nr_bai INTEGER,
+    an_constructie INTEGER
 );
-
--- Tabela pentru imaginile asociate imobilelor
-CREATE TABLE imagini_imobil (
-    id SERIAL PRIMARY KEY,
-    imobil_id INTEGER REFERENCES imobile(id) ON DELETE CASCADE,
-    url VARCHAR(500) NOT NULL -- calea catre fisierul imagine
-);
-
--- Indexuri pentru performanta
-CREATE INDEX idx_imobile_tip ON imobile(tip);
-CREATE INDEX idx_imobile_tranzactie ON imobile(tranzactie);
-CREATE INDEX idx_imobile_pret ON imobile(pret);
-CREATE INDEX idx_apartamente_imobil_id ON apartamente(imobil_id);
-CREATE INDEX idx_casee_imobil_id ON casee(imobil_id);
-CREATE INDEX idx_terenuri_imobil_id ON terenuri(imobil_id);
-CREATE INDEX idx_spatii_comerciale_imobil_id ON spatii_comerciale(imobil_id);
-CREATE INDEX idx_imagini_imobil_id ON imagini_imobil(imobil_id);
-
--- Exemple de date pentru testare
-INSERT INTO imobile (titlu, pret, locatie, descriere, tip, tranzactie) VALUES
-('Apartament 3 camere Centrul Vechi', 85000, 'Bucuresti, Sector 3', 'Apartament spatios in zona centrala', 'apartament', 'vanzare'),
-('Casa cu gradina', 120000, 'Ilfov, Otopeni', 'Casa individuala cu gradina mare', 'casa', 'vanzare'),
-('Teren constructii', 45000, 'Cluj, Floresti', 'Teren pentru constructie casa', 'teren', 'vanzare'),
-('Spatiu comercial', 1500, 'Timisoara, Centru', 'Spatiu comercial pentru birou', 'spatiu-comercial', 'inchiriere');
-
--- Exemplu de date pentru apartament
-INSERT INTO apartamente (imobil_id, suprafata_utila, nr_camere, nr_bai, compartimentare, confort, etaj, an_constructie) VALUES
-(1, 75.5, 3, 1, 'decomandat', '1', 4, 2005);
-
--- Exemplu de date pentru casa
-INSERT INTO casee (imobil_id, suprafata_utila, suprafata_teren, nr_camere, nr_bai, an_constructie, alte_dotari) VALUES
-(2, 120.0, 500.0, 4, 2, 2010, 'garaj, gradina, terasa');
-
--- Exemplu de date pentru teren
-INSERT INTO terenuri (imobil_id, suprafata_teren, tip_teren, clasificare, front_stradal) VALUES
-(3, 800.0, 'constructie', 'intravilan', 20.0);
-
--- Exemplu de date pentru spatiu comercial
-INSERT INTO spatii_comerciale (imobil_id, suprafata_utila, alte_dotari) VALUES
-(4, 50.0, 'parcare, climatizare');
