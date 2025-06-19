@@ -1,7 +1,7 @@
 // Elemente DOM
-const navbar = document.getElementById('navbar');
-const menuBtn = document.getElementById('menuBtn');
-const mainDiv = document.getElementById('content');
+let navbar = null;
+let menuBtn = null;
+let mainDiv = null;
 
 // Încărcare conținut dinamic
 function loadContent(file) {
@@ -13,11 +13,6 @@ function loadContent(file) {
       // Execută inițializarea după încărcarea HTML-ului
       if (file.includes('home.html')) {
         initializeHome();
-      }
-      if (file.includes('detalii.html')) {
-        import('../js/detalii.js').then(() => {
-          initializeDetalii();
-        });
       }
     })
     .catch(err => console.error("Eroare la încărcarea fișierului:", err));
@@ -80,6 +75,11 @@ function handleResize() {
 
 // Event listeners și inițializare
 window.addEventListener('DOMContentLoaded', function() {
+  // Elemente DOM
+  navbar = document.getElementById('navbar');
+  menuBtn = document.getElementById('menuBtn');
+  mainDiv = document.getElementById('content');
+  
   menuBtn.addEventListener('click', toggleMenu);
   
   document.querySelectorAll('nav li a').forEach(link => {

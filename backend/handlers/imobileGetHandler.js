@@ -1,6 +1,6 @@
-const pool = require('../config/database');
-
 function handleImobileGet(req, res) {
+    const pool = require('../config/database');
+
     const query = new URL(req.url, `http://${req.headers.host}`).searchParams;
 
     let sql = 'SELECT * FROM anunturi WHERE 1=1';

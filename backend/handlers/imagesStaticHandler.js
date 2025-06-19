@@ -1,7 +1,7 @@
-const fs = require('fs');
-const path = require('path');
-
 function handleImagesStatic(req, res) {
+    const fs = require('fs');
+    const path = require('path');
+
     const filePath = path.join(__dirname, '..', req.url);
     fs.readFile(filePath, (err, data) => {
         if (err) {

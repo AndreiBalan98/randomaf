@@ -1,10 +1,5 @@
 // Funcția principală pentru încărcarea detaliilor imobilului
-async function initializeDetalii() {
-  // Obține ID-ul din URL
-  const params = new URLSearchParams(window.location.search);
-  const id = params.get('id');
-  if (!id) return;
-
+async function initializeDetalii(id) {
   // Încarcă datele imobilului
   const card = await obtineImobil(id);
   if (!card) return;

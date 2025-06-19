@@ -1,8 +1,8 @@
-const fs = require('fs');
-const path = require('path');
-const pool = require('../config/database');
-
 async function handleImageUpload(req, res) {
+    const fs = require('fs');
+    const path = require('path');
+    const pool = require('../config/database');
+    
     const boundary = req.headers['content-type'].split('boundary=')[1];
     let body = Buffer.alloc(0);
 

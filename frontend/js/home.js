@@ -388,6 +388,7 @@ function addCardEventListeners(imobileData) {
     btn.addEventListener('click', function() {
       const cardId = this.getAttribute('data-id') || imobileData[index].id;
       loadContent(`html/detalii.html?id=${cardId}`);
+      initializeDetalii(cardId);
     });
   });
 }

@@ -1,6 +1,6 @@
-const pool = require('../config/database');
-
 async function handleImobilAdd(req, res) {
+    const pool = require('../config/database');
+
   let body = '';
   req.on('data', chunk => { body += chunk; });
   req.on('end', async () => {
