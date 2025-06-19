@@ -251,7 +251,7 @@ function renderImobileCards(imobileData) {
  * Creează HTML-ul pentru un card de imobil
  */
 function createImobilCard(imobil) {
-  const imagePath = imobil.imagine ? `${API_BASE_URL}/${imobil.imagine}` : `${API_BASE_URL}/uploads/default.jpg`;
+  const imagePath = imobil.imagine ? `${API_BASE_URL}/${imobil.imagine}` : `${API_BASE_URL}/images/casa1.jpg`;
   const price = imobil.pret ? `${imobil.pret} €` : 'Preț la cerere';
   const transactionType = getTransactionTypeText(imobil.tranzactie);
   const surface = imobil.suprafata || '-';
@@ -328,19 +328,6 @@ function getTransactionTypeText(tranzactie) {
 }
 
 /**
- * Adaugă event listeners pentru butoanele de detalii
- */
-function addCardEventListeners(imobileData) {
-  const detailButtons = document.querySelectorAll('.imobil-detalii-btn');
-  detailButtons.forEach((btn, index) => {
-    btn.addEventListener('click', function() {
-      const cardId = this.getAttribute('data-id') || imobileData[index].id;
-      window.location.href = `html/detalii.html?id=${cardId}`;
-    });
-  });
-}
-
-/**
  * Afișează mesaj de eroare
  */
 function displayError(message) {
@@ -390,4 +377,17 @@ function handleFormSubmit(event) {
  
   console.log('Filtre aplicate:', filters);
   loadImobileData(filters);
+}
+
+/**
+ * Adaugă event listeners pentru butoanele de detalii
+ */
+function addCardEventListeners(imobileData) {
+  const detailButtons = document.querySelectorAll('.imobil-detalii-btn');
+  detailButtons.forEach((btn, index) => {
+    btn.addEventListener('click', function() {
+      const cardId = this.getAttribute('data-id') || imobileData[index].id;
+      loadContent(`html/detalii.html?id=${cardId}`);
+    });
+  });
 }

@@ -1,106 +1,148 @@
-.imobile-cards {
-  display: flex;
-  gap: 2em;
-  justify-content: center;
-  flex-wrap: wrap;
-  margin: 2em 0;
+/* ===== VARIABILE CSS ===== */
+:root {
+  /* Culori principale */
+  --color-primary: #431164;
+  --color-primary-alpha: #431164c2;
+  --color-white: #fff;
+  --color-background-light: #f7f3fa;
+  --color-border: #e2d6f3;
+  --color-border-alpha: #e2d6f3bc;
+  --color-text-secondary: #7d5fa7d4;
+  --color-text-muted: #adadaf;
+  --color-text-muted-alpha: #adadaf7e;
+  
+  /* Umbre */
+  --shadow-light: 0 4px 24px rgba(67,17,100,0.10);
+  --shadow-medium: 0 8px 32px rgba(67,17,100,0.18);
+  --shadow-small: 0 2px 8px rgba(67,17,100,0.10);
+  --shadow-small-light: 0 2px 8px rgba(67,17,100,0.07);
+  
+  /* Dimensiuni */
+  --card-width: 320px;
+  --card-border-radius: 18px;
+  --image-height: 180px;
+  --button-border-radius: 8px;
+  --like-button-size: 38px;
+  
+  /* Spacing */
+  --gap-small: 0.4em;
+  --gap-medium: 0.7em;
+  --gap-large: 2em;
+  --padding-small: 0.7em;
+  --padding-medium: 1.2em;
 }
 
+/* ===== CONTAINER PRINCIPAL ===== */
+.imobile-cards {
+  display: flex;
+  gap: var(--gap-large);
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: var(--gap-large) 0;
+}
+
+/* ===== CARD PRINCIPAL ===== */
 .imobil-card {
-  background: #fff;
-  border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(67,17,100,0.10);
+  background: var(--color-white);
+  border-radius: var(--card-border-radius);
+  box-shadow: var(--shadow-light);
   overflow: hidden;
-  width: 320px;
+  width: var(--card-width);
   display: flex;
   flex-direction: column;
   transition: box-shadow 0.2s, transform 0.2s;
-  border: 1.5px solid #e2d6f3;
+  border: 1.5px solid var(--color-border);
 }
 
 .imobil-card:hover {
-  box-shadow: 0 8px 32px rgba(67,17,100,0.18);
+  box-shadow: var(--shadow-medium);
   transform: translateY(-4px) scale(1.02);
 }
 
+/* ===== SECTIUNEA IMAGINE ===== */
 .imobil-card-img {
   position: relative;
-  height: 180px;
+  height: var(--image-height);
   background-size: cover;
   background-position: center;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding: 0.7em 0.7em 0 0.7em;
+  padding: var(--padding-small) var(--padding-small) 0 var(--padding-small);
 }
 
+/* Labels (pret si tip) */
 .imobil-card-labels {
   display: flex;
   flex-direction: column;
-  gap: 0.4em;
+  gap: var(--gap-small);
   position: absolute;
-  left: 0.7em;
-  top: 0.7em;
+  left: var(--padding-small);
+  top: var(--padding-small);
   z-index: 2;
 }
 
 .imobil-pret {
-  background: #431164c2;
-  color: #fff;
+  background: var(--color-primary-alpha);
+  color: var(--color-white);
   font-weight: 700;
   padding: 0.3em 0.8em;
-  border-radius: 8px 8px 8px 2px;
+  border-radius: var(--button-border-radius) var(--button-border-radius) var(--button-border-radius) 2px;
   font-size: 1.1em;
   margin-bottom: 0.2em;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.10);
+  box-shadow: var(--shadow-small);
 }
 
 .imobil-tip {
-  background: #e2d6f3bc;
-  color: #431164;
+  background: var(--color-border-alpha);
+  color: var(--color-primary);
   font-weight: 600;
-  padding: 0.2em 0.7em;
-  border-radius: 8px 8px 8px 2px;
+  padding: 0.2em var(--padding-small);
+  border-radius: var(--button-border-radius) var(--button-border-radius) var(--button-border-radius) 2px;
   font-size: 0.95em;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
+  box-shadow: var(--shadow-small-light);
 }
 
+/* Buton like */
 .imobil-like-btn {
   position: absolute;
-  top: 0.7em;
-  right: 0.7em;
+  top: var(--padding-small);
+  right: var(--padding-small);
   background: rgba(255,255,255,0.85);
   border: none;
   border-radius: 50%;
-  width: 38px;
-  height: 38px;
+  width: var(--like-button-size);
+  height: var(--like-button-size);
   font-size: 1.3em;
-  color: #431164;
+  color: var(--color-primary);
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.10);
+  box-shadow: var(--shadow-small);
   transition: background 0.2s, color 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
 .imobil-like-btn:hover {
-  background: #431164;
-  color: #fff;
+  background: var(--color-primary);
+  color: var(--color-white);
 }
 
+/* ===== CONTINUTUL CARDULUI ===== */
 .imobil-card-body {
-  background: #f7f3fa;
-  padding: 1.2em 1.2em 1.2em 2em;
+  background: var(--color-background-light);
+  padding: var(--padding-medium) var(--padding-medium) var(--padding-medium) 2em;
   display: flex;
   flex-direction: column;
-  gap: 0.7em;
+  gap: var(--gap-medium);
 }
 
+/* Locatie */
 .imobil-locatie {
   display: flex;
   align-items: center;
-  gap: 0.4em;
-  color: #7d5fa7d4;
+  gap: var(--gap-small);
+  color: var(--color-text-secondary);
   font-size: 1em;
   font-weight: 500;
   margin-bottom: 0.2em;
@@ -108,32 +150,35 @@
 
 .icon-locatie {
   font-size: 1.2em;
-  color: #adadaf;
+  color: var(--color-text-muted);
 }
 
+/* Titlu */
 .imobil-titlu {
   font-size: 1.25em;
   font-weight: 700;
-  color: #431164;
+  color: var(--color-primary);
   margin-bottom: 0.2em;
 }
 
+/* Informatii suplimentare */
 .imobil-info {
   display: flex;
-  gap: 0.7em;
+  gap: var(--gap-medium);
   margin-bottom: 0.5em;
 }
 
 .imobil-mp {
-  background: #e2d6f3;
-  color: #431164c2;
+  background: var(--color-border);
+  color: var(--color-primary-alpha);
   border-radius: 16px;
   padding: 0.15em 0.90em;
   font-size: 0.8em;
   font-weight: 600;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
+  box-shadow: var(--shadow-small-light);
 }
 
+/* ===== FOOTER CARD ===== */
 .imobil-card-footer {
   display: flex;
   align-items: center;
@@ -141,37 +186,41 @@
   margin-top: 0.5em;
 }
 
+/* Buton detalii */
 .imobil-detalii-btn {
-  background: #431164c2;
-  color: #fff;
+  background: var(--color-primary-alpha);
+  color: var(--color-white);
   border: none;
-  border-radius: 8px;
+  border-radius: var(--button-border-radius);
   padding: 0.5em 1.2em;
   font-size: 1em;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
-}
-.imobil-detalii-btn:hover {
-  background: #adadaf7e;
-  color: #431164;
-  border: 1.4px solid #431164;
+  box-shadow: var(--shadow-small-light);
 }
 
+.imobil-detalii-btn:hover {
+  background: var(--color-text-muted-alpha);
+  color: var(--color-primary);
+  border: 1.4px solid var(--color-primary);
+}
+
+/* ID imobil */
 .imobil-id {
-  color: #adadaf;
+  color: var(--color-text-muted);
   font-size: 0.98em;
   font-weight: 500;
   margin-left: 1em;
 }
 
-/* Responsive pentru mobil */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1000px) {
   .imobile-cards {
     flex-direction: column;
     align-items: center;
     gap: 1.5em;
   }
+  
   .imobil-card {
     width: 95vw;
     max-width: 400px;

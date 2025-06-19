@@ -14,9 +14,14 @@ function loadContent(file) {
       if (file.includes('home.html')) {
         initializeHome();
       }
+      if (file.includes('detalii.html')) {
+        import('../js/detalii.js').then(() => {
+          initializeDetalii();
+        });
+      }
     })
     .catch(err => console.error("Eroare la încărcarea fișierului:", err));
-}
+  }
 
 // Ascunde meniu și extinde conținut
 function hideMenuAndExpandContent() {
@@ -86,3 +91,5 @@ window.addEventListener('DOMContentLoaded', function() {
   initializeMenuState();
   window.addEventListener('resize', handleResize);
 });
+
+window.loadContent = loadContent;

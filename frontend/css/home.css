@@ -1,81 +1,126 @@
+/* ===== VARIABILE CSS ===== */
+:root {
+  /* Culori principale */
+  --primary-color: #431164;
+  --primary-color-light: #431164c2;
+  --background-light: #f7f3fa;
+  --background-gray: #adadaf92;
+  --background-white: #fff;
+  --background-input: #f1f1f1;
+  --hover-background: #e2d6f3;
+  --hover-button: #adadaf7e;
+  
+  /* Culori pentru borduri */
+  --border-gray: #969696;
+  --border-light: #adadaf;
+  --text-black: #000000;
+  --text-light: #f1f1f1;
+  
+  /* Dimensiuni și spațiere */
+  --icon-small: 20px;
+  --icon-medium: 24px;
+  --icon-large: 40px;
+  --border-radius-small: 3px;
+  --border-radius-medium: 5px;
+  --border-radius-large: 6px;
+  --border-width-thin: 1.5px;
+  --border-width-thick: 5px;
+  --padding-small: 0.5em;
+  --padding-medium: 1em;
+  --padding-large: 2em;
+  --gap-small: 0.5em;
+  --gap-medium: 1.2em;
+  --gap-large: 2em;
+  
+  /* Umbre */
+  --shadow-light: 0 2px 8px rgba(67,17,100,0.07);
+  --shadow-medium: 0 2px 8px rgba(90, 89, 90, 0.279);
+  --shadow-dark: 0 4px 24px rgba(67, 17, 100, 0.16);
+}
+
 /* ===== ICOANE GENERALE ===== */
 .icon-imobile,
 .icon-filter {
   top: 0%;
   transform: translateY(-0%);
   margin-top: 20px;
-  width: 20px;  
-  height: 20px;
-  color: #431164;
+  width: var(--icon-small);
+  height: var(--icon-small);
+  color: var(--primary-color);
   transition: color 0.2s;
 }
 
 .icon-layers {
   margin: 0;
-  width: 24px;
-  height: 24px;
-  color: #431164;
+  width: var(--icon-medium);
+  height: var(--icon-medium);
+  color: var(--primary-color);
 }
 
 .section-icon {
-  width: 24px;
-  height: 24px;
+  width: var(--icon-medium);
+  height: var(--icon-medium);
 }
 
 /* ===== TITLURI SECȚIUNI ===== */
+
+/* Titlu general pentru secțiuni */
 .section-title {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: var(--gap-small);
 }
 
+/* Titlu pentru secțiunea de filtre */
 .filters-title {
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  margin-bottom: 1em;
+  gap: var(--gap-small);
+  margin-bottom: var(--padding-medium);
 }
 
 .filters-title .icon-filter {
   margin: 0;
-  width: 24px;
-  height: 24px;
-  color: #431164;
+  width: var(--icon-medium);
+  height: var(--icon-medium);
+  color: var(--primary-color);
 }
 
 .filters-title h2 {
   margin: 0;
   font-size: 1.3em;
-  color: #431164;
+  color: var(--primary-color);
   font-weight: 700;
 }
 
+/* Titlu pentru secțiunea de straturi */
 .layers-title {
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  margin-bottom: 1em;
+  gap: var(--gap-small);
+  margin-bottom: var(--padding-medium);
 }
 
 .layers-title h2 {
   margin: 0;
   font-size: 1.3em;
-  color: #431164;
+  color: var(--primary-color);
   font-weight: 700;
 }
 
+/* Titlu pentru secțiunea de imobile */
 .imobile-title {
   display: flex;
   align-items: center;
-  gap: 0.5em;
-  margin-bottom: 1em;
+  gap: var(--gap-small);
+  margin-bottom: var(--padding-medium);
 }
 
 .imobile-title .icon-imobile {
   margin: 0;
-  width: 40px;
-  height: 40px;
-  color: #431164;
+  width: var(--icon-large);
+  height: var(--icon-large);
+  color: var(--primary-color);
   margin-top: 25px;
 }
 
@@ -83,142 +128,158 @@
   margin: 0;
   margin-top: 25px;
   font-size: 1.9em;
-  color: #431164;
+  color: var(--primary-color);
   font-weight: 700;
 }
 
 /* ===== CONTAINERE PRINCIPALE ===== */
-.filters, .layers {
+.filters, 
+.layers {
   border-left-style: solid;
-  border-width: 5px;
-  border-color: #431164;
-  background: #f7f3fa;
-  border-radius: 3px;
-  padding: 1em 2em;
-  margin: 1em 0;
-  box-shadow: 0 2px 8px rgba(90, 89, 90, 0.279);
+  border-width: var(--border-width-thick);
+  border-color: var(--primary-color);
+  background: var(--background-light);
+  border-radius: var(--border-radius-small);
+  padding: var(--padding-medium) var(--padding-large);
+  margin: var(--padding-medium) 0;
+  box-shadow: var(--shadow-medium);
 }
 
 /* ===== SECȚIUNEA FILTRE ===== */
+
+/* Container interior pentru filtre */
 .filters-inner {
   display: flex;
   flex-direction: column;
-  border: 1.5px solid #969696;
-  background: #adadaf92;
-  border-radius: 5px;
-  box-shadow: 0 4px 24px rgba(67, 17, 100, 0.16);
+  border: var(--border-width-thin) solid var(--border-gray);
+  background: var(--background-gray);
+  border-radius: var(--border-radius-medium);
+  box-shadow: var(--shadow-dark);
   padding: 1.0em 1.3em 1.0em 1.3em;
-  margin-top: 0.5em;
-  gap: 1.2em;
+  margin-top: var(--gap-small);
+  gap: var(--gap-medium);
 }
 
+/* Layout flexibil pentru formular */
 .filters-form-flex {
   display: flex;
   flex-wrap: wrap;
-  gap: 1.2em 2em;
+  gap: var(--gap-medium) var(--gap-large);
   align-items: center;
   justify-content: flex-start;
 }
 
 /* Dimensiuni specifice pentru câmpurile de filtrare */
 .filters-form-flex .pret {
-  width: 120px; 
+  width: 120px;
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
 }
 
 .filters-form-flex .tip {
-  width: 160px; 
+  width: 160px;
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
 }
 
 .filters-form-flex .stare {
-  width: 100px; 
+  width: 100px;
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
 }
 
 .filters-form-flex .oferta {
-  width: 120px; 
+  width: 120px;
   min-width: 0;
   max-width: 100%;
   box-sizing: border-box;
 }
 
+/* Layout pentru formularul de filtre */
 .filters form {
   display: flex;
   flex-wrap: wrap;
-  gap: 1em;
+  gap: var(--padding-medium);
   align-items: center;
 }
 
 /* ===== STILURI PENTRU CONTROALE FILTRE ===== */
-.filters input, .filters select, .filters button {
-  padding: 0.5em 0.5em;
-  border-radius: 6px;
-  border: 1.5px solid #969696;
-  background: #f1f1f1;
+
+/* Stiluri de bază pentru input-uri, select-uri și butoane */
+.filters input, 
+.filters select, 
+.filters button {
+  padding: var(--padding-small) var(--padding-small);
+  border-radius: var(--border-radius-large);
+  border: var(--border-width-thin) solid var(--border-gray);
+  background: var(--background-input);
   font-size: 1em;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
+  box-shadow: var(--shadow-light);
 }
 
+/* Stiluri pentru hover și focus */
 .filters input:hover,
 .filters input:focus,
 .filters select:hover,
 .filters select:focus,
 .filters button:hover,
 .filters button:focus {
-  border: 1.5px solid #431164c2;
+  border: var(--border-width-thin) solid var(--primary-color-light);
   outline: none;
 }
 
+/* Stiluri specifice pentru butoane */
 .filters button {
-  background: #431164c2;
-  color: #fff;
+  background: var(--primary-color-light);
+  color: var(--background-white);
   border: none;
   cursor: pointer;
   transition: background 0.2s;
 }
 
 .filters button:hover {
-  background: #adadaf7e;
-  color: #431164;
+  background: var(--hover-button);
+  color: var(--primary-color);
 }
 
 /* ===== SECȚIUNEA STRATURI (LAYERS) ===== */
+
+/* Stiluri pentru etichete în layers */
 .layers label {
   margin-right: 1.5em;
   font-size: 1em;
 }
 
+/* Stiluri pentru chip-urile de straturi */
 .layer-chip {
   display: inline-block;
-  padding: 0.5em 1.2em;
+  padding: var(--padding-small) 1.2em;
   margin: 0.3em 0.6em 0.3em 0;
-  border-radius: 5px;
-  background: #fff;
-  color: #000000;
+  border-radius: var(--border-radius-medium);
+  background: var(--background-white);
+  color: var(--text-black);
   padding: 0.45em 0.95em;
-  box-shadow: 0 2px 8px rgba(67,17,100,0.07);
-  border: 1.5px solid #adadaf;
+  box-shadow: var(--shadow-light);
+  border: var(--border-width-thin) solid var(--border-light);
   font-size: 1em;
   cursor: pointer;
   transition: background 0.2s, color 0.2s, border-color 0.2s;
   user-select: none;
 }
 
+/* Stiluri pentru chip-uri selectate */
 input[type="checkbox"]:checked + .layer-chip {
-  background: #431164c2;
-  color: #f1f1f1;
-  border-color: #431164c2;
+  background: var(--primary-color-light);
+  color: var(--text-light);
+  border-color: var(--primary-color-light);
 }
 
+/* Stiluri pentru hover pe chip-uri */
 .layer-chip:hover {
-  background: #e2d6f3;
-  color: #431164;
-  border-color: #431164c2;
+  background: var(--hover-background);
+  color: var(--primary-color);
+  border-color: var(--primary-color-light);
 }
