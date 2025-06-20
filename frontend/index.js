@@ -90,8 +90,9 @@ window.addEventListener('DOMContentLoaded', function() {
     // ...
   });
 
+  const API_BASE_URL = 'https://randomaf-backend.onrender.com';
 
-  fetch('http://localhost:3001/api/imobile')
+ fetch(`${API_BASE_URL}/api/imobile`)
     .then(res => res.json())
     .then(anunturi => {
       const container = document.querySelector('.imobile-cards');
@@ -102,7 +103,7 @@ window.addEventListener('DOMContentLoaded', function() {
         console.log(card.tranzactie);
         container.innerHTML += `
           <div class="imobil-card">
-            <div class="imobil-card-img" style="background-image:url('http://localhost:3001/${card.imagine ? card.imagine : 'uploads/default.jpg'}');">
+            <div class="imobil-card-img" style="background-image:url('${API_BASE_URL}/${card.imagine ? card.imagine : 'uploads/default.jpg'}');">
               <button class="imobil-like-btn" title="Favorite">&#10084;</button>
               <div class="imobil-card-labels">
                 <div class="imobil-pret">${card.pret ? card.pret + ' €' : ''}</div>

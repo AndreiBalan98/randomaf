@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
+  const API_BASE_URL = 'https://randomaf-backend.onrender.com'; // sau URL-ul backendului tău online
   const terenRadio = document.getElementById('teren');
   const terenExtra = document.getElementById('terenExtraOptions');
   const allTypeRadios = document.querySelectorAll('input[name="propertyType"]');
@@ -305,7 +306,7 @@ function afiseazaCard(card, showActions = false) {
     // În funcția de confirmare:
 document.getElementById('confirmaCardBtn').onclick = function() {
   const draft = JSON.parse(sessionStorage.getItem('draftImobilCard'));
-  fetch('http://localhost:3001/api/imobil', {
+  fetch(`API_BASE_URL /api/imobil`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(draft)
@@ -321,7 +322,7 @@ document.getElementById('confirmaCardBtn').onclick = function() {
       formData.append('imobil_id', data.id);
       formData.append('imagine', window.terenImages[i]);
       uploads.push(
-        fetch('http://localhost:3001/api/upload-imagine', {
+        fetch(`API_BASE_URL /api/upload-imagine`, {
           method: 'POST',
           body: formData
         })

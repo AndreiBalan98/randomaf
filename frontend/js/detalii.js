@@ -1,18 +1,20 @@
 document.addEventListener('DOMContentLoaded', async function() {
+  const API_BASE_URL = 'https://randomaf-backend.onrender.com';
   const params = new URLSearchParams(window.location.search);
   const id = params.get('id');
   if (!id) return;
 
   // Ia toate anunturile
-  const res = await fetch('http://localhost:3001/api/imobile');
+  const res = await fetch(`${API_BASE_URL}/api/imobile`);
   const anunturi = await res.json();
+  
   const card = anunturi.find(c => c.id == id);
   if (!card) return;
 
   // Ia toate imaginile pentru acest imobil
   let imagini = [];
   try {
-    const resImg = await fetch(`http://localhost:3001/api/imagini/${id}`);
+    const resImg = await fetch(`${API_BASE_URL}/api/imagini/${id}`);
     imagini = await resImg.json();
   } catch {}
 
@@ -26,7 +28,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         <button class="slider-arrow" id="slider-prev" ${currentSlide === 0 ? 'disabled' : ''}>
           <svg viewBox="0 0 48 48" width="48" height="48"><path d="M31.5 39.1 17.4 24l14.1-15.1-2.8-2.8L11.6 24l17.5 19.9z"/></svg>
         </button>
-        <img class="slider-img" src="http://localhost:3001/${imagini[currentSlide].url}" alt="imagine imobil">
+        <img class="slider-img" src="${API_BASE_URL}/${imagini[currentSlide].url}" alt="imagine imobil">
         <button class="slider-arrow" id="slider-next" ${currentSlide === imagini.length-1 ? 'disabled' : ''}>
           <svg viewBox="0 0 48 48" width="48" height="48"><path d="M16.5 8.9 30.6 24l-14.1 15.1 2.8 2.8L36.4 24 18.9 4.1z"/></svg>
         </button>
@@ -79,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     let current = idx;
 
     function showImg(i) {
-      modalImg.src = "http://localhost:3001/" + imagini[i].url;
+      modalImg.src = `${API_BASE_URL}/${imagini[i].url}`;
       modalImg.dataset.idx = i;
     }
 
@@ -165,7 +167,7 @@ attachSliderEvents();
 
   document.getElementById('relevante-container').innerHTML = relevante.map(r => `
   <div class="imobil-card">
-    <div class="imobil-card-img" style="background-image:url('http://localhost:3001/${r.imagine ? r.imagine : 'uploads/default.jpg'}');">
+    <div class="imobil-card-img" style="background-image:url('${API_BASE_URL}/${r.imagine ? r.imagine : 'uploads/default.jpg'}');">
       <button class="imobil-like-btn" title="Favorite">&#10084;</button>
       <div class="imobil-card-labels">
         <div class="imobil-pret">${r.pret ? r.pret + ' €' : ''}</div>
