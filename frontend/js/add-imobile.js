@@ -306,7 +306,7 @@ function afiseazaCard(card, showActions = false) {
     // În funcția de confirmare:
 document.getElementById('confirmaCardBtn').onclick = function() {
   const draft = JSON.parse(sessionStorage.getItem('draftImobilCard'));
-  fetch(`API_BASE_URL /api/imobil`, {
+  fetch(`${API_BASE_URL} /api/imobil`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(draft)
@@ -322,7 +322,7 @@ document.getElementById('confirmaCardBtn').onclick = function() {
       formData.append('imobil_id', data.id);
       formData.append('imagine', window.terenImages[i]);
       uploads.push(
-        fetch(`API_BASE_URL /api/upload-imagine`, {
+        fetch(`${API_BASE_URL}/api/upload-imagine`, {
           method: 'POST',
           body: formData
         })
