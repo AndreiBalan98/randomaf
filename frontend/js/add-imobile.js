@@ -159,7 +159,6 @@ function initializeAdd() {
         }
       };
       
-      const API_BASE_URL = 'https://randomaf-backend.onrender.com';
 
 
       // Buton confirmă
@@ -187,7 +186,7 @@ function initializeAdd() {
           frontStradal: draft.frontStradal,
           alteDotari: draft.alteDotari
         };
-        fetch(`${API_BASE_URL}/api/imobil`, {
+        fetch(`https://randomaf-backend.onrender.com/api/imobil`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(draft)
@@ -200,7 +199,7 @@ function initializeAdd() {
               const formData = new FormData();
               formData.append('anunt_id', data.id);
               formData.append('imagine', window.terenImages[0]);
-              fetch(`${API_BASE_URL}/api/upload-imagine`, {
+              fetch(`https://randomaf-backend.onrender.com/api/upload-imagine`, {
                 method: 'POST',
                 body: formData
               })
