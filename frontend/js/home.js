@@ -250,7 +250,7 @@ function renderImobileCards(imobileData) {
  * Creează HTML-ul pentru un card de imobil
  */
 function createImobilCard(imobil) {
-  const imagePath = imobil.imagine ? `https://randomaf-backend.onrender.com/${imobil.imagine}` : `${API_BASE_URL}/images/casa1.jpg`;
+  const imagePath = imobil.imagine ? `https://randomaf-backend.onrender.com/${imobil.imagine}` : `https://randomaf-backend.onrender.com/images/casa1.jpg`;
   const price = imobil.pret ? `${imobil.pret} €` : 'Preț la cerere';
   const transactionType = getTransactionTypeText(imobil.tranzactie);
   const surface = imobil.suprafata || '-';
