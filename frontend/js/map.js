@@ -1,150 +1,49 @@
-// Variabile globale pentru hartă
-let map;
-let initialView = [51.505, -0.09];
-let initialZoom = 13;
-
-// Inițializarea hărții
-function initMap() {
-    // Verifică dacă containerul există
-    const mapContainer = document.getElementById('map');
-    if (!mapContainer) {
-        console.error('Map container not found');
+// Funcția de inițializare pentru hartă
+function initializeMap() {
+    // Verifică dacă div-ul pentru hartă există
+    const mapElement = document.getElementById('map');
+    if (!mapElement) {
+        console.error('Elementul cu id="map" nu a fost găsit');
         return;
     }
 
     // Verifică dacă Leaflet este încărcat
     if (typeof L === 'undefined') {
-        console.error('Leaflet library not loaded');
+        console.error('Leaflet nu este încărcat');
         return;
     }
 
-    try {
-        // Creează harta
-        map = L.map('map').setView(initialView, initialZoom);
+    // Inițializează harta centrată pe București
+    const map = L.map('map', {
+        center: [44.4268, 26.1025], // Coordonatele Bucureștiului
+        zoom: 10,
+        zoomControl: true,
+        scrollWheelZoom: true
+    });
 
-        // Adaugă tile layer
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        }).addTo(map);
+    // Adaugă layer-ul de tile-uri OpenStreetMap
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-        // Adaugă marker de exemplu
-        L.marker([51.5, -0.09]).addTo(map)
-            .bindPopup('Bine ai venit!<br>Aceasta este harta ta.')
-            .openPopup();
-
-        // Eveniment pentru click pe hartă
-        map.on('click', function(e) {
-            console.log('Click position:', e.latlng);
-            L.popup()
-                .setLatLng(e.latlng)
-                .setContent('Coordonate: ' + e.latlng.toString())
-                .openOn(map);
-        });
-
-        console.log('Harta a fost inițializată cu succes');
-
-    } catch (error) {
-        console.error('Eroare la inițializarea hărții:', error);
-        showMapError();
-    }
-}
-
-// Funcție pentru resetarea view-ului hărții
-function resetMapView() {
-    if (map) {
-        map.setView(initialView, initialZoom);
-    }
-}
-
-// Funcție pentru fullscreen
-function toggleFullscreen() {
-    const mapContainer = document.querySelector('.map-container');
-    const fullscreenBtn = event.target;
+    // Adaugă un marker pe București
+    const marker = L.marker([44.4268, 26.1025]).addTo(map);
     
-    if (mapContainer.classList.contains('fullscreen')) {
-        mapContainer.classList.remove('fullscreen');
-        fullscreenBtn.textContent = 'Fullscreen';
-        
-        // Redimensionează harta după ieșirea din fullscreen
-        setTimeout(() => {
-            if (map) {
-                map.invalidateSize();
-            }
-        }, 300);
-    } else {
-        mapContainer.classList.add('fullscreen');
-        fullscreenBtn.textContent = 'Exit Fullscreen';
-        
-        // Redimensionează harta după intrarea în fullscreen
-        setTimeout(() => {
-            if (map) {
-                map.invalidateSize();
-            }
-        }, 300);
-    }
+    // Adaugă un popup pentru marker
+    marker.bindPopup('<b>București</b><br>Capitala României').openPopup();
+
+    // Opțional: adaugă un cerc pentru a demonstra alte funcționalități
+    const circle = L.circle([44.4268, 26.1025], {
+        color: 'red',
+        fillColor: '#f03',
+        fillOpacity: 0.3,
+        radius: 5000
+    }).addTo(map);
+
+    circle.bindPopup('Zona centrală București');
+
+    console.log('Harta Leaflet a fost inițializată cu succes');
 }
 
-// Funcție pentru afișarea erorilor
-function showMapError() {
-    const mapContainer = document.getElementById('map');
-    if (mapContainer) {
-        mapContainer.innerHTML = `
-            <div style="display: flex; justify-content: center; align-items: center; height: 100%; 
-                        flex-direction: column; color: #666; font-family: Arial, sans-serif;">
-                <div style="font-size: 48px; margin-bottom: 20px;">🗺️</div>
-                <div style="font-size: 18px; margin-bottom: 10px;">Eroare la încărcarea hărții</div>
-                <div style="font-size: 14px;">Vă rugăm să reîncărcați pagina</div>
-            </div>
-        `;
-    }
-}
-
-// Funcție pentru redimensionarea hărții când se schimbă dimensiunea ferestrei
-function handleResize() {
-    if (map) {
-        map.invalidateSize();
-    }
-}
-
-// Funcție pentru curățarea hărții la schimbarea paginii
-function destroyMap() {
-    if (map) {
-        map.remove();
-        map = null;
-    }
-}
-
-// Event listeners
-window.addEventListener('resize', handleResize);
-
-// Eveniment pentru ESC key în fullscreen
-document.addEventListener('keydown', function(e) {
-    if (e.key === 'Escape') {
-        const mapContainer = document.querySelector('.map-container');
-        if (mapContainer && mapContainer.classList.contains('fullscreen')) {
-            const fullscreenBtn = document.querySelector('.map-control-btn');
-            if (fullscreenBtn && fullscreenBtn.textContent === 'Exit Fullscreen') {
-                toggleFullscreen();
-            }
-        }
-    }
-});
-
-// Inițializare automată când DOM-ul este gata
-document.addEventListener('DOMContentLoaded', function() {
-    // Verifică dacă suntem pe pagina cu harta
-    if (document.getElementById('map')) {
-        initMap();
-    }
-});
-
-// Export pentru utilizare externă
-window.mapModule = {
-    init: initMap,
-    destroy: destroyMap,
-    reset: resetMapView,
-    toggleFullscreen: toggleFullscreen
-};
-
-console.log('Map script loaded successfully');
+window.initializeMap = initializeMap;

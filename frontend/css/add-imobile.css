@@ -1,30 +1,73 @@
-form {
+/* ============================================
+   VARIABILE CSS - CULORI ȘI DIMENSIUNI
+   ============================================ */
+:root {
+  /* Culori principale */
+  --primary-color: #431164;
+  --primary-color-alpha: #431164c2;
+  --primary-color-light: #43116440;
+  --primary-background: #f3eeff;
+  --light-background: #faf6ff;
+  --form-background: #f9f9f9;
+  
+  /* Culori secundare */
+  --border-color: #ccc;
+  --text-color: #6b6b6b;
+  --disabled-color: #a1a1a1;
+  --delete-color: #c00;
+  --delete-background: #ffeaea;
+  --suffix-background: #e5e3e6;
+  --id-color: #adadaf;
+  
+  /* Dimensiuni */
+  --border-radius: 8px;
+  --border-radius-small: 6px;
+  --border-radius-medium: 12px;
+  --input-height: 40px;
+  --icon-size: 60px;
+  --thumbnail-size: 90px;
+  
+  /* Spațiere */
+  --spacing-small: 8px;
+  --spacing-medium: 15px;
+  --spacing-large: 20px;
+  --spacing-xl: 30px;
+}
+
+/* ============================================
+   STILURI FORMULAR PRINCIPAL
+   ============================================ */
+
+/* Container principal formular */
+#adauga-imobil-form {
   max-width: 600px;
-  margin: 20px auto;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border: 1px solid #431164c2;
-  border-radius: 8px;
+  margin: var(--spacing-large) auto;
+  padding: var(--spacing-large);
+  background-color: var(--form-background);
+  border: 1px solid var(--primary-color-alpha);
+  border-radius: var(--border-radius);
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-form input[type="text"],
-form input[type="email"],
-form input[type="number"],
-form textarea {
+/* Elemente input generale */
+#adauga-imobil-form input[type="text"],
+#adauga-imobil-form input[type="email"],
+#adauga-imobil-form input[type="number"],
+#adauga-imobil-form textarea {
   width: 100%;
   padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
+  margin-bottom: var(--spacing-medium);
+  border: 1px solid var(--border-color);
   border-radius: 4px;
   font-size: 16px;
 }
 
-form button {
+/* Buton principal */
+#adauga-imobil-form button {
   display: block;
   width: 100%;
   padding: 10px;
-  background-color: #431164c2; /* Purple color */
+  background-color: var(--primary-color-alpha);
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -33,117 +76,132 @@ form button {
   transition: background-color 0.3s ease;
 }
 
-form button:hover {
-  background-color: #431164;
+#adauga-imobil-form button:hover {
+  background-color: var(--primary-color);
 }
 
-form label {
+/* Labels generale */
+#adauga-imobil-form label {
   font-size: 14px;
   font-weight: bold;
   margin-bottom: 5px;
   display: block;
 }
 
-/*******/
+/* ============================================
+   SELECȚIA TIPULUI DE PROPRIETATE
+   ============================================ */
+
+/* Container principal pentru selecția tipului */
 .property-type-selection {
   display: flex;
   justify-content: space-between;
-  gap: 15px;
-  margin: 20px 0;
-  background-color: #f9f9f9;
-  border-radius: 12px;
-  padding: 15px;
+  gap: var(--spacing-medium);
+  margin: var(--spacing-large) 0;
+  background-color: var(--form-background);
+  border-radius: var(--border-radius-medium);
+  padding: var(--spacing-medium);
 }
 
+/* Fiecare opțiune de tip proprietate */
 .property-type-option {
   flex: 1;
   text-align: center;
 }
 
+/* Ascundere radio button nativ */
 .property-type-option input[type="radio"] {
-  display: none;  /* Hide the radio button */
+  display: none;
 }
 
+/* Label pentru tipul de proprietate */
 .property-type-option label {
-  color: #431164c2;  /* Purple color for the label */
+  color: var(--primary-color-alpha);
   display: flex;
   flex-direction: column;
   align-items: center;
   cursor: pointer;
-  padding: 15px 10px;
-  border-radius: 8px;
+  padding: var(--spacing-medium) 10px;
+  border-radius: var(--border-radius);
   transition: all 0.3s ease;
   border: 2px solid transparent;
 }
 
+/* Container pentru iconuri */
 .icon-container {
-  width: 60px;
-  height: 60px;
+  width: var(--icon-size);
+  height: var(--icon-size);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 10px;
-  color: #431164c2;  /* Purple color for the icon */
+  color: var(--primary-color-alpha);
 }
 
+/* Hover state pentru opțiunile de proprietate */
 .property-type-option label:hover {
   background-color: #f0f0f0;
-  color: #431164;  /* Purple color on hover */
+  color: var(--primary-color);
 }
 
 .property-type-option label:hover .icon-container {
-  color: #431164;  /* Change icon color on hover */
+  color: var(--primary-color);
 }
 
+/* State activ (radio selectat) */
 .property-type-option input[type="radio"]:checked + label {
-  background-color: #f3eeff;  /* Light purple background */
-  border: 2px solid #431164c2;  /* Purple border */
+  background-color: var(--primary-background);
+  border: 2px solid var(--primary-color-alpha);
   box-shadow: 0 2px 8px rgba(67, 17, 100, 0.2);
-  color: #431164;
+  color: var(--primary-color);
 }
 
-.property-type-option input[type="radio"]:checked + label .icon-container
-{
-  color: #431164;
+.property-type-option input[type="radio"]:checked + label .icon-container {
+  color: var(--primary-color);
 }
 
+/* ============================================
+   OPȚIUNI EXTRA PENTRU TEREN
+   ============================================ */
 
-
+/* Container principal pentru opțiuni extra teren */
 .teren-extra-options {
   margin-top: -40px !important;
   display: flex;
-  flex-direction: column;   /* vertical pentru containerul mare */
+  flex-direction: column;
   gap: 10px;
-  margin: 20px 0 30px 0;
+  margin: var(--spacing-large) 0 var(--spacing-xl) 0;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-left: 30px;
+  margin-left: var(--spacing-xl);
 }
 
+/* Rând cu radio buttons pentru teren */
 .teren-extra-options .teren-radio-row {
   margin-top: -15px;
   margin-bottom: -10px;
   display: flex;
-  flex-direction: row;      /* orizontal pentru opțiuni */
+  flex-direction: row;
   gap: 10px;
   justify-content: flex-start;
   align-items: flex-start;
   width: 100%;
 }
 
-.teren-radio-row{
+.teren-radio-row {
   margin-top: 10px !important;
 }
 
+/* Labels pentru opțiunile extra */
 .teren-extra-options label {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--spacing-small);
   border: 2px solid transparent;
-  border-radius: 6px;
+  border-radius: var(--border-radius-small);
   padding: 10px 18px;
   font-size: 16px;
-  color: #431164c2;
+  color: var(--primary-color-alpha);
   cursor: pointer;
   transition: all 0.3s ease;
   font-weight: 600;
@@ -151,16 +209,18 @@ form label {
 
 .teren-extra-options label:hover {
   background: #f0f0f0;
-  color: #431164;
+  color: var(--primary-color);
 }
+
 .teren-extra-options label:has(input[type="radio"]:checked) {
-  background: #f3eeff;
-  border: 2px solid #431164c2;
-  color: #431164;
+  background: var(--primary-background);
+  border: 2px solid var(--primary-color-alpha);
+  color: var(--primary-color);
   font-weight: bold;
   transition: all 0.2s;
 }
 
+/* Radio buttons pentru opțiuni teren */
 .teren-extra-options input[type="radio"] {
   accent-color: #5d307a;
   width: 18px;
@@ -169,13 +229,17 @@ form label {
   cursor: pointer;
 }
 
-
-/* Pentru a arăta frumos textul după radio */
+/* Text după radio buttons */
 .teren-extra-options label span {
   display: inline-block;
   transition: color 0.2s;
 }
 
+/* ============================================
+   CÂMPURI FORMULAR PENTRU TEREN
+   ============================================ */
+
+/* Rând pentru titlul terenului */
 .teren-titlu-row {
   display: flex;
   flex-direction: column;
@@ -196,24 +260,29 @@ form label {
 .teren-titlu-row label,
 .teren-titlu-row label:hover {
   background: none !important;
-  color: #431164c2 !important;
+  color: var(--primary-color-alpha) !important;
   cursor: default !important;
   font-weight: 600;
 }
 
 .teren-titlu-row input[type="text"] {
-  padding: 8px 12px;
-  border: 1.5px solid #43116440;
-  border-radius: 6px;
+  padding: var(--spacing-small) 12px;
+  border: 1.5px solid var(--primary-color-light);
+  border-radius: var(--border-radius-small);
   font-size: 15px;
   transition: border-color 0.2s;
 }
 
 .teren-titlu-row input[type="text"]:focus {
-  border-color: #431164;
+  border-color: var(--primary-color);
   outline: none;
 }
 
+/* ============================================
+   SECȚIUNEA PENTRU IMAGINI
+   ============================================ */
+
+/* Container principal pentru imagini */
 .teren-imagini-section {
   width: 100%;
   max-width: 500px;
@@ -223,21 +292,23 @@ form label {
   gap: 10px;
 }
 
+/* Informații despre upload */
 .teren-imagini-info {
-  color: #431164c2;
+  color: var(--primary-color-alpha);
   font-size: 15px;
   font-weight: 600;
   margin-bottom: 4px;
   margin-bottom: -3px;
 }
 
+/* Zona de drag & drop */
 .teren-imagini-dropzone {
   border: 2px dashed #43116480;
-  border-radius: 8px;
-  background: #faf6ff;
+  border-radius: var(--border-radius);
+  background: var(--light-background);
   padding: 24px 12px;
   text-align: center;
-  color: #431164c2;
+  color: var(--primary-color-alpha);
   font-size: 15px;
   cursor: pointer;
   transition: border-color 0.2s, background 0.2s;
@@ -245,8 +316,8 @@ form label {
 }
 
 .teren-imagini-dropzone.dragover {
-  border-color: #431164;
-  background: #f3eeff;
+  border-color: var(--primary-color);
+  background: var(--primary-background);
 }
 
 .teren-imagini-dropzone .icon-img {
@@ -255,20 +326,22 @@ form label {
   margin-left: 215px;
 }
 
+/* Lista cu imaginile încărcate */
 .teren-imagini-list {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-top: 8px;
+  margin-top: var(--spacing-small);
 }
 
+/* Thumbnail pentru imagini */
 .teren-imagini-thumb {
   position: relative;
-  width: 90px;
-  height: 90px;
-  border-radius: 8px;
+  width: var(--thumbnail-size);
+  height: var(--thumbnail-size);
+  border-radius: var(--border-radius);
   overflow: hidden;
-  border: 2px solid #43116440;
+  border: 2px solid var(--primary-color-light);
   background: #fff;
   display: flex;
   align-items: center;
@@ -282,13 +355,14 @@ form label {
   object-fit: cover;
 }
 
+/* Buton pentru ștergerea imaginilor */
 .teren-imagini-thumb .delete-btn {
   position: absolute;
   top: 3px;
   right: 3px;
   background: #fff;
   border: none;
-  color: #c00;
+  color: var(--delete-color);
   font-size: 18px;
   border-radius: 50%;
   width: 22px;
@@ -301,23 +375,27 @@ form label {
   z-index: 2;
   transition: background 0.2s;
 }
+
 .teren-imagini-thumb .delete-btn:hover {
-  background: #ffeaea;
+  background: var(--delete-background);
 }
 
+/* ============================================
+   CÂMPURI DE TIP ȘI FORMULARE
+   ============================================ */
 
-
+/* Rând pentru tipul de teren */
 .teren-tip-row {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--spacing-small);
   margin-top: 14px;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-small);
   width: 100%;
   max-width: 400px;
 }
 
-
+/* Labels pentru câmpuri teren */
 .teren-field label,
 .teren-field label:hover,
 .teren-tip-label,
@@ -325,27 +403,33 @@ form label {
   font-size: 15px !important;
   font-weight: 600 !important;
   background: none !important;
-  color: #431164c2 !important;
+  color: var(--primary-color-alpha) !important;
   cursor: default !important;
   margin-bottom: -15px !important;
   margin-left: -20px !important;
 }
 
+/* Select pentru tipul de teren */
 .teren-tip-select {
-  padding: 8px 12px;
-  border: 1.5px solid #43116440;
-  border-radius: 6px;
+  padding: var(--spacing-small) 12px;
+  border: 1.5px solid var(--primary-color-light);
+  border-radius: var(--border-radius-small);
   font-size: 15px;
-  color: #431164;
-  background: #faf6ff;
+  color: var(--primary-color);
+  background: var(--light-background);
   transition: border-color 0.2s;
 }
 
 .teren-tip-select:focus {
-  border-color: #431164;
+  border-color: var(--primary-color);
   outline: none;
 }
 
+/* ============================================
+   RÂNDURI DE CÂMPURI
+   ============================================ */
+
+/* Rând cu mai multe câmpuri */
 .teren-fields-row {
   display: flex;
   gap: 32px;
@@ -355,8 +439,7 @@ form label {
   align-items: flex-end;
 }
 
-
-
+/* Câmp individual */
 .teren-field {
   display: flex;
   flex-direction: column;
@@ -370,24 +453,29 @@ form label {
 .teren-field label {
   font-size: 15px;
   font-weight: 600;
-  color: #431164c2;
+  color: var(--primary-color-alpha);
   margin-bottom: 2px;
-  margin-bottom:-3px;
+  margin-bottom: -3px;
 }
 
 .teren-field input[type="number"] {
-  padding: 8px 2px;
-  border: 1.5px solid #43116440;
-  border-radius: 6px;
+  padding: var(--spacing-small) 2px;
+  border: 1.5px solid var(--primary-color-light);
+  border-radius: var(--border-radius-small);
   font-size: 15px;
   transition: border-color 0.2s;
 }
 
 .teren-field input[type="number"]:focus {
-  border-color: #431164;
+  border-color: var(--primary-color);
   outline: none;
 }
 
+/* ============================================
+   INPUT CU SUFIX (MP, M, €, %)
+   ============================================ */
+
+/* Wrapper pentru input cu sufix */
 .input-suffix-wrapper {
   display: flex;
   align-items: stretch;
@@ -395,13 +483,13 @@ form label {
 }
 
 .input-suffix-wrapper input[type="number"] {
-  border-radius: 12px 0 0 12px;
-  border: 1.5px solid #43116440;
+  border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
+  border: 1.5px solid var(--primary-color-light);
   border-right: none;
   padding: 9px 12px;
   font-size: 16px;
   width: 100%;
-  height: 40px;
+  height: var(--input-height);
   box-sizing: border-box;
   background: #fff;
   transition: border-color 0.2s;
@@ -409,34 +497,38 @@ form label {
 }
 
 .input-suffix-wrapper input[type="number"]:focus {
-  border-color: #431164;
+  border-color: var(--primary-color);
   border-right: none;
   z-index: 1;
 }
 
+/* Sufixul pentru input */
 .input-suffix {
   display: flex;
   align-items: center;
-  background: #e5e3e6;
-  color: #6b6b6b;
+  background: var(--suffix-background);
+  color: var(--text-color);
   font-size: 16px;
   padding: 0 18px;
-  border-radius: 0 12px 12px 0;
-  border: 1.5px solid #43116440;
+  border-radius: 0 var(--border-radius-medium) var(--border-radius-medium) 0;
+  border: 1.5px solid var(--primary-color-light);
   border-left: none;
   min-width: 44px;
-  height: 40px;
+  height: var(--input-height);
   justify-content: center;
   box-sizing: border-box;
   pointer-events: none;
 }
 
-
 .input-suffix-wrapper:focus-within .input-suffix {
-  border-color: #431164;
+  border-color: var(--primary-color);
 }
 
-/* Pentru wrapperul cu input, sufix și select Da/Nu */
+/* ============================================
+   CÂMPUL PENTRU COMISION
+   ============================================ */
+
+/* Wrapper pentru câmpul de comision */
 .teren-comision-field .input-suffix-wrapper {
   display: flex;
   align-items: stretch;
@@ -444,51 +536,51 @@ form label {
   min-width: 120px;
 }
 
-/* Inputul de comision */
+/* Input pentru comision */
 .teren-comision-field input[type="number"] {
-  border-radius: 12px 0 0 12px;
-  border: 1.5px solid #43116440;
+  border-radius: var(--border-radius-medium) 0 0 var(--border-radius-medium);
+  border: 1.5px solid var(--primary-color-light);
   border-right: none;
   padding: 9px 12px;
   font-size: 16px;
   width: 100%;
-  height: 40px;
+  height: var(--input-height);
   box-sizing: border-box;
   background: #fff;
   transition: border-color 0.2s;
   outline: none;
 }
 
-/* Sufixul % */
+/* Sufixul % pentru comision */
 .teren-comision-field .input-suffix {
   border-radius: 0;
   border-left: none;
   border-right: none;
   min-width: 38px;
-  height: 40px;
+  height: var(--input-height);
   padding: 0 10px;
-  background: #e5e3e6;
-  color: #6b6b6b;
+  background: var(--suffix-background);
+  color: var(--text-color);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  border: 1.5px solid #43116440;
+  border: 1.5px solid var(--primary-color-light);
   border-left: none;
   border-right: none;
   box-sizing: border-box;
   pointer-events: none;
 }
 
-/* Selectul Da/Nu */
+/* Select pentru Da/Nu comision */
 .comision-select {
-  border-radius: 0 12px 12px 0;
-  border: 1.5px solid #43116440;
+  border-radius: 0 var(--border-radius-medium) var(--border-radius-medium) 0;
+  border: 1.5px solid var(--primary-color-light);
   border-left: none;
   font-size: 16px;
-  background: #e5e3e6;
-  color: #431164;
-  height: 40px;
+  background: var(--suffix-background);
+  color: var(--primary-color);
+  height: var(--input-height);
   padding: 0 14px;
   outline: none;
   transition: border-color 0.2s;
@@ -500,55 +592,37 @@ form label {
 }
 
 .comision-select:focus {
-  border-color: #431164;
+  border-color: var(--primary-color);
 }
 
-/* Disabled input pentru comision */
+/* Input dezactivat pentru comision */
 .teren-comision-field input[disabled] {
-  background: #f3eeff;
-  color: #a1a1a1;
+  background: var(--primary-background);
+  color: var(--disabled-color);
   cursor: not-allowed;
 }
 
+/* ============================================
+   CÂMPURI SPECIFICE ȘI DESCRIERE
+   ============================================ */
+
+/* Input pentru localizare */
 .localizare-row input[type="text"] {
   background: #fff;
 }
 
- .localizare-row, .space-row
-{
-  margin-top: 30px !important;
-}
-
-.an-row{
-  margin-top: 40px !important;
-}
-
-.mp{
-  margin-top: -50px !important;
-  margin-bottom: -10px !important;
-}
-
-.mp-row
- {
-  margin-top: 15px !important;
- }
-
-.teren-field.last
-{
-  margin-top: 40px !important;
-}
-
+/* Textarea pentru descriere */
 .descriere-row {
-  max-width: 500px;   /* sau 600px */
+  max-width: 500px;
   width: 100%;
 }
 
 .descriere-row textarea {
-  padding: 8px 12px;
-  border: 1.5px solid #43116440;
-  border-radius: 6px;
+  padding: var(--spacing-small) 12px;
+  border: 1.5px solid var(--primary-color-light);
+  border-radius: var(--border-radius-small);
   font-size: 15px;
-  color: #431164;
+  color: var(--primary-color);
   background: #fff;
   transition: border-color 0.2s;
   resize: vertical;
@@ -559,23 +633,54 @@ form label {
 }
 
 .descriere-row textarea:focus {
-  border-color: #431164;
+  border-color: var(--primary-color);
   outline: none;
 }
 
-.camere-row{
+/* ============================================
+   SPAȚIERE ȘI MARJINE SPECIFICE
+   ============================================ */
+
+/* Marjine pentru rânduri specifice */
+.localizare-row, 
+.space-row {
+  margin-top: var(--spacing-xl) !important;
+}
+
+.an-row {
+  margin-top: 40px !important;
+}
+
+.mp {
+  margin-top: -50px !important;
+  margin-bottom: -10px !important;
+}
+
+.mp-row {
+  margin-top: var(--spacing-medium) !important;
+}
+
+.teren-field.last {
+  margin-top: 40px !important;
+}
+
+.camere-row {
   margin-top: 10px;
 }
 
-/* Micșorează spațiul de sub "Suprafață utilă" DOAR pentru spațiu comercial */
+/* Ajustare specială pentru spațiul comercial */
 .teren-field[data-property-type="spatiu-comercial"] {
   margin-bottom: -130px !important;
 }
 
+/* ============================================
+   CONTAINERE PENTRU CARDURI ȘI NAVIGARE
+   ============================================ */
 
+/* Container pentru cardurile de imobile */
 #imobileCardsContainer {
   position: relative;
-  top: -20px; /* Ajustează această valoare pentru a poziționa corect cardurile */
+  top: -20px;
   left: 0;
   right: 0;
   margin: 0 auto;
@@ -585,21 +690,10 @@ form label {
   justify-content: center;
   align-items: flex-start;
   background: transparent;
-  z-index: 10; /* mai mic decât header-ul */
+  z-index: 10;
 }
 
-nav {
-  z-index: 1000;
-  position: relative;
-}
-
-header {
-  position: sticky;
-  top: 0;
-  z-index: 2000; /* sau mai mare decât orice altceva din pagină */
-}
-
-
+/* Informații despre imobil */
 .imobil-info {
   display: flex;
   justify-content: space-between;
@@ -610,11 +704,16 @@ header {
 
 .imobil-id {
   margin-left: 0;
-  color: #adadaf;
+  color: var(--id-color);
   font-size: 0.98em;
   font-weight: 500;
 }
 
+/* ============================================
+   LAYOUT PENTRU CONȚINUT PRINCIPAL
+   ============================================ */
+
+/* Container principal pentru conținut */
 #mainContent {
   position: relative;
   max-width: 600px;
@@ -626,4 +725,3 @@ header {
   transition: margin-left 0.3s, left 0.3s;
   margin-left: 325px;
 }
-

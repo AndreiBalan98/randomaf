@@ -14,6 +14,15 @@ function loadContent(file) {
       if (file.includes('home.html')) {
         initializeHome();
       }
+      // if (file.includes('detalii.html')) { se apeleaza in alta parte, in home.js
+      //   initializeDetalii();
+      // }
+      if (file.includes('map.html')) {
+        initializeMap();
+      }
+      if (file.includes('add-imobile.html')) {
+        initializeAdd();
+      }
     })
     .catch(err => console.error("Eroare la încărcarea fișierului:", err));
   }
