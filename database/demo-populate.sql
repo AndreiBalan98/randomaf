@@ -576,4 +576,5 @@ EXCEPTION
     WHEN OTHERS THEN
         RAISE NOTICE 'EROARE la inserarea anuntului %: % - %', v_counter, SQLSTATE, SQLERRM;
         RAISE;
-END $;
+END 
+$$;
