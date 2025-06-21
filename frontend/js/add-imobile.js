@@ -162,15 +162,31 @@ function initializeAdd() {
       const API_BASE_URL = 'https://randomaf-backend.onrender.com';
 
 
-      const draft = JSON.parse(sessionStorage.getItem('draftImobilCard'));
-      const payload = {
-      tip_imobil: draft.tip,
-      tip_oferta: draft.tranzactie,
-      localizare: draft.locatie
-      };
       // Buton confirmă
       document.getElementById('confirmaCardBtn').onclick = function() {
         const draft = JSON.parse(sessionStorage.getItem('draftImobilCard'));
+        const payload = {
+          titlu: draft.titlu,
+          pret: draft.pret,
+          locatie: draft.locatie,
+          descriere: draft.descriere,
+          tip: draft.tip,
+          tranzactie: draft.tranzactie,
+          imagini: draft.imagini, // array de imagini (doar URL-uri temporare, pentru upload folosești separat)
+          suprafata: draft.suprafata,
+          suprafataUtila: draft.suprafataUtila,
+          suprafataTeren: draft.suprafataTeren,
+          nrCamere: draft.nrCamere,
+          nrBai: draft.nrBai,
+          compartimentare: draft.compartimentare,
+          confort: draft.confort,
+          etaj: draft.etaj,
+          anConstructie: draft.anConstructie,
+          tipTeren: draft.tipTeren,
+          clasificare: draft.clasificare,
+          frontStradal: draft.frontStradal,
+          alteDotari: draft.alteDotari
+        };
         fetch(`${API_BASE_URL}/api/imobil`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
