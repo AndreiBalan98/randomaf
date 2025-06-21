@@ -1,8 +1,8 @@
 const http                  = require('http');
-const handleImagesStatic    = require('./handlers/imagesStaticHandler');
-const handleImobilAdd       = require('./handlers/imobilAddHandler');
-const handleImageUpload     = require('./handlers/imageUploadHandler');
 const handleImobileGet      = require('./handlers/imobileGetHandler');
+const handleImobileAdd      = require('./handlers/imobileAddHandler');
+const handleImagesStatic    = require('./handlers/imagesStaticHandler');
+const handleImageUpload     = require('./handlers/imageUploadHandler');
 const handleImagesGet       = require('./handlers/imagesGetHandler');
 
 const hostname              = 'localhost';
@@ -24,14 +24,14 @@ const server = http.createServer((req, res) => {
     }
 
     // Routing
-    if (req.method === 'GET' && req.url.startsWith('/images/')) {
-        handleImagesStatic(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/imobil') {
-        handleImobilAdd(req, res);
+    if (req.method === 'GET' && req.url.startsWith('/api/imobile')) {
+        handleImobileGet(req, res);
+    } else if (req.method === 'POST' && req.url === '/api/imobile') {
+        handleImobileAdd(req, res);
     } else if (req.method === 'POST' && req.url === '/api/upload-imagine') {
         handleImageUpload(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/api/imobile')) {
-        handleImobileGet(req, res);
+    } else if (req.method === 'GET' && req.url.startsWith('/images/')) {
+        handleImagesStatic(req, res);
     } else if (req.method === 'GET' && req.url.startsWith('/api/imagini/')) {
         handleImagesGet(req, res);
     } else {

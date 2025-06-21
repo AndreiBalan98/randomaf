@@ -10,7 +10,7 @@ const FILTER_OPTIONS = {
     { value: 'apartament', text: 'Apartament' },
     { value: 'casa', text: 'Casă' },
     { value: 'teren', text: 'Teren' },
-    { value: 'spații comerciale', text: 'Spații comerciale' }
+    { value: 'spatiu_comercial', text: 'Spații comerciale' }
   ],
   stare: [
     { value: 'nou', text: 'Nou' },
@@ -214,6 +214,7 @@ async function loadImobileData(filters = {}) {
     }
    
     const imobileData = await response.json();
+    console.log(imobileData);
     renderImobileCards(imobileData);
    
   } catch (error) {
