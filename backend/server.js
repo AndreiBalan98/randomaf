@@ -6,7 +6,7 @@ const handleImobileGet      = require('./handlers/imobileGetHandler');
 const handleImagesGet       = require('./handlers/imagesGetHandler');
 
 const hostname              = 'localhost';
-const port                  = 3001;
+const port                  = process.env.PORT || 3001;
 
 const server = http.createServer((req, res) => {
     console.log('Cerere primită:', req.method, req.url);

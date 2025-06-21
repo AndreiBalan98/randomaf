@@ -15,9 +15,11 @@ async function initializeDetalii(id) {
   await incarcaAnunturiRelevante(id, card);
 }
 
+const API_BASE_URL = 'https://randomaf-backend.onrender.com';
+
 // Obține datele imobilului după ID
 async function obtineImobil(id) {
-  const res = await fetch('http://localhost:3001/api/imobile');
+  const res = await fetch(`${API_BASE_URL}/api/imobile`);
   const anunturi = await res.json();
   return anunturi.find(c => c.id == id);
 }
@@ -26,7 +28,7 @@ async function obtineImobil(id) {
 async function obtineImagini(id) {
   let imagini = [];
   try {
-    const resImg = await fetch(`http://localhost:3001/api/imagini/${id}`);
+    const resImg = await fetch(`${API_BASE_URL}/api/imagini/${id}`);
     imagini = await resImg.json();
   } catch {}
   return imagini;
@@ -39,7 +41,7 @@ function genereazaGalerie(imagini) {
   return `
     <div class="galerie">
       ${imagini.map((img, idx) => `
-        <img src="http://localhost:3001/${img.url}" class="galerie-img" data-idx="${idx}" style="max-width:120px;cursor:pointer;">
+        <img src="${API_BASE_URL}/${img.url}" class="galerie-img" data-idx="${idx}" style="max-width:120px;cursor:pointer;">
       `).join('')}
     </div>
     <div id="galerie-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.8);align-items:center;justify-content:center;z-index:9999;">
@@ -132,7 +134,7 @@ function configureazaGalerieModal() {
 
 // Încarcă și afișează anunțurile relevante
 async function incarcaAnunturiRelevante(idCurent, cardCurent) {
-  const res = await fetch('http://localhost:3001/api/imobile');
+  const res = await fetch(`${API_BASE_URL}/api/imobile`);
   const anunturi = await res.json();
   
   // Filtrează anunțurile relevante după locație sau titlu
@@ -143,7 +145,7 @@ async function incarcaAnunturiRelevante(idCurent, cardCurent) {
   // Generează HTML-ul pentru anunțurile relevante
   const htmlRelevante = relevante.map(r => `
     <div class="imobil-card">
-      <div class="imobil-card-img" style="background-image:url('http://localhost:3001/${r.imagine ? r.imagine : 'uploads/default.jpg'}');"></div>
+      <div class="imobil-card-img" style="background-image:url('${API_BASE_URL}/${r.imagine ? r.imagine : 'uploads/default.jpg'}');"></div>
       <div class="imobil-card-body">
         <div class="imobil-titlu">${r.titlu}</div>
         <div class="imobil-info">

@@ -159,10 +159,12 @@ function initializeAdd() {
         }
       };
       
+      const API_BASE_URL = 'https://randomaf-backend.onrender.com';
+
       // Buton confirmă
       document.getElementById('confirmaCardBtn').onclick = function() {
         const draft = JSON.parse(sessionStorage.getItem('draftImobilCard'));
-        fetch('http://localhost:3001/api/imobil', {
+        fetch(`${API_BASE_URL}/api/imobil`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(draft)
@@ -175,7 +177,7 @@ function initializeAdd() {
               const formData = new FormData();
               formData.append('anunt_id', data.id);
               formData.append('imagine', window.terenImages[0]);
-              fetch('http://localhost:3001/api/upload-imagine', {
+              fetch(`${API_BASE_URL}/api/upload-imagine`, {
                 method: 'POST',
                 body: formData
               })

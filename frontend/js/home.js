@@ -2,7 +2,7 @@
 // CONSTANTE ȘI CONFIGURAȚII
 // ========================================
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = 'https://randomaf-backend.onrender.com';;
 
 // Opțiuni pentru selectoarele din filtre
 const FILTER_OPTIONS = {
