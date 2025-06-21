@@ -103,6 +103,15 @@
 }
 
 /* ===== PRET PE SLIDER (daca ai slider) ===== */
+.slider-container {
+  min-width: 340px;
+  min-height: 220px;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
 .slider-img {
   max-width: 340px;
   max-height: 220px;
@@ -118,19 +127,16 @@
 }
 
 .pret-eticheta-slider {
-  position: absolute;
-  top: 18px;
-  left: 18px;
-  background: #fff;
-  color: #431164;
-  font-weight: bold;
-  font-size: 1.2rem;
-  padding: 7px 18px;
-  border-radius: 18px;
-  box-shadow: 0 2px 12px #43116422;
-  z-index: 2;
-  pointer-events: none;
-  opacity: 0.95;
+  background: #431164c2;
+  margin-top: 200px;
+  margin-left: 70px;
+  color: #fff;
+  font-weight: 700;
+  padding: 0.3em 0.8em;
+  border-radius: 8px 8px 8px 8px;
+  font-size: 1.1em;
+  margin-bottom: 0.2em;
+  box-shadow: 0 2px 8px rgba(67,17,100,0.10);
 }
 
 /* ===== OPTIONAL: SLIDER ARROWS (daca ai slider JS) ===== */

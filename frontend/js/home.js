@@ -250,11 +250,22 @@ function renderImobileCards(imobileData) {
  * Creează HTML-ul pentru un card de imobil
  */
 function createImobilCard(imobil) {
-  const imagePath = imobil.imagine ? `https://randomaf-backend.onrender.com/${imobil.imagine}` : `https://randomaf-backend.onrender.com/images/casa1.jpg`;
+  const imagePath = imobil.imagine
+    ? `https://randomaf-backend.onrender.com/${imobil.imagine}`
+    : `https://randomaf-backend.onrender.com/images/casa1.jpg`;
   const price = imobil.pret ? `${imobil.pret} €` : 'Preț la cerere';
-  const transactionType = getTransactionTypeText(imobil.tranzactie);
-  const surface = imobil.suprafata || '-';
-  
+  // Acceptă și tip_oferta, și tranzactie
+  const tranzactie = imobil.tranzactie || imobil.tip_oferta || '';
+  const transactionType = tranzactie === 'vanzare'
+    ? 'De vânzare'
+    : tranzactie === 'inchiriat'
+      ? 'De închiriat'
+      : '';
+  // Acceptă și suprafata_utila, și suprafata
+  const surface = imobil.suprafata || imobil.suprafata_utila || '-';
+  // Acceptă și localizare, și locatie
+  const locatie = imobil.locatie || imobil.localizare || '-';
+
   return `
     <div class="imobil-card">
       <div class="imobil-card-img" style="background-image:url('${imagePath}');">
@@ -268,7 +279,7 @@ function createImobilCard(imobil) {
         <div class="imobil-titlu">${imobil.titlu}</div>
         <div class="imobil-locatie">
           <span class="icon-locatie">📍</span>
-          ${imobil.locatie}
+          ${locatie}
         </div>
         <div class="imobil-info">
           <span class="imobil-mp">${surface} mp</span>
