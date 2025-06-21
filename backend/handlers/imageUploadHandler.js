@@ -11,19 +11,18 @@ async function handleImageUpload(req, res) {
     });
 
     req.on('end', async () => {
-        // Folosește latin1 pentru a păstra datele binare
         const parts = body
-        .toString('latin1')
-        .split('--' + boundary)
-        .filter(p => p.includes('Content-Disposition'));
+            .toString('latin1')
+            .split('--' + boundary)
+            .filter(p => p.includes('Content-Disposition'));
 
-        let imobil_id = null;
+        let anunt_id = null;
         let fileBuffer = null;
         let fileName = null;
 
         for (const part of parts) {
-            if (part.includes('name="imobil_id"')) {
-                imobil_id = part.split('\r\n\r\n')[1]?.trim();
+            if (part.includes('name="anunt_id"')) {
+                anunt_id = part.split('\r\n\r\n')[1]?.trim();
             }
             if (part.includes('name="imagine"')) {
                 const match = part.match(/filename="(.+?)"/);
@@ -37,19 +36,24 @@ async function handleImageUpload(req, res) {
             }
         }
 
-            if (imobil_id && fileBuffer && fileName) {
-                if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
-                fs.writeFileSync(path.join('uploads', fileName), fileBuffer);
-                await pool.query(
-                    'INSERT INTO imagini_imobil (imobil_id, url) VALUES ($1, $2)',
-                    [imobil_id, 'uploads/' + fileName]
-                );
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ status: 'ok', url: 'uploads/' + fileName }));
-            } else {
-                res.writeHead(400, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ status: 'error', mesaj: 'Upload invalid!' }));
-            }
+        if (anunt_id && fileBuffer && fileName) {
+            const imagesDir = path.join(__dirname, '..', 'images');
+            if (!fs.existsSync(imagesDir)) fs.mkdirSync(imagesDir);
+            
+            const filePath = path.join(imagesDir, fileName);
+            fs.writeFileSync(filePath, fileBuffer);
+            
+            await pool.query(
+                'INSERT INTO imagini (anunt_id, url, ordine) VALUES ($1, $2, $3)',
+                [anunt_id, 'images/' + fileName, 1]
+            );
+            
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ status: 'ok', url: 'images/' + fileName }));
+        } else {
+            res.writeHead(400, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ status: 'error', mesaj: 'Upload invalid!' }));
+        }
     });
 }
 

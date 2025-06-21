@@ -6,7 +6,7 @@
 CREATE TABLE anunturi (
     id SERIAL PRIMARY KEY,
     tip_imobil VARCHAR(20) NOT NULL CHECK (tip_imobil IN ('apartament', 'casa', 'teren', 'spatiu_comercial')),
-    tip_oferta VARCHAR(10) NOT NULL CHECK (tip_oferta IN ('vanzare', 'cumparare')),
+    tip_oferta VARCHAR(10) NOT NULL CHECK (tip_oferta IN ('vanzare', 'inchiriat')),
     titlu TEXT NOT NULL,
     pret NUMERIC(12, 2) NOT NULL,
     comision NUMERIC(5, 2),

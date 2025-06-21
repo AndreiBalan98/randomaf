@@ -173,7 +173,7 @@ function initializeAdd() {
             // Upload imagine dacă există
             if (window.terenImages && window.terenImages.length > 0) {
               const formData = new FormData();
-              formData.append('imobil_id', data.id);
+              formData.append('anunt_id', data.id);
               formData.append('imagine', window.terenImages[0]);
               fetch('http://localhost:3001/api/upload-imagine', {
                 method: 'POST',

@@ -6,9 +6,9 @@
 INSERT INTO anunturi (tip_imobil, tip_oferta, titlu, pret, comision, localizare, descriere)
 VALUES 
 ('apartament', 'vanzare', 'Apartament 2 camere', 75000, 2.5, 'Bucuresti, Sector 3', 'Apartament spațios, zona linistita'),
-('apartament', 'cumparare', 'Caut apartament 3 camere', 95000, 0, 'Cluj-Napoca, Centru', 'Sunt interesat de un apartament luminos.'),
+('apartament', 'vanzare', 'Apartament 3 camere central', 95000, 3, 'Cluj-Napoca, Centru', 'Apartament luminos cu vedere panoramica.'),
 ('apartament', 'vanzare', 'Apartament 4 camere modern', 120000, 3, 'Iasi, Copou', 'Complet renovat, aproape de parc.'),
-('apartament', 'vanzare', 'Apartament decomandat', 68000, 2, 'Timisoara, Complex', 'Ideal pentru studenti.'),
+('apartament', 'inchiriat', 'Apartament decomandat', 800, 2, 'Timisoara, Complex', 'Ideal pentru studenti.'),
 ('apartament', 'vanzare', 'Apartament tip studio', 48000, 1.5, 'Brasov, Astra', 'Potrivit pentru investitie.');
 
 -- Atribute specifice pentru apartamente
@@ -25,9 +25,9 @@ INSERT INTO anunturi (tip_imobil, tip_oferta, titlu, pret, comision, localizare,
 VALUES 
 ('casa', 'vanzare', 'Casa individuala', 150000, 2, 'Bucuresti, Prelungirea Ghencea', 'Curte mare, zona linistita.'),
 ('casa', 'vanzare', 'Casa duplex', 135000, 2.5, 'Oradea, Rogerius', 'Constructie noua.'),
-('casa', 'cumparare', 'Caut casa batraneasca', 60000, 0, 'Arad, periferie', 'Vreau o casa veche cu potential.'),
+('casa', 'inchiriat', 'Casa batraneasca de inchiriat', 1200, 0, 'Arad, periferie', 'Casa veche cu potential, mobila inclusa.'),
 ('casa', 'vanzare', 'Vila P+1', 210000, 3, 'Constanta, Palazu Mare', 'Lux, finisaje premium.'),
-('casa', 'vanzare', 'Casa mica de vacanta', 85000, 1.5, 'Sibiu, Gusterita', 'Ideala pentru weekend.');
+('casa', 'inchiriat', 'Casa mica de vacanta', 600, 1.5, 'Sibiu, Gusterita', 'Ideala pentru weekend.');
 
 -- Atribute case
 INSERT INTO casee (anunt_id, nr_camere, nr_bai, an_constructie, suprafata_utila, suprafata_teren)
@@ -42,10 +42,10 @@ VALUES
 INSERT INTO anunturi (tip_imobil, tip_oferta, titlu, pret, comision, localizare, descriere)
 VALUES 
 ('teren', 'vanzare', 'Teren intravilan 500mp', 45000, 2, 'Bucuresti, Berceni', 'Acces facil la utilitati.'),
-('teren', 'cumparare', 'Caut teren agricol', 30000, 0, 'Galati, zona rurala', 'Minim 1000mp.'),
+('teren', 'vanzare', 'Teren agricol de vanzare', 30000, 2.5, 'Galati, zona rurala', 'Teren fertil, 1200mp.'),
 ('teren', 'vanzare', 'Teren 1000mp - deschidere mare', 80000, 1.8, 'Cluj, Floresti', 'Ideal pentru constructie bloc.'),
 ('teren', 'vanzare', 'Teren extravilan', 25000, 2.5, 'Ialomita, campie', 'Teren agricol, foarte fertil.'),
-('teren', 'vanzare', 'Teren pentru hala', 95000, 2, 'Timis, zona industriala', 'Acces TIR, gaze si curent.');
+('teren', 'inchiriat', 'Teren pentru depozitare', 500, 2, 'Timis, zona industriala', 'Acces TIR, gaze si curent.');
 
 -- Atribute terenuri
 INSERT INTO terenuri (anunt_id, suprafata_teren, tip_teren, clasificare, front_stradal)
@@ -60,9 +60,9 @@ VALUES
 INSERT INTO anunturi (tip_imobil, tip_oferta, titlu, pret, comision, localizare, descriere)
 VALUES 
 ('spatiu_comercial', 'vanzare', 'Spatiu comercial stradal', 180000, 3, 'Bucuresti, Unirii', 'Vad comercial excelent.'),
-('spatiu_comercial', 'cumparare', 'Caut spatiu pentru birouri', 120000, 0, 'Timisoara, Centru', 'Zona accesibila.'),
+('spatiu_comercial', 'inchiriat', 'Spatiu pentru birouri', 1500, 0, 'Timisoara, Centru', 'Zona accesibila.'),
 ('spatiu_comercial', 'vanzare', 'Spatiu depozitare', 95000, 2.5, 'Satu Mare', 'Hala industriala.'),
-('spatiu_comercial', 'vanzare', 'Spatiu open space 200mp', 150000, 2, 'Cluj-Napoca, Marasti', 'Etaj 1, cladire business.'),
+('spatiu_comercial', 'inchiriat', 'Spatiu open space 200mp', 2000, 2, 'Cluj-Napoca, Marasti', 'Etaj 1, cladire business.'),
 ('spatiu_comercial', 'vanzare', 'Parter comercial cu vitrina', 175000, 2.8, 'Oradea, Centru', 'Ideal farmacie sau banca.');
 
 -- Atribute spatii comerciale
