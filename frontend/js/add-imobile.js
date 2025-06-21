@@ -208,18 +208,18 @@ function initializeAdd() {
                 alert('Anunț și imagine încărcate cu succes!');
                 sessionStorage.removeItem('draftImobilCard');
                 if (typeof loadContent === 'function') {
-                loadContent('html/home.html');
-                } else {
-                  window.location.href = 'index.html'; // fallback dacă nu e SPA
+                  loadContent('html/home.html');
+                  } else {
+                    window.location.href = 'index.html';
                 }
               });
             } else {
               alert('Anunț adăugat fără imagine!');
               sessionStorage.removeItem('draftImobilCard');
-              if (typeof loadContent === 'function') {
+             if (typeof loadContent === 'function') {
               loadContent('html/home.html');
-              } else {
-                window.location.href = 'index.html'; // fallback dacă nu e SPA
+            } else {
+              window.location.href = 'index.html';
               }
             }
           } else {
