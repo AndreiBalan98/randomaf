@@ -12,11 +12,6 @@ const FILTER_OPTIONS = {
     { value: 'teren', text: 'Teren' },
     { value: 'spatiu_comercial', text: 'Spații comerciale' }
   ],
-  stare: [
-    { value: 'nou', text: 'Nou' },
-    { value: 'renovat', text: 'Renovat' },
-    { value: 'vechi', text: 'Vechi' }
-  ],
   oferta: [
     { value: 'vanzare', text: 'De vânzare' },
     { value: 'inchiriat', text: 'De închiriat' }
@@ -252,10 +247,12 @@ function renderImobileCards(imobileData) {
  * Creează HTML-ul pentru un card de imobil
  */
 function createImobilCard(imobil) {
-  const imagePath = imobil.imagine ? `${API_BASE_URL}/${imobil.imagine}` : `${API_BASE_URL}/images/casa1.jpg`;
+  const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
   const price = imobil.pret ? `${imobil.pret} €` : 'Preț la cerere';
-  const transactionType = getTransactionTypeText(imobil.tranzactie);
-  const surface = imobil.suprafata || '-';
+  const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vânzare' : 'Închiriere';
+  const surface = imobil.tip_imobil === 'teren' ? 
+    (imobil.detalii_specifice?.suprafata_teren || '-') : 
+    (imobil.detalii_specifice?.suprafata_utila || '-');
   
   return `
     <div class="imobil-card">
@@ -270,7 +267,7 @@ function createImobilCard(imobil) {
         <div class="imobil-titlu">${imobil.titlu}</div>
         <div class="imobil-locatie">
           <span class="icon-locatie">📍</span>
-          ${imobil.locatie}
+          ${imobil.localizare}
         </div>
         <div class="imobil-info">
           <span class="imobil-mp">${surface} mp</span>
@@ -370,7 +367,6 @@ function handleFormSubmit(event) {
     minPrice: formData.get('minPrice') || '',
     maxPrice: formData.get('maxPrice') || '',
     tip: formData.get('tip') || '',
-    stare: formData.get('stare') || '',
     oferta: formData.get('oferta') || '',
     oras: formData.get('oras') || '',
     localitate: formData.get('localitate') || ''

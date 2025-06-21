@@ -78,6 +78,20 @@ function handleImobileGet(req, res) {
         paramIndex++;
     }
 
+    // Filtrare după oraș
+    if (query.get('oras')) {
+        sql += ` AND LOWER(SPLIT_PART(a.localizare, ',', 1)) = $${paramIndex}`;
+        params.push(query.get('oras').toLowerCase());
+        paramIndex++;
+    }
+
+    // Filtrare după localitate
+    if (query.get('localitate')) {
+        sql += ` AND LOWER(TRIM(SPLIT_PART(a.localizare, ',', 2))) = $${paramIndex}`;
+        params.push(query.get('localitate').toLowerCase());
+        paramIndex++;
+    }
+
     console.log('SQL Query:', sql);
     console.log('Params:', params);
 
@@ -96,8 +110,26 @@ function handleImobileGet(req, res) {
             return;
         }
 
+        // Filtrare după search în descriere
+        let filteredRows = result.rows;
+        if (query.get('search')) {
+            const searchTerms = query.get('search').split(',').map(term => term.trim().toLowerCase()).filter(term => term.length > 0);
+            if (searchTerms.length > 0) {
+                filteredRows = result.rows.filter(row => {
+                    const descriere = row.descriere ? row.descriere.toLowerCase() : '';
+                    return searchTerms.some(term => descriere.includes(term));
+                });
+            }
+        }
+
+        if (filteredRows.length === 0) {
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify([]));
+            return;
+        }
+
         // Obținere imagini pentru toate anunturile
-        const anuntIds = result.rows.map(row => row.id);
+        const anuntIds = filteredRows.map(row => row.id);
         const imaginiSql = `
             SELECT anunt_id, url, ordine 
             FROM imagini 
@@ -126,7 +158,7 @@ function handleImobileGet(req, res) {
             });
 
             // Structurare răspuns final
-            const anunturi = result.rows.map(row => {
+            const anunturi = filteredRows.map(row => {
                 // Date comune pentru toate anunturile
                 const anunt = {
                     id: row.id,

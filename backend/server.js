@@ -1,6 +1,7 @@
 const http                  = require('http');
 const handleImobileGet      = require('./handlers/imobileGetHandler');
 const handleImobileAdd      = require('./handlers/imobileAddHandler');
+const handleCoordsGet       = require('./handlers/coordsGetHandler');
 const handleImagesStatic    = require('./handlers/imagesStaticHandler');
 const handleImageUpload     = require('./handlers/imageUploadHandler');
 const handleImagesGet       = require('./handlers/imagesGetHandler');
@@ -28,6 +29,8 @@ const server = http.createServer((req, res) => {
         handleImobileGet(req, res);
     } else if (req.method === 'POST' && req.url === '/api/imobile') {
         handleImobileAdd(req, res);
+    } else if (req.method === 'GET' && req.url === '/api/coords') {
+        handleCoordsGet(req, res);
     } else if (req.method === 'POST' && req.url === '/api/upload-imagine') {
         handleImageUpload(req, res);
     } else if (req.method === 'GET' && req.url.startsWith('/images/')) {
