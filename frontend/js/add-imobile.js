@@ -161,6 +161,13 @@ function initializeAdd() {
       
       const API_BASE_URL = 'https://randomaf-backend.onrender.com';
 
+
+      const draft = JSON.parse(sessionStorage.getItem('draftImobilCard'));
+      const payload = {
+      tip_imobil: draft.tip,
+      tip_oferta: draft.tranzactie,
+      localizare: draft.locatie
+      };
       // Buton confirmă
       document.getElementById('confirmaCardBtn').onclick = function() {
         const draft = JSON.parse(sessionStorage.getItem('draftImobilCard'));
