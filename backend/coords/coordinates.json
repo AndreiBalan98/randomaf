@@ -39,11 +39,11 @@
     "lat": "46.2013524",
     "lon": "21.2913618"
   },
-  "arad/Grădiște": {
+  "arad/Gradiste": {
     "lat": "46.1956548",
     "lon": "21.3355053"
   },
-  "arad/Micălaca": {
+  "arad/Micalaca": {
     "lat": "46.1735594",
     "lon": "21.3570487"
   },
@@ -55,9 +55,9 @@
     "lat": "46.1940266",
     "lon": "21.2821851"
   },
-  "arad/Sânnicolau Mic": {
-    "lat": null,
-    "lon": null
+  "arad/Sannicolau Mic": {
+    "lat": "46.1739360",
+    "lon": "21.3152143"
   },
   "arad/Vladimirescu": {
     "lat": "46.1638285",
@@ -68,12 +68,12 @@
     "lon": "26.9296455"
   },
   "bacau/Nord": {
-    "lat": null,
-    "lon": null
+    "lat": "46.4956568",
+    "lon": "26.9296455"
   },
   "bacau/Sud": {
-    "lat": null,
-    "lon": null
+    "lat": "46.4956568",
+    "lon": "26.9296455"
   },
   "bacau/Serbanesti": {
     "lat": "46.5816324",
@@ -99,7 +99,7 @@
     "lat": "47.7565814",
     "lon": "23.6056024"
   },
-  "baia-mare/Valea Roșie": {
+  "baia-mare/Valea Rosie": {
     "lat": "47.6714306",
     "lon": "23.5627282"
   },
@@ -107,7 +107,7 @@
     "lat": "47.6464275",
     "lon": "23.5819921"
   },
-  "baia-mare/Săsar": {
+  "baia-mare/Sasar": {
     "lat": "47.6627684",
     "lon": "23.5854468"
   },
@@ -115,7 +115,7 @@
     "lat": "47.6941509",
     "lon": "23.6286534"
   },
-  "baia-mare/Griviței": {
+  "baia-mare/Grivitei": {
     "lat": "47.6654624",
     "lon": "23.5918593"
   },
@@ -124,8 +124,8 @@
     "lon": "23.5525439"
   },
   "baia-mare/Recea": {
-    "lat": null,
-    "lon": null
+    "lat": "47.7565814",
+    "lon": "23.6056024"
   },
   "bistrita/Centru": {
     "lat": "46.9500347",
@@ -163,7 +163,7 @@
     "lat": "47.7500151",
     "lon": "26.6711378"
   },
-  "botosani/Cătămărăști": {
+  "botosani/Catamarasti": {
     "lat": "47.7920090",
     "lon": "26.6209911"
   },
@@ -175,7 +175,7 @@
     "lat": "47.5074742",
     "lon": "26.6345914"
   },
-  "botosani/Curtești": {
+  "botosani/Curtesti": {
     "lat": "47.7169501",
     "lon": "26.6474635"
   },
@@ -215,7 +215,7 @@
     "lat": "45.6722705",
     "lon": "25.6008043"
   },
-  "brasov/Răcădău": {
+  "brasov/Racadau": {
     "lat": "45.6039217",
     "lon": "25.6011744"
   },
@@ -263,7 +263,7 @@
     "lat": "44.4478746",
     "lon": "26.0324476"
   },
-  "bucuresti/Băneasa": {
+  "bucuresti/Baneasa": {
     "lat": "44.4945018",
     "lon": "26.0786696"
   },
@@ -307,11 +307,11 @@
     "lat": "45.1466509",
     "lon": "26.8378360"
   },
-  "buzau/Dorobanți": {
+  "buzau/Dorobanti": {
     "lat": "45.1525731",
     "lon": "26.8433171"
   },
-  "buzau/Bălcescu": {
+  "buzau/Balcescu": {
     "lat": "45.1480753",
     "lon": "26.8070685"
   },
@@ -319,13 +319,13 @@
     "lat": "45.1671901",
     "lon": "26.7802862"
   },
-  "buzau/Broșteni": {
+  "buzau/Brosteni": {
     "lat": "45.1544768",
     "lon": "26.8304164"
   },
   "calafat/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "44.0053156",
+    "lon": "23.0054960"
   },
   "calafat/Basarabi": {
     "lat": "44.0053156",
@@ -335,69 +335,69 @@
     "lat": "43.9451224",
     "lon": "22.8946867"
   },
-  "calafat/Golenți": {
+  "calafat/Golenti": {
     "lat": "44.0129038",
     "lon": "23.0566601"
   },
-  "calarași/Centru": {
+  "calarasi/Centru": {
     "lat": "44.2061823",
     "lon": "27.3217173"
   },
-  "calarași/Mircea Vodă": {
+  "calarasi/Mircea Voda": {
     "lat": "44.2131335",
     "lon": "27.3042682"
   },
-  "calarași/Oborul Nou": {
-    "lat": null,
-    "lon": null
+  "calarasi/Oborul Nou": {
+    "lat": "44.2061823",
+    "lon": "27.3217173"
   },
-  "calarași/Măgureni": {
+  "calarasi/Magureni": {
     "lat": "44.4130786",
     "lon": "26.6195614"
   },
-  "calarași/Dumbrava": {
+  "calarasi/Dumbrava": {
     "lat": "44.1919123",
     "lon": "27.3246541"
   },
-  "calarași/Ostroveni": {
-    "lat": null,
-    "lon": null
+  "calarasi/Ostroveni": {
+    "lat": "44.2061823",
+    "lon": "27.3217173"
   },
   "campina/Centru": {
     "lat": "45.1440370",
     "lon": "25.7268174"
   },
   "campina/Slobozia": {
-    "lat": null,
-    "lon": null
+    "lat": "45.1440370",
+    "lon": "25.7268174"
   },
   "campina/Voila": {
     "lat": "45.1501946",
     "lon": "25.7500004"
   },
-  "campina/Câmpinița": {
+  "campina/Campinita": {
     "lat": "45.1452132",
     "lon": "25.7192142"
   },
-  "campina/Turnătorie": {
-    "lat": null,
-    "lon": null
+  "campina/Turnatorie": {
+    "lat": "45.1440370",
+    "lon": "25.7268174"
   },
   "campulung/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "45.2855051",
+    "lon": "25.0465184"
   },
   "campulung/Grui": {
     "lat": "45.2855051",
     "lon": "25.0465184"
   },
-  "campulung/Vișoi": {
+  "campulung/Visoi": {
     "lat": "45.2763859",
     "lon": "25.0570292"
   },
-  "campulung/Valea Româneștilor": {
-    "lat": null,
-    "lon": null
+  "campulung/Valea Romanestilor": {
+    "lat": "45.2855051",
+    "lon": "25.0465184"
   },
   "campulung/Schei": {
     "lat": "45.2832988",
@@ -407,7 +407,7 @@
     "lat": "46.7687648",
     "lon": "23.5900905"
   },
-  "cluj-napoca/Mănăștur": {
+  "cluj-napoca/Manastur": {
     "lat": "46.7554185",
     "lon": "23.5565892"
   },
@@ -423,7 +423,7 @@
     "lat": "46.7555595",
     "lon": "23.5857936"
   },
-  "cluj-napoca/Bună Ziua": {
+  "cluj-napoca/Buna Ziua": {
     "lat": "46.7498055",
     "lon": "23.5984619"
   },
@@ -431,7 +431,7 @@
     "lat": "46.7951071",
     "lon": "23.6035121"
   },
-  "cluj-napoca/Someșeni": {
+  "cluj-napoca/Someseni": {
     "lat": "46.7887913",
     "lon": "23.6509822"
   },
@@ -447,7 +447,7 @@
     "lat": "44.1999008",
     "lon": "28.6303544"
   },
-  "constanta/Faleză Nord": {
+  "constanta/Faleza Nord": {
     "lat": "44.2033491",
     "lon": "28.6486027"
   },
@@ -479,19 +479,19 @@
     "lat": "44.3302359",
     "lon": "23.8009174"
   },
-  "craiova/Lăpuș": {
+  "craiova/Lapus": {
     "lat": "44.3151117",
     "lon": "23.8353679"
   },
-  "craiova/Valea Roșie": {
+  "craiova/Valea Rosie": {
     "lat": "44.3056654",
     "lon": "23.8178492"
   },
-  "craiova/Craiovița Nouă": {
+  "craiova/Craiovita Noua": {
     "lat": "44.3362245",
     "lon": "23.7764576"
   },
-  "craiova/Bariera Vâlcii": {
+  "craiova/Bariera Valcii": {
     "lat": "44.3357179",
     "lon": "23.8244637"
   },
@@ -504,16 +504,16 @@
     "lon": "22.9068156"
   },
   "deva/Micro 16": {
-    "lat": null,
-    "lon": null
+    "lat": "45.8765212",
+    "lon": "22.9066283"
   },
   "deva/Micro 4": {
-    "lat": null,
-    "lon": null
+    "lat": "45.8765212",
+    "lon": "22.9066283"
   },
   "deva/Micro 5": {
-    "lat": null,
-    "lon": null
+    "lat": "45.8765212",
+    "lon": "22.9066283"
   },
   "deva/Aurel Vlaicu": {
     "lat": "45.8812604",
@@ -524,8 +524,8 @@
     "lon": "22.9124788"
   },
   "drobeta-turnu-severin/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "44.6455570",
+    "lon": "22.6528042"
   },
   "drobeta-turnu-severin/Crihala": {
     "lat": "44.6455570",
@@ -535,15 +535,15 @@
     "lat": "44.6265648",
     "lon": "22.6092651"
   },
-  "drobeta-turnu-severin/Gura Văii": {
+  "drobeta-turnu-severin/Gura Vaii": {
     "lat": "44.6673203",
     "lon": "22.5564574"
   },
-  "drobeta-turnu-severin/Dudașu": {
+  "drobeta-turnu-severin/Dudasu": {
     "lat": "44.6412791",
     "lon": "22.5960132"
   },
-  "drobeta-turnu-severin/Banovița": {
+  "drobeta-turnu-severin/Banovita": {
     "lat": "44.6363475",
     "lon": "22.6928196"
   },
@@ -552,12 +552,12 @@
     "lon": "27.1832971"
   },
   "focsani/Sud": {
-    "lat": null,
-    "lon": null
+    "lat": "45.6977013",
+    "lon": "27.1832971"
   },
   "focsani/Nord": {
-    "lat": null,
-    "lon": null
+    "lat": "45.6977013",
+    "lon": "27.1832971"
   },
   "focsani/Obor": {
     "lat": "45.7102788",
@@ -571,7 +571,7 @@
     "lat": "45.7009928",
     "lon": "27.1716622"
   },
-  "focsani/Mândrești": {
+  "focsani/Mandresti": {
     "lat": "45.6885805",
     "lon": "27.2559873"
   },
@@ -595,23 +595,23 @@
     "lat": "45.4498837",
     "lon": "28.0255999"
   },
-  "galati/Țiglina": {
+  "galati/Tiglina": {
     "lat": "45.4213023",
     "lon": "28.0252149"
   },
-  "galati/Dunărea": {
+  "galati/Dunarea": {
     "lat": "45.4386554",
     "lon": "28.0556660"
   },
   "giurgiu/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "43.9078193",
+    "lon": "25.9738266"
   },
   "giurgiu/Tineretului": {
     "lat": "43.9078193",
     "lon": "25.9738266"
   },
-  "giurgiu/Smârda": {
+  "giurgiu/Smarda": {
     "lat": "43.8974389",
     "lon": "25.9778119"
   },
@@ -619,7 +619,7 @@
     "lat": "43.9564917",
     "lon": "26.0152735"
   },
-  "giurgiu/Steaua Dunării": {
+  "giurgiu/Steaua Dunarii": {
     "lat": "43.8995570",
     "lon": "25.9799963"
   },
@@ -631,7 +631,7 @@
     "lat": "47.1904883",
     "lon": "27.5593798"
   },
-  "iasi/Tătărași": {
+  "iasi/Tatarasi": {
     "lat": "47.1637142",
     "lon": "27.6047884"
   },
@@ -639,7 +639,7 @@
     "lat": "47.1488579",
     "lon": "27.5776323"
   },
-  "iasi/Păcurari": {
+  "iasi/Pacurari": {
     "lat": "47.1740452",
     "lon": "27.5578839"
   },
@@ -656,22 +656,22 @@
     "lon": "27.5414681"
   },
   "medias/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "46.1686138",
+    "lon": "24.3370040"
   },
-  "medias/Gura Câmpului": {
+  "medias/Gura Campului": {
     "lat": "46.1686138",
     "lon": "24.3370040"
   },
   "medias/Vitrometan": {
-    "lat": null,
-    "lon": null
+    "lat": "46.1686138",
+    "lon": "24.3370040"
   },
-  "medias/După Zid": {
+  "medias/Dupa Zid": {
     "lat": "46.1680327",
     "lon": "24.3535157"
   },
-  "medias/Moșnei": {
+  "medias/Mosnei": {
     "lat": "46.1403062",
     "lon": "24.3674801"
   },
@@ -679,7 +679,7 @@
     "lat": "46.3583948",
     "lon": "25.8022445"
   },
-  "miercurea-ciuc/Szécseny": {
+  "miercurea-ciuc/Szecseny": {
     "lat": "46.3435512",
     "lon": "25.7668802"
   },
@@ -687,7 +687,7 @@
     "lat": "46.3644444",
     "lon": "25.8096968"
   },
-  "miercurea-ciuc/Nagymező": {
+  "miercurea-ciuc/Nagymezo": {
     "lat": "46.3804366",
     "lon": "25.8149865"
   },
@@ -703,15 +703,15 @@
     "lat": "47.0776592",
     "lon": "21.9164294"
   },
-  "oradea/Nufărul": {
+  "oradea/Nufarul": {
     "lat": "47.0324887",
     "lon": "21.9570118"
   },
-  "oradea/Ioșia": {
+  "oradea/Iosia": {
     "lat": "47.0575778",
     "lon": "21.9022311"
   },
-  "oradea/Velența": {
+  "oradea/Velenta": {
     "lat": "47.0494182",
     "lon": "21.9498705"
   },
@@ -735,11 +735,11 @@
     "lat": "45.4198346",
     "lon": "23.3627669"
   },
-  "petrosani/Dâlja": {
+  "petrosani/Dalja": {
     "lat": "45.4139299",
     "lon": "23.3400403"
   },
-  "petrosani/Sașa": {
+  "petrosani/Sasa": {
     "lat": "45.3713724",
     "lon": "23.3702784"
   },
@@ -751,7 +751,7 @@
     "lat": "46.9263912",
     "lon": "26.3738144"
   },
-  "piatra-neamt/Dărmănești": {
+  "piatra-neamt/Darmanesti": {
     "lat": "46.9322726",
     "lon": "26.3906225"
   },
@@ -759,11 +759,11 @@
     "lat": "46.9333868",
     "lon": "26.3604067"
   },
-  "piatra-neamt/Mărăței": {
+  "piatra-neamt/Maratei": {
     "lat": "46.9219241",
     "lon": "26.3826740"
   },
-  "piatra-neamt/Văleni": {
+  "piatra-neamt/Valeni": {
     "lat": "46.9037405",
     "lon": "26.3894373"
   },
@@ -779,7 +779,7 @@
     "lat": "44.8486812",
     "lon": "24.8435050"
   },
-  "pitesti/Găvana": {
+  "pitesti/Gavana": {
     "lat": "44.8717542",
     "lon": "24.8456557"
   },
@@ -787,7 +787,7 @@
     "lat": "44.8309467",
     "lon": "24.9086687"
   },
-  "pitesti/Războieni": {
+  "pitesti/Razboieni": {
     "lat": "44.8434564",
     "lon": "24.8729849"
   },
@@ -811,11 +811,11 @@
     "lat": "44.9246076",
     "lon": "25.9947675"
   },
-  "ploiesti/Malul Roșu": {
-    "lat": null,
-    "lon": null
+  "ploiesti/Malul Rosu": {
+    "lat": "44.9420331",
+    "lon": "26.0230725"
   },
-  "ploiesti/Bariera București": {
+  "ploiesti/Bariera Bucuresti": {
     "lat": "44.9211640",
     "lon": "26.0324306"
   },
@@ -839,11 +839,11 @@
     "lat": "45.1096415",
     "lon": "24.3704143"
   },
-  "ramnicu-valcea/Petrișor": {
+  "ramnicu-valcea/Petrisor": {
     "lat": "45.0972184",
     "lon": "24.3554018"
   },
-  "ramnicu-valcea/Căzănești": {
+  "ramnicu-valcea/Cazanesti": {
     "lat": "45.0576727",
     "lon": "24.2851215"
   },
@@ -859,39 +859,39 @@
     "lat": "45.4137267",
     "lon": "27.0300248"
   },
-  "ramnicu-sarat/Bariera Focșani": {
+  "ramnicu-sarat/Bariera Focsani": {
     "lat": "45.4030140",
     "lon": "27.0498894"
   },
   "reghin/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "46.7523127",
+    "lon": "24.6927549"
   },
   "reghin/Apalina": {
     "lat": "46.7523127",
     "lon": "24.6927549"
   },
-  "reghin/Iernuțeni": {
+  "reghin/Iernuteni": {
     "lat": "46.7638665",
     "lon": "24.7191914"
   },
   "reghin/Dedrad": {
-    "lat": null,
-    "lon": null
+    "lat": "46.7523127",
+    "lon": "24.6927549"
   },
   "reghin/Breaza": {
-    "lat": null,
-    "lon": null
+    "lat": "46.7523127",
+    "lon": "24.6927549"
   },
   "resita/Centru": {
-    "lat": null,
-    "lon": null
-  },
-  "resita/Govândari": {
     "lat": "45.3282552",
     "lon": "21.8730960"
   },
-  "resita/Lunca Bârzavei": {
+  "resita/Govandari": {
+    "lat": "45.3282552",
+    "lon": "21.8730960"
+  },
+  "resita/Lunca Barzavei": {
     "lat": "45.3282552",
     "lon": "21.8730960"
   },
@@ -908,36 +908,36 @@
     "lon": "21.1248475"
   },
   "roman/Favorit": {
-    "lat": null,
-    "lon": null
+    "lat": "45.7152518",
+    "lon": "21.1248475"
   },
-  "roman/Petru Rareș": {
+  "roman/Petru Rares": {
     "lat": "46.9243547",
     "lon": "26.9165195"
   },
   "roman/Mihai Viteazu": {
-    "lat": null,
-    "lon": null
+    "lat": "45.7152518",
+    "lon": "21.1248475"
   },
-  "roman/Nicolae Bălcescu": {
+  "roman/Nicolae Balcescu": {
     "lat": "46.9272023",
     "lon": "26.9104020"
   },
   "rosiorii-de-vede/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "44.1233667",
+    "lon": "24.9788917"
   },
   "rosiorii-de-vede/Spitalului": {
-    "lat": null,
-    "lon": null
+    "lat": "44.1233667",
+    "lon": "24.9788917"
   },
   "rosiorii-de-vede/Nord": {
     "lat": "44.1233667",
     "lon": "24.9788917"
   },
   "rosiorii-de-vede/Sud": {
-    "lat": null,
-    "lon": null
+    "lat": "44.1233667",
+    "lon": "24.9788917"
   },
   "rosiorii-de-vede/Est": {
     "lat": "44.1107937",
@@ -955,7 +955,7 @@
     "lat": "47.7860937",
     "lon": "22.8597104"
   },
-  "satu-mare/Carpați": {
+  "satu-mare/Carpati": {
     "lat": "47.7696697",
     "lon": "22.8864255"
   },
@@ -971,7 +971,7 @@
     "lat": "45.7144656",
     "lon": "24.1520457"
   },
-  "sibiu/Ștrand": {
+  "sibiu/Strand": {
     "lat": "45.7876521",
     "lon": "24.1368335"
   },
@@ -983,7 +983,7 @@
     "lat": "45.7835856",
     "lon": "24.1550756"
   },
-  "sibiu/Turnișor": {
+  "sibiu/Turnisor": {
     "lat": "45.7912398",
     "lon": "24.1186515"
   },
@@ -999,7 +999,7 @@
     "lat": "47.9282367",
     "lon": "23.8890465"
   },
-  "sighetu-marmatiei/Valea Cufundoasă": {
+  "sighetu-marmatiei/Valea Cufundoasa": {
     "lat": "47.9181343",
     "lon": "23.8967793"
   },
@@ -1007,7 +1007,7 @@
     "lat": "47.9251306",
     "lon": "23.8253872"
   },
-  "sighetu-marmatiei/Șugău": {
+  "sighetu-marmatiei/Sugau": {
     "lat": "47.8816371",
     "lon": "23.9158876"
   },
@@ -1031,7 +1031,7 @@
     "lat": "44.4161926",
     "lon": "24.3688532"
   },
-  "slatina/Cireașov": {
+  "slatina/Cireasov": {
     "lat": "44.4546295",
     "lon": "24.3737720"
   },
@@ -1039,7 +1039,7 @@
     "lat": "45.6059787",
     "lon": "27.2113358"
   },
-  "slobozia/Gării Noi": {
+  "slobozia/Garii Noi": {
     "lat": "44.5724632",
     "lon": "27.3808579"
   },
@@ -1048,8 +1048,8 @@
     "lon": "27.3642217"
   },
   "slobozia/Sud": {
-    "lat": null,
-    "lon": null
+    "lat": "45.6059787",
+    "lon": "27.2113358"
   },
   "slobozia/Vest": {
     "lat": "45.0154418",
@@ -1067,7 +1067,7 @@
     "lat": "47.6373921",
     "lon": "26.2320203"
   },
-  "suceava/Ițcani": {
+  "suceava/Itcani": {
     "lat": "47.6783590",
     "lon": "26.2380981"
   },
@@ -1084,12 +1084,12 @@
     "lon": "25.4605623"
   },
   "targoviste/Micro 6": {
-    "lat": null,
-    "lon": null
+    "lat": "44.9286947",
+    "lon": "25.4605623"
   },
   "targoviste/Micro 9": {
-    "lat": null,
-    "lon": null
+    "lat": "44.9286947",
+    "lon": "25.4605623"
   },
   "targoviste/Priseaca": {
     "lat": "44.9237671",
@@ -1111,11 +1111,11 @@
     "lat": "45.0526486",
     "lon": "23.2762025"
   },
-  "targu-jiu/Griviței": {
+  "targu-jiu/Grivitei": {
     "lat": "45.0426418",
     "lon": "23.2773776"
   },
-  "targu-jiu/Bârsești": {
+  "targu-jiu/Barsesti": {
     "lat": "45.0534912",
     "lon": "23.2354318"
   },
@@ -1123,7 +1123,7 @@
     "lat": "46.5194568",
     "lon": "24.5160058"
   },
-  "targu-mures/Dâmbul Pietros": {
+  "targu-mures/Dambul Pietros": {
     "lat": "46.5309302",
     "lon": "24.5566455"
   },
@@ -1135,11 +1135,11 @@
     "lat": "46.5351287",
     "lon": "24.5834007"
   },
-  "targu-mures/Aleea Carpați": {
+  "targu-mures/Aleea Carpati": {
     "lat": "46.5538638",
     "lon": "24.5585753"
   },
-  "targu-mures/Cornișa": {
+  "targu-mures/Cornisa": {
     "lat": "46.5516523",
     "lon": "24.5753378"
   },
@@ -1152,10 +1152,10 @@
     "lon": "26.4084836"
   },
   "targu-neamt/Condreni": {
-    "lat": null,
-    "lon": null
+    "lat": "47.2066122",
+    "lon": "26.3655554"
   },
-  "targu-neamt/Humulești": {
+  "targu-neamt/Humulesti": {
     "lat": "47.1987383",
     "lon": "26.3505809"
   },
@@ -1164,8 +1164,8 @@
     "lon": "26.3765991"
   },
   "targu-secuiesc/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "45.9983223",
+    "lon": "26.1434104"
   },
   "targu-secuiesc/Fabricii": {
     "lat": "45.9983223",
@@ -1175,9 +1175,9 @@
     "lat": "46.0098675",
     "lon": "26.1391911"
   },
-  "targu-secuiesc/Molnar János": {
-    "lat": null,
-    "lon": null
+  "targu-secuiesc/Molnar Janos": {
+    "lat": "45.9983223",
+    "lon": "26.1434104"
   },
   "targu-secuiesc/Turia": {
     "lat": "46.0508075",
@@ -1195,7 +1195,7 @@
     "lat": "45.7318471",
     "lon": "21.2318790"
   },
-  "timisoara/Circumvalațiunii": {
+  "timisoara/Circumvalatiunii": {
     "lat": "45.7593451",
     "lon": "21.2140323"
   },
@@ -1219,7 +1219,7 @@
     "lat": "46.5726616",
     "lon": "23.7856956"
   },
-  "turda/Oprișani": {
+  "turda/Oprisani": {
     "lat": "46.5577716",
     "lon": "23.7996030"
   },
@@ -1231,45 +1231,45 @@
     "lat": "46.5591780",
     "lon": "23.8315359"
   },
-  "turda/Turda Nouă": {
+  "turda/Turda Noua": {
     "lat": "46.5799293",
     "lon": "23.7718016"
   },
   "turnu-magurele/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "43.7564677",
+    "lon": "24.8752826"
   },
   "turnu-magurele/Odaia": {
-    "lat": null,
-    "lon": null
+    "lat": "43.7564677",
+    "lon": "24.8752826"
   },
   "turnu-magurele/Magurele": {
     "lat": "43.7564677",
     "lon": "24.8752826"
   },
   "turnu-magurele/Combinat": {
-    "lat": null,
-    "lon": null
+    "lat": "43.7564677",
+    "lon": "24.8752826"
   },
   "urziceni/Centru": {
-    "lat": null,
-    "lon": null
+    "lat": "44.7127232",
+    "lon": "26.6560595"
   },
   "urziceni/Tineretului": {
     "lat": "44.7127232",
     "lon": "26.6560595"
   },
   "urziceni/Sud": {
-    "lat": null,
-    "lon": null
+    "lat": "44.7127232",
+    "lon": "26.6560595"
   },
   "urziceni/Vest": {
-    "lat": null,
-    "lon": null
+    "lat": "44.7127232",
+    "lon": "26.6560595"
   },
   "urziceni/Est": {
-    "lat": null,
-    "lon": null
+    "lat": "44.7127232",
+    "lon": "26.6560595"
   },
   "vaslui/Centru": {
     "lat": "46.2260971",
@@ -1287,7 +1287,7 @@
     "lat": "46.4740917",
     "lon": "27.8741347"
   },
-  "vaslui/Bălteni": {
+  "vaslui/Balteni": {
     "lat": "46.6749392",
     "lon": "27.6239884"
   },
@@ -1299,7 +1299,7 @@
     "lat": "47.2006296",
     "lon": "23.0483609"
   },
-  "zalau/Brădet": {
+  "zalau/Bradet": {
     "lat": "47.1741455",
     "lon": "23.0666362"
   },
@@ -1307,7 +1307,7 @@
     "lat": "47.1893716",
     "lon": "23.0653205"
   },
-  "zalau/Meseș": {
+  "zalau/Meses": {
     "lat": "47.1694867",
     "lon": "23.1085745"
   },
@@ -1324,11 +1324,11 @@
     "lon": "25.3845258"
   },
   "zarnesti/Prund": {
-    "lat": null,
-    "lon": null
+    "lat": "45.5669719",
+    "lon": "25.2912753"
   },
-  "zarnesti/Bălăceanca": {
-    "lat": null,
-    "lon": null
+  "zarnesti/Balaceanca": {
+    "lat": "45.5669719",
+    "lon": "25.2912753"
   }
 }

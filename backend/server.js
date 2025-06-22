@@ -29,14 +29,14 @@ const server = http.createServer((req, res) => {
         handleImobileGet(req, res);
     } else if (req.method === 'POST' && req.url === '/api/imobile') {
         handleImobileAdd(req, res);
-    } else if (req.method === 'GET' && req.url === '/api/coords') {
+    } else if (req.method === 'GET' && req.url.startsWith('/api/coords')) {
         handleCoordsGet(req, res);
+    } else if (req.method === 'GET' && req.url.startsWith('/api/imagini/')) {
+        handleImagesGet(req, res);
     } else if (req.method === 'POST' && req.url === '/api/upload-imagine') {
         handleImageUpload(req, res);
     } else if (req.method === 'GET' && req.url.startsWith('/images/')) {
         handleImagesStatic(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/api/imagini/')) {
-        handleImagesGet(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ status: 'error', mesaj: 'Not found' }));

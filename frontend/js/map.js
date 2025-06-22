@@ -1,5 +1,7 @@
 // Funcția de inițializare pentru hartă
 async function initializeMap() {
+    const API_BASE_URL = 'http://localhost:3001';
+    
     // Verifică dacă div-ul pentru hartă există
     const mapElement = document.getElementById('map');
     if (!mapElement) {
@@ -33,20 +35,11 @@ async function initializeMap() {
     // Adaugă un popup pentru marker
     marker.bindPopup('<b>București</b><br>Capitala României').openPopup();
 
-    // Opțional: adaugă un cerc pentru a demonstra alte funcționalități
-    const circle = L.circle([44.4268, 26.1025], {
-        color: 'red',
-        fillColor: '#f03',
-        fillOpacity: 0.3,
-        radius: 5000
-    }).addTo(map);
-
-    circle.bindPopup('Zona centrală București');
-
     // Încarcă imobilele
     try {
-        const imobileResponse = await fetch('http://localhost:3001/api/imobile');
+        const imobileResponse = await fetch(`${API_BASE_URL}/api/imobile`);
         const imobile = await imobileResponse.json();
+
 
         // Plasează markeri pentru fiecare imobil
         for (const imobil of imobile) {
@@ -54,7 +47,7 @@ async function initializeMap() {
                 const { numeOras, numeLocalitate } = parseLocalizare(imobil.localizare);
                 
                 // Face request pentru coordonate
-                const coordsResponse = await fetch(`http://localhost:3001/api/coords?numeOras=${encodeURIComponent(numeOras)}&numeLocalitate=${encodeURIComponent(numeLocalitate)}`);
+                const coordsResponse = await fetch(`${API_BASE_URL}/api/coords?numeOras=${encodeURIComponent(numeOras)}&numeLocalitate=${encodeURIComponent(numeLocalitate)}`);
                 
                 if (coordsResponse.ok) {
                     const coord = await coordsResponse.json();
@@ -64,6 +57,16 @@ async function initializeMap() {
                     // Adaugă popup cu cardul imobilului
                     const cardHTML = createImobilCard(imobil);
                     imobilMarker.bindPopup(cardHTML);
+
+                    imobilMarker.on('popupopen', () => {
+                    const detaliiBtn = document.querySelector(`[data-id="${imobil.id}"]`);
+                        if (detaliiBtn) {
+                            detaliiBtn.addEventListener('click', () => {
+                                loadContent(`html/detalii.html?id=${imobil.id}`);
+                                initializeDetalii(imobil.id);
+                            });
+                        }
+                    });
                 } else {
                     console.warn(`Coordonate nu au fost găsite pentru: ${imobil.localizare}`);
                 }

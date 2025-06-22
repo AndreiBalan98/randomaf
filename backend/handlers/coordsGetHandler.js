@@ -16,7 +16,7 @@ function handleCoordsGet(req, res) {
         }
 
         // Construiește calea către fișierul coordinates.json
-        const coordsFilePath = path.join(__dirname, 'coords', 'coordinates.json');
+        const coordsFilePath = path.join(__dirname, '..', 'coords', 'coordinates.json');
 
         // Verifică dacă fișierul există
         if (!fs.existsSync(coordsFilePath)) {
@@ -53,3 +53,5 @@ function handleCoordsGet(req, res) {
         res.end(JSON.stringify({ error: 'Eroare internă a serverului' }));
     }
 }
+
+module.exports = handleCoordsGet;
