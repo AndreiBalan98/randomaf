@@ -1,17 +1,16 @@
 /* CSS AUTENTIFICARE SIMPLIFICAT */
 
 :root {
-    --primary: #431164;
-    --primary-light: rgba(67, 17, 100, 0.1);
-    --error: #c00;
-    --success: #0a0;
-    --border: #ddd;
-    --text: #333;
-    --disabled: #999;
+    --auth-primary: #431164;
+    --auth-primary-light: rgba(67, 17, 100, 0.1);
+    --auth-error: #c00;
+    --auth-success: #0a0;
+    --auth-border: #ddd;
+    --auth-text: #333;
+    --auth-disabled: #999;
 }
 
-* { box-sizing: border-box; }
-
+/* Profile Container */
 .profile-container {
     text-align: center;
 }
@@ -47,6 +46,7 @@
     background: #c82333;
 }
 
+/* Auth Container - Toate stilurile sunt scopate */
 .auth-container {
     max-width: 400px;
     margin: 40px auto;
@@ -54,6 +54,10 @@
     padding: 30px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.auth-container * {
+    box-sizing: border-box;
 }
 
 .auth-toggle {
@@ -64,7 +68,7 @@
     margin-bottom: 30px;
 }
 
-.toggle-btn {
+.auth-toggle .toggle-btn {
     flex: 1;
     padding: 12px;
     text-align: center;
@@ -74,47 +78,51 @@
     font-weight: 500;
 }
 
-.toggle-btn.active {
-    background: var(--primary);
+.auth-toggle .toggle-btn.active {
+    background: var(--auth-primary);
     color: white;
 }
 
-h2 {
+.auth-container h2 {
     text-align: center;
-    color: var(--primary);
+    color: var(--auth-primary);
     margin: 0 0 30px;
     font-size: 1.8rem;
 }
 
-.field {
+.auth-field {
     margin-bottom: 20px;
 }
 
-.field.hidden { display: none; }
+.auth-field.hidden { 
+    display: none; 
+}
 
-label {
+.auth-container label {
     display: block;
     margin-bottom: 8px;
-    color: var(--text);
+    color: var(--auth-text);
     font-weight: 500;
 }
 
-input {
+.auth-container input {
     width: 100%;
     padding: 12px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--auth-border);
     border-radius: 6px;
     font-size: 16px;
     transition: border-color 0.3s;
 }
 
-input:focus {
+.auth-container input:focus {
     outline: none;
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px var(--primary-light);
+    border-color: var(--auth-primary);
+    box-shadow: 0 0 0 3px var(--auth-primary-light);
 }
 
-input.error { border-color: var(--error); }
+.auth-container input.error { 
+    border-color: var(--auth-error); 
+}
 
 .password-wrapper {
     position: relative;
@@ -140,27 +148,27 @@ input.error { border-color: var(--error); }
     margin-bottom: 20px;
 }
 
-.message {
+.auth-container .message {
     padding: 12px;
     border-radius: 6px;
     font-size: 14px;
     margin-bottom: 10px;
 }
 
-.message.error {
+.auth-container .message.error {
     background: #ffebee;
-    color: var(--error);
-    border: 1px solid var(--error);
+    color: var(--auth-error);
+    border: 1px solid var(--auth-error);
 }
 
-.message.success {
+.auth-container .message.success {
     background: #e8f5e8;
-    color: var(--success);
-    border: 1px solid var(--success);
+    color: var(--auth-success);
+    border: 1px solid var(--auth-success);
 }
 
-.field-error {
-    color: var(--error);
+.auth-container .field-error {
+    color: var(--auth-error);
     font-size: 12px;
     margin-top: 4px;
 }
@@ -168,7 +176,7 @@ input.error { border-color: var(--error); }
 #submit-btn {
     width: 100%;
     padding: 14px;
-    background: var(--primary);
+    background: var(--auth-primary);
     color: white;
     border: none;
     border-radius: 6px;
@@ -184,7 +192,7 @@ input.error { border-color: var(--error); }
 }
 
 #submit-btn:disabled {
-    background: var(--disabled);
+    background: var(--auth-disabled);
     cursor: not-allowed;
     transform: none;
 }
