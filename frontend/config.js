@@ -1,4 +1,3 @@
-// Configurare globală pentru URL-uri
 window.CONFIG = {
     // Server backend
     BACKEND: {
@@ -29,7 +28,6 @@ window.CONFIG = {
         BASE_URL: 'http://localhost:8000'
     },
     
-    // Helper functions
     getBackendUrl: function(endpoint = '') {
         return this.BACKEND.BASE_URL + endpoint;
     },
@@ -43,7 +41,6 @@ window.CONFIG = {
     }
 };
 
-// Pentru Node.js (backend)
 if (typeof module !== 'undefined' && module.exports) {
     module.exports = {
         BACKEND: {
