@@ -87,7 +87,7 @@ function initializeAdd() {
       formData.append('ordine', index + 1);
       formData.append('imagine', file);
       
-      return fetch(APP_CONFIG.API.BASE_URL + APP_CONFIG.API.ENDPOINTS.UPLOAD_IMAGINE, {
+      return fetch(APP_CONFIG.getApiUrl(APP_CONFIG.API.ENDPOINTS.UPLOAD_IMAGINE), {
         method: 'POST',
         body: formData
       }).then(res => res.json());
@@ -218,7 +218,7 @@ function initializeAdd() {
 
     try {
       // Adauga anuntul in baza de date
-      const response = await fetch(APP_CONFIG.API.BASE_URL + APP_CONFIG.API.ENDPOINTS.IMOBILE, {
+      const response = await fetch(APP_CONFIG.getApiUrl(APP_CONFIG.API.ENDPOINTS.IMOBILE), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include', // IMPORTANT: Include cookies

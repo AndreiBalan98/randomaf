@@ -1,6 +1,6 @@
 // Functia de initializare pentru harta
 async function initializeMap() {
-    const API_BASE_URL = APP_CONFIG.API.BASE_URL;
+    const APP_CONFIG.API.BASE_URL = APP_CONFIG.API.BASE_URL;
     
     // Verifica daca div-ul pentru harta exista
     const mapElement = document.getElementById('map');
@@ -47,7 +47,7 @@ async function initializeMap() {
                 const { numeOras, numeLocalitate } = parseLocalizare(imobil.localizare);
                 
                 // Face request pentru coordonate
-                const coordsResponse = await fetch(`${APP_CONFIG.API.BASE_URL}/api/coords?numeOras=${encodeURIComponent(numeOras)}&numeLocalitate=${encodeURIComponent(numeLocalitate)}`);
+                const coordsResponse = await fetch(APP_CONFIG.API.BASE_URL + "/api/coords?numeOras=${encodeURIComponent(numeOras)}&numeLocalitate=${encodeURIComponent(numeLocalitate)}");
                 
                 if (coordsResponse.ok) {
                     const coord = await coordsResponse.json();
@@ -59,7 +59,7 @@ async function initializeMap() {
                     imobilMarker.bindPopup(cardHTML);
 
                     imobilMarker.on("popupopen', () => {
-                    const detaliiBtn = document.querySelector(`[data-id="${imobil.id}"]`);
+                    const detaliiBtn = document.querySelector("[data-id="${imobil.id}"]`);
                         if (detaliiBtn) {
                             detaliiBtn.addEventListener('click', () => {
                                 loadContent(`html/detalii.html?id=${imobil.id}`);
@@ -104,8 +104,8 @@ function parseLocalizare(localizare) {
 }
 
 function createImobilCard(imobil) {
-    const API_BASE_URL = APP_CONFIG.API.BASE_URL;
-    const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${APP_CONFIG.API.BASE_URL}/images/casa1.jpg`;
+    const APP_CONFIG.API.BASE_URL = APP_CONFIG.API.BASE_URL;
+    const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : APP_CONFIG.API.BASE_URL + "/images/casa1.jpg";
     const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
     const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
     const surface = imobil.tip_imobil === 'teren' ? 

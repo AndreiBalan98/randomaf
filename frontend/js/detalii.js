@@ -27,7 +27,7 @@ async function obtineImobil(id) {
 async function obtineImagini(id) {
   let imagini = [];
   try {
-    const resImg = await fetch(`${APP_CONFIG.API.BASE_URL}/api/imagini/${id}`);
+    const resImg = await fetch(APP_CONFIG.API.BASE_URL + "/api/imagini/${id}");
     imagini = await resImg.json();
   } catch {}
   return imagini;
@@ -36,7 +36,7 @@ async function obtineImagini(id) {
 // Genereaza HTML-ul pentru galeria de imagini
 function genereazaGalerie(imagini, currentSlide = 0) {
   if (!imagini.length) return "';
-  return `
+  return "
     <div class="slider-container" style="display:flex;justify-content:center;align-items:center;position:relative;">
       <button class="slider-arrow" id="slider-prev" ${currentSlide === 0 ? 'disabled' : ''} style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;">
         <svg viewBox="0 0 48 48" width="40" height="40"><path d="M31.5 39.1 17.4 24l14.1-15.1-2.8-2.8L11.6 24l17.5 19.9z"/></svg>
@@ -144,7 +144,7 @@ function afiseazaDetaliiImobil(card, imagini) {
     let current = idx;
 
     function showImg(i) {
-      modalImg.src = `${APP_CONFIG.API.BASE_URL}/${imagini[i].url}`;
+      modalImg.src = APP_CONFIG.API.BASE_URL + "/${imagini[i].url}";
       console.log("Modal: " + modalImg.src);
       modalImg.dataset.idx = i;
     }
@@ -209,7 +209,7 @@ function configureazaGalerieModal() {
 
 // Incarca si afiseaza anunturile relevante
 async function incarcaAnunturiRelevante(idCurent, cardCurent) {
-  const res = await fetch(APP_CONFIG.API.BASE_URL + "/api/imobile`);
+  const res = await fetch(APP_CONFIG.API.BASE_URL + APP_CONFIG.API.ENDPOINTS.IMOBILE);
   const anunturi = await res.json();
 
   const locatieCurenta = cardCurent.localizare || cardCurent.locatie || "';
@@ -219,8 +219,8 @@ async function incarcaAnunturiRelevante(idCurent, cardCurent) {
 
   const htmlRelevante = relevante.map(r => {
     const imagePath = r.imagine
-      ? `${APP_CONFIG.API.BASE_URL}/${r.imagine}`
-      : `${APP_CONFIG.API.BASE_URL}/images/casa1.jpg`;
+      ? APP_CONFIG.API.BASE_URL + "/${r.imagine}"
+      : APP_CONFIG.API.BASE_URL + "/images/casa1.jpg";
     const price = r.pret ? `${r.pret} €` : 'Pret la cerere';
     const transactionType = r.tip_oferta === 'vanzare'
       ? 'De vanzare'

@@ -2,7 +2,7 @@
 // CONSTANTE SI CONFIGURATII
 // ========================================
 
-const API_BASE_URL = APP_CONFIG.API.BASE_URL;
+const APP_CONFIG.API.BASE_URL = APP_CONFIG.API.BASE_URL;
 
 // Optiuni pentru selectoarele din filtre
 const FILTER_OPTIONS = {
@@ -205,7 +205,7 @@ async function loadImobileData(filters = {}) {
     const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/imobile?${queryParams}`);
    
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}");
     }
    
     const imobileData = await response.json();
@@ -251,7 +251,7 @@ async function renderImobileCards(imobileData) {
  * Creeaza HTML-ul pentru un card de imobil
  */
 function createImobilCard(imobil, isLiked = false) {
-  const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${APP_CONFIG.API.BASE_URL}/images/casa1.jpg`;
+  const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : APP_CONFIG.API.BASE_URL + "/images/casa1.jpg";
   const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
   const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
   const surface = imobil.tip_imobil === 'teren' ? 
@@ -344,7 +344,7 @@ function displayError(message) {
 // Functii pentru like
 async function toggleLike(anuntId, buttonElement) {
     try {
-        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}`, {
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}", {
             method: "POST',
             credentials: 'include'
         });
@@ -373,12 +373,9 @@ async function toggleLike(anuntId, buttonElement) {
 
 async function checkLikeStatus(anuntId) {
     try {
-        const user = JSON.parse(sessionStorage.getItem('currentUser'));
-        if (!user) {
-            return false; // Daca nu e conectat, sigur nu are like
-        }
+        const user = JSON.parse(sessionStorage.getItem('currentUser",
         
-        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}`, {
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}", {
             method: "GET',
             credentials: 'include'
         });
@@ -455,8 +452,7 @@ async function addLikeEventListeners() {
  * Gestioneaza schimbarea straturilor
  */
 function handleLayerChange(event) {
-  if (event.target.classList.contains('layer-checkbox')) {
-    const label = document.querySelector(`label[for="${event.target.id}"]`);
+  if (event.target.classList.contains('layer-checkbox","]`);
     if (label) {
       if (event.target.checked) {
         label.classList.add('active');

@@ -2,7 +2,7 @@
 const APP_CONFIG = {
   // URL-uri API
   API: {
-    BASE_URL: APP_CONFIG.API.BASE_URL,
+    BASE_URL: 'APP_CONFIG.API.BASE_URL',
     ENDPOINTS: {
       // Imobile
       IMOBILE: APP_CONFIG.API.ENDPOINTS.IMOBILE,
@@ -20,7 +20,7 @@ const APP_CONFIG = {
         CURRENT_USER: APP_CONFIG.API.ENDPOINTS.AUTH.CURRENT_USER
       },
       
-      // Likes & Favorites
+      // Likes si Favorites
       LIKES: APP_CONFIG.API.ENDPOINTS.LIKES,
       FAVORITES: APP_CONFIG.API.ENDPOINTS.FAVORITES
     }
@@ -28,8 +28,8 @@ const APP_CONFIG = {
   
   // URL-uri pentru resurse statice
   STATIC: {
-    IMAGES: '/images',
-    DEFAULT_IMAGE: APP_CONFIG.STATIC.DEFAULT_IMAGE
+    IMAGES: APP_CONFIG.STATIC.IMAGES,
+    DEFAULT_IMAGE: '/images/casa1.jpg'
   },
   
   // Functii helper pentru construirea URL-urilor complete

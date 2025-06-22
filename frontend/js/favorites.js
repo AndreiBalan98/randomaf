@@ -11,7 +11,7 @@ async function initializeFavorites() {
 
 async function loadFavorites() {
     try {
-        const response = await fetch(APP_CONFIG.API.BASE_URL + APP_CONFIG.API.ENDPOINTS.FAVORITES, {
+        const response = await fetch(APP_CONFIG.getApiUrl(APP_CONFIG.API.ENDPOINTS.FAVORITES), {
             method: 'GET',
             credentials: 'include'
         });
@@ -26,7 +26,7 @@ async function loadFavorites() {
         const favoritesWithImages = await Promise.all(
             favorites.map(async (favorite) => {
                 try {
-                    const imgResponse = await fetch(APP_CONFIG.API.BASE_URL + "/api/imagini/${favorite.id}`);
+                    const imgResponse = await fetch(APP_CONFIG.API.BASE_URL + "/api/imagini/${favorite.id}");
                     const imagini = await imgResponse.json();
                     return { ...favorite, imagini };
                 } catch (error) {
@@ -101,7 +101,7 @@ async function checkLikeStatus(anuntId) {
             return false; // Daca nu e conectat, sigur nu are like
         }
         
-        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}`, {
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}", {
             method: "GET',
             credentials: 'include'
         });
@@ -111,14 +111,13 @@ async function checkLikeStatus(anuntId) {
             return result.liked;
         }
     } catch (error) {
-        console.error('Eroare verificare like:', error);
-    }
+        console.error('Eroare verificare like:",
     return false;
 }
 
 async function toggleLike(anuntId, buttonElement) {
     try {
-        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}`, {
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}", {
             method: "POST',
             credentials: 'include'
         });
@@ -146,9 +145,7 @@ async function toggleLike(anuntId, buttonElement) {
 }
 
 function displayFavoritesError(message) {
-    const container = document.getElementById('favoriteCards');
-    if (container) {
-        container.innerHTML = `<p style="color:red; text-align: center;">${message}</p>`;
+    const container = document.getElementById('favoriteCards",</p>`;
     }
 }
 

@@ -44,7 +44,7 @@ async function checkAuthAndLoad(file) {
   if (needsAuth) {
     // Verifica daca user-ul este conectat
     try {
-      const response = await fetch(APP_CONFIG.API.BASE_URL + APP_CONFIG.API.ENDPOINTS.AUTH.CURRENT_USER, {
+      const response = await fetch(APP_CONFIG.getApiUrl(APP_CONFIG.API.ENDPOINTS.AUTH.CURRENT_USER), {
         method: 'GET',
         credentials: 'include'
       });

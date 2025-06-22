@@ -13,7 +13,7 @@ function initializeAuthentication() {
 // Verifica user-ul conectat la incarcarea paginii
 async function checkCurrentUser() {
     try {
-        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/auth/current-user`, {
+        const response = await fetch(APP_CONFIG.getApiUrl(APP_CONFIG.API.ENDPOINTS.AUTH.CURRENT_USER), {
             method: "GET',
             credentials: 'include' // Include cookies
         });
@@ -45,10 +45,7 @@ async function checkCurrentUser() {
 function showUserProfile() {
     if (!currentUser) return;
     
-    const container = document.querySelector('.auth-container');
-    container.innerHTML = `
-        <div class="profile-container">
-            <h2>Bun venit, ${currentUser.username}!</h2>
+    const container = document.querySelector('.auth-container",!</h2>
             <div class="profile-info">
                 <p><strong>Username:</strong> ${currentUser.username}</p>
                 <p><strong>Email:</strong> ${currentUser.email}</p>
@@ -210,7 +207,7 @@ async function handleSubmit(e) {
     
     try {
         const endpoint = currentMode === 'signin' ? APP_CONFIG.API.ENDPOINTS.AUTH.LOGIN : APP_CONFIG.API.ENDPOINTS.AUTH.REGISTER;
-        const response = await fetch(APP_CONFIG.API.BASE_URL + "${endpoint}`, {
+        const response = await fetch(APP_CONFIG.API.BASE_URL + endpoint, {
             method: "POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include', // Include cookies
@@ -241,8 +238,7 @@ async function handleSubmit(e) {
         }
     } catch (error) {
         showMessage('Eroare de conexiune', 'error');
-        console.error('Auth error:', error);
-    } finally {
+        console.error('Auth error:", finally {
         setLoading(false);
     }
 }
@@ -250,7 +246,7 @@ async function handleSubmit(e) {
 // Handle logout
 async function handleLogout() {
     try {
-        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/auth/logout`, {
+        const response = await fetch(APP_CONFIG.getApiUrl(APP_CONFIG.API.ENDPOINTS.AUTH.LOGOUT), {
             method: "POST',
             credentials: 'include'
         });
@@ -275,9 +271,7 @@ async function handleLogout() {
 
 // Utility functions
 function showMessage(text, type) {
-    const container = document.getElementById('messages');
-    if (container) {
-        container.innerHTML = `<div class="message ${type}">${text}</div>`;
+    const container = document.getElementById('messages",">${text}</div>`;
         setTimeout(clearMessages, 5000);
     }
 }
