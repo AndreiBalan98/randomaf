@@ -8,10 +8,10 @@ function handleImobileAdd(req, res) {
     
     req.on('end', () => {
         try {
-            const data = JSON.parse(body);
+            const anunt = JSON.parse(body);
             
             // Validare date obligatorii
-            if (!data.tip_imobil || !data.tip_oferta || !data.titlu || !data.pret) {
+            if (!anunt.tip_imobil || !anunt.tip_oferta || !anunt.titlu || !anunt.pret) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ status: 'error', mesaj: 'Date obligatorii lipsesc!' }));
                 return;
@@ -19,19 +19,20 @@ function handleImobileAdd(req, res) {
             
             // 1. Inserare în tabela anunturi
             const anuntSql = `
-                INSERT INTO anunturi (tip_imobil, tip_oferta, titlu, pret, comision, localizare, descriere)
-                VALUES ($1, $2, $3, $4, $5, $6, $7)
+                INSERT INTO anunturi (tip_imobil, tip_oferta, titlu, pret, comision, localizare, descriere, data_publicare)
+                VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 RETURNING id
             `;
             
             const anuntParams = [
-                data.tip_imobil,
-                data.tip_oferta,
-                data.titlu,
-                data.pret,
-                data.comision || null,
-                data.localizare || null,
-                data.descriere || null
+                anunt.tip_imobil,
+                anunt.tip_oferta,
+                anunt.titlu,
+                anunt.pret,
+                anunt.comision || null,
+                anunt.localizare || null,
+                anunt.descriere || null,
+                anunt.data_publicare || new Date().toISOString()
             ];
             
             pool.query(anuntSql, anuntParams, (err, result) => {
@@ -46,7 +47,7 @@ function handleImobileAdd(req, res) {
                 console.log('Anunt ID creat:', anuntId);
                 
                 // 2. Inserare date specifice în funcție de tip
-                insertSpecificData(pool, data.tip_imobil, anuntId, data.detalii_specifice, (err) => {
+                insertSpecificData(pool, anunt.tip_imobil, anuntId, anunt.detalii_specifice, (err) => {
                     if (err) {
                         console.error('Eroare inserare detalii specifice:', err);
                         res.writeHead(500, { 'Content-Type': 'application/json' });
@@ -55,9 +56,9 @@ function handleImobileAdd(req, res) {
                     }
                     
                     // 3. Inserare imagini (dacă există)
-                    if (data.imagini && data.imagini.length > 0) {
+                    if (anunt.imagini && anunt.imagini.length > 0) {
                         console.log('Inserez imagini pentru anuntId:', anuntId);
-                        insertImages(pool, anuntId, data.imagini, (err) => {
+                        insertImages(pool, anuntId, anunt.imagini, (err) => {
                             if (err) {
                                 console.error('Eroare inserare imagini:', err);
                                 res.writeHead(500, { 'Content-Type': 'application/json' });
@@ -69,7 +70,20 @@ function handleImobileAdd(req, res) {
                             res.end(JSON.stringify({ 
                                 status: 'success', 
                                 mesaj: 'Anunt adăugat cu succes!',
-                                id: anuntId 
+                                id: anuntId,
+                                anunt: {
+                                    id: anuntId,
+                                    tip_imobil: anunt.tip_imobil,
+                                    tip_oferta: anunt.tip_oferta,
+                                    titlu: anunt.titlu,
+                                    pret: parseFloat(anunt.pret),
+                                    comision: anunt.comision ? parseFloat(anunt.comision) : null,
+                                    localizare: anunt.localizare,
+                                    descriere: anunt.descriere,
+                                    data_publicare: anunt.data_publicare,
+                                    imagini: anunt.imagini,
+                                    detalii_specifice: anunt.detalii_specifice
+                                }
                             }));
                         });
                     } else {
@@ -77,7 +91,20 @@ function handleImobileAdd(req, res) {
                         res.end(JSON.stringify({ 
                             status: 'success', 
                             mesaj: 'Anunt adăugat cu succes!',
-                            id: anuntId 
+                            id: anuntId,
+                            anunt: {
+                                id: anuntId,
+                                tip_imobil: anunt.tip_imobil,
+                                tip_oferta: anunt.tip_oferta,
+                                titlu: anunt.titlu,
+                                pret: parseFloat(anunt.pret),
+                                comision: anunt.comision ? parseFloat(anunt.comision) : null,
+                                localizare: anunt.localizare,
+                                descriere: anunt.descriere,
+                                data_publicare: anunt.data_publicare,
+                                imagini: [],
+                                detalii_specifice: anunt.detalii_specifice
+                            }
                         }));
                     }
                 });
@@ -146,6 +173,7 @@ function insertSpecificData(pool, tipImobil, anuntId, detalii, callback) {
             ];
             break;
             
+        case 'spatiu-comercial':
         case 'spatiu_comercial':
             sql = `
                 INSERT INTO spatii_comerciale (anunt_id, suprafata_utila, nr_camere, nr_bai, an_constructie)

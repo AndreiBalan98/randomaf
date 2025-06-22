@@ -49,7 +49,7 @@ async function handleImageUpload(req, res) {
             );
             
             res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ status: 'ok', url: 'images/' + fileName }));
+            res.end(JSON.stringify({ status: 'ok', url: 'images/' + fileName, fileName: fileName }));
         } else {
             res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ status: 'error', mesaj: 'Upload invalid!' }));

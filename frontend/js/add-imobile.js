@@ -162,7 +162,7 @@ function initializeAdd() {
       // Buton confirmă
       document.getElementById('confirmaCardBtn').onclick = function() {
         const draft = JSON.parse(sessionStorage.getItem('draftImobilCard'));
-        fetch('http://localhost:3001/api/imobil', {
+        fetch('http://localhost:3001/api/imobile', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(draft)
@@ -243,56 +243,47 @@ function initializeAdd() {
 
     // Colectează câmpuri comune
     const titlu = document.getElementById('terenTitlu')?.value.trim();
-    const pret = document.getElementById('terenPret')?.value.trim();
+    const pret = parseFloat(document.getElementById('terenPret')?.value.trim()) || 0;
     const locatie = document.getElementById('terenLocalizare')?.value.trim();
     const descriere = document.getElementById('terenDescriere')?.value.trim();
     const tip = document.querySelector('input[name="propertyType"]:checked')?.value || '';
     const tranzactie = document.querySelector('input[name="terenType"]:checked')?.value || '';
     const imagini = window.terenImages?.length ? window.terenImages : [];
+    
+    // Colectează comisionul
+    const comisionSelect = document.getElementById('comisionSelect')?.value;
+    const comisionValue = comisionSelect === 'nu' ? 0 : parseFloat(document.getElementById('comisionCumparator')?.value.trim()) || 0;
 
     // Inițializează câmpuri specifice
     let suprafataUtila = '', suprafataTeren = '', nrCamere = '', nrBai = '';
     let compartimentare = '', confort = '', etaj = '', anConstructie = '';
-    let tipTeren = '', clasificare = '', frontStradal = '', alteDotari = '', suprafata = '';
+    let tipTeren = '', clasificare = '', frontStradal = '', alteDotari = '';
 
     // Colectează câmpuri specifice pe tip
     if (tip === 'apartament') {
-      suprafataUtila = document.getElementById('suprafataUtilaApartament')?.value.trim();
-      nrCamere = document.getElementById('nrCamere')?.value.trim();
-      nrBai = document.getElementById('nrBai')?.value.trim();
+      suprafataUtila = parseFloat(document.getElementById('suprafataUtilaApartament')?.value.trim()) || 0;
+      nrCamere = parseInt(document.getElementById('nrCamere')?.value.trim()) || 0;
+      nrBai = parseInt(document.getElementById('nrBai')?.value.trim()) || 0;
       compartimentare = document.getElementById('compartimentare')?.value.trim();
       confort = document.getElementById('confort')?.value.trim();
-      etaj = document.getElementById('etaj')?.value.trim();
-      anConstructie = document.getElementById('anConstructieApartament')?.value.trim();
+      etaj = parseInt(document.getElementById('etaj')?.value.trim()) || 0;
+      anConstructie = parseInt(document.getElementById('anConstructieApartament')?.value.trim()) || 0;
     } else if (tip === 'casa') {
-      suprafataUtila = document.getElementById('suprafataUtilaCasa')?.value.trim();
-      suprafataTeren = document.getElementById('suprafataTerenCasa')?.value.trim();
-      nrCamere = document.getElementById('nrCamere')?.value.trim();
-      nrBai = document.getElementById('nrBai')?.value.trim();
-      anConstructie = document.getElementById('anConstructieCasa')?.value.trim();
+      suprafataUtila = parseFloat(document.getElementById('suprafataUtilaCasa')?.value.trim()) || 0;
+      suprafataTeren = parseFloat(document.getElementById('suprafataTerenCasa')?.value.trim()) || 0;
+      nrCamere = parseInt(document.getElementById('nrCamere')?.value.trim()) || 0;
+      nrBai = parseInt(document.getElementById('nrBai')?.value.trim()) || 0;
+      anConstructie = parseInt(document.getElementById('anConstructieCasa')?.value.trim()) || 0;
       alteDotari = document.getElementById('alteDotari')?.value.trim();
     } else if (tip === 'teren') {
-      suprafataTeren = document.getElementById('suprafataTerenTeren')?.value.trim();
+      suprafataTeren = parseFloat(document.getElementById('suprafataTerenTeren')?.value.trim()) || 0;
       tipTeren = document.getElementById('terenTipSelect')?.value.trim();
       clasificare = document.getElementById('terenClasificare')?.value.trim();
-      frontStradal = document.getElementById('terenFrontStradal')?.value.trim();
+      frontStradal = parseFloat(document.getElementById('terenFrontStradal')?.value.trim()) || 0;
     } else if (tip === 'spatiu-comercial') {
-      suprafataUtila = document.getElementById('suprafataUtilaSpatiu')?.value.trim();
+      suprafataUtila = parseFloat(document.getElementById('suprafataUtilaSpatiu')?.value.trim()) || 0;
       alteDotari = document.getElementById('alteDotariSpatiu')?.value.trim();
     }
-
-    // Determină suprafața principală
-    if (tip === 'spatiu-comercial' || tip === 'apartament' || tip === 'casa') {
-      suprafata = suprafataUtila;
-    } else if (tip === 'teren') {
-      suprafata = suprafataTeren;
-    }
-
-    console.log({
-      titlu, pret, locatie, descriere, tip, tranzactie, imagini, suprafataUtila, 
-      suprafataTeren, nrCamere, nrBai, compartimentare, confort, etaj, anConstructie, 
-      tipTeren, clasificare, frontStradal, alteDotari
-    });
 
     // Validare câmpuri obligatorii
     if (!titlu || !pret || !locatie || !descriere || !tip || imagini.length === 0 || !tranzactie ||
@@ -305,19 +296,99 @@ function initializeAdd() {
       return;
     }
 
-    // Creează obiectul card complet
-    const card = {
-      titlu, pret, locatie, descriere, tip, tranzactie,
-      imagini: imagini.map(f => URL.createObjectURL(f)),
-      suprafata, suprafataUtila, suprafataTeren, nrCamere, nrBai,
-      compartimentare, confort, etaj, anConstructie, tipTeren,
-      clasificare, frontStradal, alteDotari
+    // Convertește tip-ul pentru a respecta constraint-ul bazei de date
+    const tipImobilDB = tip === 'spatiu-comercial' ? 'spatiu_comercial' : tip;
+
+    // Creează obiectul în formatul cerut
+    const anunt = {
+      tip_imobil: tipImobilDB,
+      tip_oferta: tranzactie,
+      titlu: titlu,
+      pret: pret,
+      comision: comisionValue,
+      localizare: locatie,
+      descriere: descriere,
+      data_publicare: new Date().toISOString(),
+      imagini: imagini.map((file, index) => ({
+        url: `http://localhost:3001/images/${file.name}`, // Presupunem că fișierele vor fi uploadate și vor avea URL-uri
+        ordine: index + 1
+      })),
+      detalii_specifice: {}
     };
 
-    // Salvează draft și afișează card
-    sessionStorage.setItem('draftImobilCard', JSON.stringify(card));
-    document.getElementById('adauga-imobil-form').style.display = 'none';
-    afiseazaCard(card, true);
+    // Adaugă detalii specifice în funcție de tipul imobilului
+    if (tip === 'apartament') {
+      anunt.detalii_specifice = {
+        nr_camere: nrCamere,
+        nr_bai: nrBai,
+        compartimentare: compartimentare,
+        confort: confort,
+        etaj: etaj,
+        an_constructie: anConstructie,
+        suprafata_utila: suprafataUtila
+      };
+    } else if (tip === 'casa') {
+      anunt.detalii_specifice = {
+        nr_camere: nrCamere,
+        nr_bai: nrBai,
+        an_constructie: anConstructie,
+        suprafata_utila: suprafataUtila,
+        suprafata_teren: suprafataTeren,
+        alte_dotari: alteDotari
+      };
+    } else if (tip === 'teren') {
+      anunt.detalii_specifice = {
+        suprafata_teren: suprafataTeren,
+        tip_teren: tipTeren,
+        clasificare: clasificare,
+        front_stradal: frontStradal
+      };
+    } else if (tip === 'spatiu-comercial') {
+      anunt.detalii_specifice = {
+        suprafata_utila: suprafataUtila,
+        alte_dotari: alteDotari
+      };
+    }
+
+    console.log('Anunt creat:', anunt);
+
+    // Trimite request către server
+    fetch(`${API_BASE_URL}/api/imobile`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(anunt)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'success') {
+        alert('Anuntul a fost adăugat cu succes!');
+        // Salvează pentru afișarea card-ului
+        sessionStorage.setItem('draftImobilCard', JSON.stringify(anunt));
+        document.getElementById('adauga-imobil-form').style.display = 'none';
+        
+        // Pentru afișarea card-ului, convertește înapoi la formatul vechi temporar
+        const cardForDisplay = {
+          titlu: anunt.titlu,
+          pret: anunt.pret,
+          locatie: anunt.localizare,
+          descriere: anunt.descriere,
+          tip: anunt.tip_imobil,
+          tranzactie: anunt.tip_oferta,
+          imagini: anunt.imagini.map(img => img.url),
+          suprafata: anunt.tip_imobil === 'teren' ? anunt.detalii_specifice.suprafata_teren : anunt.detalii_specifice.suprafata_utila
+        };
+        
+        afiseazaCard(cardForDisplay, true);
+      } else {
+        alert('Eroare la adăugarea anuntului: ' + data.mesaj);
+      }
+    })
+    .catch(error => {
+      console.error('Eroare:', error);
+      alert('Eroare la comunicarea cu serverul!');
+    });
   });
 
   // === INIȚIALIZARE ===
