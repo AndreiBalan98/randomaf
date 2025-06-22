@@ -3,14 +3,14 @@
 let currentMode = 'signin';
 let currentUser = null; // Variabila globala pentru user-ul conectat
 
-// Inițializare
+// Initializare
 function initializeAuthentication() {
     setupEventListeners();
-    checkCurrentUser(); // Verifică dacă există user conectat
-    console.log('Sistem autentificare inițializat');
+    checkCurrentUser(); // Verifica daca exista user conectat
+    console.log('Sistem autentificare initializat');
 }
 
-// Verifică user-ul conectat la încărcarea paginii
+// Verifica user-ul conectat la incarcarea paginii
 async function checkCurrentUser() {
     try {
         const response = await fetch(`${API_BASE_URL}/api/auth/current-user`, {
@@ -24,10 +24,10 @@ async function checkCurrentUser() {
             currentUser = result.user;
             console.log('User conectat:', currentUser.username);
             
-            // Salvează și în sessionStorage pentru acces rapid
+            // Salveaza si in sessionStorage pentru acces rapid
             sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
             
-            // Dacă user-ul este conectat, redirectează la profil
+            // Daca user-ul este conectat, redirecteaza la profil
             showUserProfile();
         } else {
             currentUser = null;
@@ -41,7 +41,7 @@ async function checkCurrentUser() {
     }
 }
 
-// Afișează profilul user-ului conectat
+// Afiseaza profilul user-ului conectat
 function showUserProfile() {
     if (!currentUser) return;
     
@@ -55,7 +55,7 @@ function showUserProfile() {
                 <p><strong>Membru din:</strong> ${new Date(currentUser.data_inregistrare).toLocaleDateString('ro-RO')}</p>
             </div>
             <div class="profile-actions">
-                <button id="logout-btn" class="logout-btn">Deconectează-te</button>
+                <button id="logout-btn" class="logout-btn">Deconecteaza-te</button>
             </div>
         </div>
     `;
@@ -98,8 +98,8 @@ function setMode(mode) {
     
     // Update UI
     const isSignup = mode === 'signup';
-    document.getElementById('auth-title').textContent = isSignup ? 'Înregistrează-te' : 'Conectează-te';
-    document.getElementById('submit-text').textContent = isSignup ? 'Înregistrează-te' : 'Conectează-te';
+    document.getElementById('auth-title').textContent = isSignup ? 'Inregistreaza-te' : 'Conecteaza-te';
+    document.getElementById('submit-text').textContent = isSignup ? 'Inregistreaza-te' : 'Conecteaza-te';
     
     // Show/hide email field
     const emailField = document.getElementById('email-field');
@@ -139,7 +139,7 @@ function validateField(fieldId) {
     switch (fieldId) {
         case 'username':
             if (value.length < 3) error = 'Minim 3 caractere';
-            else if (!/^[a-zA-Z0-9_]+$/.test(value)) error = 'Doar litere, cifre și _';
+            else if (!/^[a-zA-Z0-9_]+$/.test(value)) error = 'Doar litere, cifre si _';
             break;
         case 'email':
             if (currentMode === 'signup' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
@@ -179,7 +179,7 @@ function validateForm() {
     fields.forEach(field => {
         const input = document.getElementById(field);
         if (!input.value.trim()) {
-            showMessage('Toate câmpurile sunt obligatorii', 'error');
+            showMessage('Toate campurile sunt obligatorii', 'error');
             isValid = false;
         } else if (!validateField(field)) {
             isValid = false;
@@ -221,7 +221,7 @@ async function handleSubmit(e) {
         
         if (result.success) {
             if (currentMode === 'signin') {
-                showMessage('Conectare reușită!', 'success');
+                showMessage('Conectare reusita!', 'success');
                 currentUser = result.user;
                 sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
     
@@ -261,12 +261,12 @@ async function handleLogout() {
             currentUser = null;
             sessionStorage.removeItem('currentUser');
             
-            // Reîncarcă pagina de autentificare
+            // Reincarca pagina de autentificare
             location.reload();
         }
     } catch (error) {
         console.error('Eroare logout:', error);
-        // Forțează logout local chiar dacă server-ul nu răspunde
+        // Forteaza logout local chiar daca server-ul nu raspunde
         currentUser = null;
         sessionStorage.removeItem('currentUser');
         location.reload();
@@ -304,12 +304,12 @@ function setLoading(loading) {
     
     if (btn && text) {
         btn.disabled = loading;
-        text.textContent = loading ? 'Se procesează...' : 
-            (currentMode === 'signin' ? 'Conectează-te' : 'Înregistrează-te');
+        text.textContent = loading ? 'Se proceseaza...' : 
+            (currentMode === 'signin' ? 'Conecteaza-te' : 'Inregistreaza-te');
     }
 }
 
-// Funcții globale pentru accesul la user-ul conectat
+// Functii globale pentru accesul la user-ul conectat
 function getCurrentUser() {
     return currentUser;
 }
@@ -318,7 +318,7 @@ function isUserLoggedIn() {
     return currentUser !== null;
 }
 
-// Export pentru utilizare globală
+// Export pentru utilizare globala
 window.initializeAuthentication = initializeAuthentication;
 window.getCurrentUser = getCurrentUser;
 window.isUserLoggedIn = isUserLoggedIn;

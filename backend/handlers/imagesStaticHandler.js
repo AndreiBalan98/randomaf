@@ -3,7 +3,7 @@ function handleImagesStatic(req, res) {
     const path = require('path');
 
     const filePath = path.join(__dirname, '..', req.url);
-    console.log('Calea fișierului:', filePath);
+    console.log('Calea fisierului:', filePath);
 
     fs.readFile(filePath, (err, data) => {
         if (err) {

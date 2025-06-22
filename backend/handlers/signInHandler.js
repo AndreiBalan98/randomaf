@@ -21,12 +21,12 @@ function handleSignIn(req, res) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     success: false, 
-                    message: 'Username și parola sunt obligatorii!' 
+                    message: 'Username si parola sunt obligatorii!' 
                 }));
                 return;
             }
             
-            // Caută user-ul în baza de date
+            // Cauta user-ul in baza de date
             const sql = `
                 SELECT id, username, email, password_hash, data_inregistrare 
                 FROM users 
@@ -35,7 +35,7 @@ function handleSignIn(req, res) {
             
             pool.query(sql, [username], async (err, result) => {
                 if (err) {
-                    console.error('Eroare căutare user:', err);
+                    console.error('Eroare cautare user:', err);
                     res.writeHead(500, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ 
                         success: false, 
@@ -48,7 +48,7 @@ function handleSignIn(req, res) {
                     res.writeHead(401, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ 
                         success: false, 
-                        message: 'Username sau parolă incorectă!' 
+                        message: 'Username sau parola incorecta!' 
                     }));
                     return;
                 }
@@ -56,22 +56,22 @@ function handleSignIn(req, res) {
                 const user = result.rows[0];
                 
                 try {
-                    // Verifică parola
+                    // Verifica parola
                     const isPasswordValid = await bcrypt.compare(password, user.password_hash);
                     
                     if (!isPasswordValid) {
                         res.writeHead(401, { 'Content-Type': 'application/json' });
                         res.end(JSON.stringify({ 
                             success: false, 
-                            message: 'Username sau parolă incorectă!' 
+                            message: 'Username sau parola incorecta!' 
                         }));
                         return;
                     }
                     
-                    // Generează session token
+                    // Genereaza session token
                     const sessionToken = crypto.randomBytes(32).toString('hex');
                     
-                    // Salvează sesiunea (fără password_hash)
+                    // Salveaza sesiunea (fara password_hash)
                     const userSession = {
                         id: user.id,
                         username: user.username,
@@ -84,7 +84,7 @@ function handleSignIn(req, res) {
                     
                     console.log('User logat:', user.username, 'Token:', sessionToken.substring(0, 8) + '...');
                     
-                    // Setează cookie-ul cu session token
+                    // Seteaza cookie-ul cu session token
                     const cookieOptions = [
                         `session_token=${sessionToken}`,
                         'HttpOnly', // Pentru securitate
@@ -100,12 +100,12 @@ function handleSignIn(req, res) {
                     
                     res.end(JSON.stringify({ 
                         success: true, 
-                        message: 'Conectare reușită!',
+                        message: 'Conectare reusita!',
                         user: userSession
                     }));
                     
                 } catch (compareError) {
-                    console.error('Eroare verificare parolă:', compareError);
+                    console.error('Eroare verificare parola:', compareError);
                     res.writeHead(500, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ 
                         success: false, 
@@ -125,12 +125,12 @@ function handleSignIn(req, res) {
     });
 }
 
-// Funcție helper pentru verificarea sesiunii
+// Functie helper pentru verificarea sesiunii
 function getActiveSession(sessionToken) {
     return activeSessions.get(sessionToken) || null;
 }
 
-// Funcție helper pentru ștergerea sesiunii
+// Functie helper pentru stergerea sesiunii
 function deleteSession(sessionToken) {
     return activeSessions.delete(sessionToken);
 }

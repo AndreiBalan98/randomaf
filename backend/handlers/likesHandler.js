@@ -2,13 +2,13 @@ const pool = require('../config/database');
 const { getActiveSession } = require('./signInHandler');
 const { parseCookies } = require('./getCurrentUserHandler');
 
-// Handler pentru adăugare/ștergere like
+// Handler pentru adaugare/stergere like
 function handleLikeToggle(req, res) {
     const url = require('url');
     const parsedUrl = url.parse(req.url, true);
     const anuntId = parsedUrl.pathname.split('/').pop();
 
-    // Verifică autentificarea
+    // Verifica autentificarea
     const cookies = parseCookies(req.headers.cookie || '');
     const sessionToken = cookies.session_token;
     const userSession = getActiveSession(sessionToken);
@@ -31,24 +31,24 @@ function handleLikeToggle(req, res) {
             }
 
             if (result.rows.length > 0) {
-                // Există deja, îl ștergem
+                // Exista deja, il stergem
                 const deleteSql = 'DELETE FROM likes WHERE user_id = $1 AND anunt_id = $2';
                 pool.query(deleteSql, [userSession.id, anuntId], (err) => {
                     if (err) {
                         res.writeHead(500, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Eroare la ștergere' }));
+                        res.end(JSON.stringify({ error: 'Eroare la stergere' }));
                         return;
                     }
                     res.writeHead(200, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ liked: false }));
                 });
             } else {
-                // Nu există, îl adăugăm
+                // Nu exista, il adaugam
                 const insertSql = 'INSERT INTO likes (user_id, anunt_id) VALUES ($1, $2)';
                 pool.query(insertSql, [userSession.id, anuntId], (err) => {
                     if (err) {
                         res.writeHead(500, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Eroare la adăugare' }));
+                        res.end(JSON.stringify({ error: 'Eroare la adaugare' }));
                         return;
                     }
                     res.writeHead(200, { 'Content-Type': 'application/json' });
@@ -57,7 +57,7 @@ function handleLikeToggle(req, res) {
             }
         });
     } else if (req.method === 'GET') {
-        // Verifică dacă user-ul a dat like
+        // Verifica daca user-ul a dat like
         const sql = 'SELECT * FROM likes WHERE user_id = $1 AND anunt_id = $2';
         pool.query(sql, [userSession.id, anuntId], (err, result) => {
             if (err) {
@@ -71,7 +71,7 @@ function handleLikeToggle(req, res) {
     }
 }
 
-// Handler pentru obținerea favoritelor unui user
+// Handler pentru obtinerea favoritelor unui user
 function handleGetFavorites(req, res) {
     const cookies = parseCookies(req.headers.cookie || '');
     const sessionToken = cookies.session_token;

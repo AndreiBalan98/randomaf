@@ -50,49 +50,49 @@ function handleImobileGet(req, res) {
     const params = [];
     let paramIndex = 1;
 
-    // Filtrare după preț minim
+    // Filtrare dupa pret minim
     if (query.get('minPrice')) {
         sql += ` AND a.pret >= $${paramIndex}`;
         params.push(parseFloat(query.get('minPrice')));
         paramIndex++;
     }
 
-    // Filtrare după preț maxim
+    // Filtrare dupa pret maxim
     if (query.get('maxPrice')) {
         sql += ` AND a.pret <= $${paramIndex}`;
         params.push(parseFloat(query.get('maxPrice')));
         paramIndex++;
     }
 
-    // Filtrare după tipul imobilului
+    // Filtrare dupa tipul imobilului
     if (query.get('tip')) {
         sql += ` AND a.tip_imobil = $${paramIndex}`;
         params.push(query.get('tip'));
         paramIndex++;
     }
 
-    // Filtrare după tipul ofertei
+    // Filtrare dupa tipul ofertei
     if (query.get('oferta')) {
         sql += ` AND a.tip_oferta = $${paramIndex}`;
         params.push(query.get('oferta'));
         paramIndex++;
     }
 
-    // Filtrare după oraș
+    // Filtrare dupa oras
     if (query.get('oras')) {
         sql += ` AND LOWER(SPLIT_PART(a.localizare, ',', 1)) = $${paramIndex}`;
         params.push(query.get('oras').toLowerCase());
         paramIndex++;
     }
 
-    // Filtrare după localitate
+    // Filtrare dupa localitate
     if (query.get('localitate')) {
         sql += ` AND LOWER(TRIM(SPLIT_PART(a.localizare, ',', 2))) = $${paramIndex}`;
         params.push(query.get('localitate').toLowerCase());
         paramIndex++;
     }
 
-    // Filtrare după ownership
+    // Filtrare dupa ownership
     if (query.get('userId')) {
         sql = sql.replace(
             'WHERE 1=1',
@@ -121,7 +121,7 @@ function handleImobileGet(req, res) {
             return;
         }
 
-        // Filtrare după search în descriere
+        // Filtrare dupa search in descriere
         let filteredRows = result.rows;
         if (query.get('search')) {
             const searchTerms = query.get('search').split(',').map(term => term.trim().toLowerCase()).filter(term => term.length > 0);
@@ -139,7 +139,7 @@ function handleImobileGet(req, res) {
             return;
         }
 
-        // Obținere imagini pentru toate anunturile
+        // Obtinere imagini pentru toate anunturile
         const anuntIds = filteredRows.map(row => row.id);
         const imaginiSql = `
             SELECT anunt_id, url, ordine 
@@ -150,13 +150,13 @@ function handleImobileGet(req, res) {
 
         pool.query(imaginiSql, [anuntIds], (errImagini, resultImagini) => {
             if (errImagini) {
-                console.error('Eroare la încărcarea imaginilor:', errImagini);
+                console.error('Eroare la incarcarea imaginilor:', errImagini);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ status: 'error', mesaj: 'Eroare la încărcarea imaginilor!' }));
+                res.end(JSON.stringify({ status: 'error', mesaj: 'Eroare la incarcarea imaginilor!' }));
                 return;
             }
 
-            // Grupare imagini după anunt_id
+            // Grupare imagini dupa anunt_id
             const imaginiMap = {};
             resultImagini.rows.forEach(img => {
                 if (!imaginiMap[img.anunt_id]) {
@@ -168,7 +168,7 @@ function handleImobileGet(req, res) {
                 });
             });
 
-            // Structurare răspuns final
+            // Structurare raspuns final
             const anunturi = filteredRows.map(row => {
                 // Date comune pentru toate anunturile
                 const anunt = {
@@ -184,7 +184,7 @@ function handleImobileGet(req, res) {
                     imagini: imaginiMap[row.id] || []
                 };
 
-                // Date specifice în funcție de tipul imobilului
+                // Date specifice in functie de tipul imobilului
                 switch (row.tip_imobil) {
                     case 'apartament':
                         anunt.detalii_specifice = {

@@ -14,7 +14,7 @@ const hostname              = 'localhost';
 const port                  = 3001;
 
 const server = http.createServer((req, res) => {
-    console.log('Cerere primită:', req.method, req.url);
+    console.log('Cerere primita:', req.method, req.url);
     
     // CORS
     res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
@@ -63,5 +63,5 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(port, hostname, () => {
-  console.log(`Serverul rulează pe http://${hostname}:${port}`);
+  console.log(`Serverul ruleaza pe http://${hostname}:${port}`);
 });

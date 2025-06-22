@@ -22,7 +22,7 @@ async function loadFavorites() {
         
         const favorites = await response.json();
         
-        // Pentru fiecare favorit, încarcă imaginile
+        // Pentru fiecare favorit, incarca imaginile
         const favoritesWithImages = await Promise.all(
             favorites.map(async (favorite) => {
                 try {
@@ -30,7 +30,7 @@ async function loadFavorites() {
                     const imagini = await imgResponse.json();
                     return { ...favorite, imagini };
                 } catch (error) {
-                    console.error(`Eroare încărcare imagini pentru ${favorite.id}:`, error);
+                    console.error(`Eroare incarcare imagini pentru ${favorite.id}:`, error);
                     return { ...favorite, imagini: [] };
                 }
             })
@@ -39,8 +39,8 @@ async function loadFavorites() {
         renderFavoriteCards(favoritesWithImages);
         
     } catch (error) {
-        console.error('Eroare la încărcarea favoritelor:', error);
-        displayFavoritesError('Eroare la încărcarea favoritelor!');
+        console.error('Eroare la incarcarea favoritelor:', error);
+        displayFavoritesError('Eroare la incarcarea favoritelor!');
     }
 }
 
@@ -49,11 +49,11 @@ function renderFavoriteCards(favorites) {
     if (!container) return;
     
     if (!favorites || favorites.length === 0) {
-        container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2em; margin-top: 50px;">Încă nu ai dat niciun like!</p>';
+        container.innerHTML = '<p style="text-align: center; color: #666; font-size: 1.2em; margin-top: 50px;">Inca nu ai dat niciun like!</p>';
         return;
     }
     
-    // SCHIMBAREA IMPORTANTĂ: Nu mai forțăm isLiked = true
+    // SCHIMBAREA IMPORTANTA: Nu mai fortam isLiked = true
     container.innerHTML = favorites.map(favorite => createImobilCard(favorite, false)).join('');
     
     // Event listeners pentru butoanele de detalii
@@ -70,7 +70,7 @@ async function addLikeEventListeners() {
         const cardElement = btn.closest('.imobil-card');
         const anuntId = cardElement.querySelector('.imobil-detalii-btn').getAttribute('data-id');
         
-        // SCHIMBAREA IMPORTANTĂ: Verifică statusul real în loc să forțezi liked
+        // SCHIMBAREA IMPORTANTA: Verifica statusul real in loc sa fortezi liked
         const user = JSON.parse(sessionStorage.getItem('currentUser'));
         if (user) {
             const isLiked = await checkLikeStatus(anuntId);
@@ -88,7 +88,7 @@ async function addLikeEventListeners() {
             
             await toggleLike(anuntId, this);
             
-            // Refresh favorites după unlike
+            // Refresh favorites dupa unlike
             setTimeout(() => loadFavorites(), 500);
         });
     }
@@ -98,7 +98,7 @@ async function checkLikeStatus(anuntId) {
     try {
         const user = JSON.parse(sessionStorage.getItem('currentUser'));
         if (!user) {
-            return false; // Dacă nu e conectat, sigur nu are like
+            return false; // Daca nu e conectat, sigur nu are like
         }
         
         const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
@@ -125,7 +125,7 @@ async function toggleLike(anuntId, buttonElement) {
         
         if (!response.ok) {
             if (response.status === 401) {
-                alert('Trebuie să fii conectat pentru a adăuga la favorite!');
+                alert('Trebuie sa fii conectat pentru a adauga la favorite!');
                 return;
             }
             throw new Error(`HTTP error! status: ${response.status}`);

@@ -1,5 +1,5 @@
 /* ============================================
-   VARIABILE CSS - CULORI ȘI DIMENSIUNI
+   VARIABILE CSS - CULORI SI DIMENSIUNI
    ============================================ */
 :root {
   /* Culori principale */
@@ -27,7 +27,7 @@
   --icon-size: 60px;
   --thumbnail-size: 90px;
   
-  /* Spațiere */
+  /* Spatiere */
   --spacing-small: 8px;
   --spacing-medium: 15px;
   --spacing-large: 20px;
@@ -48,7 +48,7 @@
   box-shadow: 0 4px 12px rgba(67, 17, 100, 0.1);
 }
 
-/* Zona cu informațiile */
+/* Zona cu informatiile */
 .detalii-info {
   padding: var(--spacing-large);
 }
@@ -139,10 +139,10 @@
 }
 
 /* ============================================
-   SELECȚIA TIPULUI DE PROPRIETATE
+   SELECTIA TIPULUI DE PROPRIETATE
    ============================================ */
 
-/* Container principal pentru selecția tipului */
+/* Container principal pentru selectia tipului */
 .property-type-selection {
   display: flex;
   justify-content: space-between;
@@ -153,7 +153,7 @@
   padding: var(--spacing-medium);
 }
 
-/* Fiecare opțiune de tip proprietate */
+/* Fiecare optiune de tip proprietate */
 .property-type-option {
   flex: 1;
   text-align: center;
@@ -188,7 +188,7 @@
   color: var(--primary-color-alpha);
 }
 
-/* Hover state pentru opțiunile de proprietate */
+/* Hover state pentru optiunile de proprietate */
 .property-type-option label:hover {
   background-color: #f0f0f0;
   color: var(--primary-color);
@@ -211,10 +211,10 @@
 }
 
 /* ============================================
-   OPȚIUNI EXTRA PENTRU TEREN
+   OPTIUNI EXTRA PENTRU TEREN
    ============================================ */
 
-/* Container principal pentru opțiuni extra teren */
+/* Container principal pentru optiuni extra teren */
 .teren-extra-options {
   margin-top: -40px !important;
   display: flex;
@@ -226,7 +226,7 @@
   margin-left: var(--spacing-xl);
 }
 
-/* Rând cu radio buttons pentru teren */
+/* Rand cu radio buttons pentru teren */
 .teren-extra-options .teren-radio-row {
   margin-top: -15px;
   margin-bottom: -10px;
@@ -242,7 +242,7 @@
   margin-top: 10px !important;
 }
 
-/* Labels pentru opțiunile extra */
+/* Labels pentru optiunile extra */
 .teren-extra-options label {
   display: flex;
   align-items: center;
@@ -270,7 +270,7 @@
   transition: all 0.2s;
 }
 
-/* Radio buttons pentru opțiuni teren */
+/* Radio buttons pentru optiuni teren */
 .teren-extra-options input[type="radio"] {
   accent-color: #5d307a;
   width: 18px;
@@ -279,17 +279,17 @@
   cursor: pointer;
 }
 
-/* Text după radio buttons */
+/* Text dupa radio buttons */
 .teren-extra-options label span {
   display: inline-block;
   transition: color 0.2s;
 }
 
 /* ============================================
-   CÂMPURI FORMULAR PENTRU TEREN
+   CAMPURI FORMULAR PENTRU TEREN
    ============================================ */
 
-/* Rând pentru titlul terenului */
+/* Rand pentru titlul terenului */
 .teren-titlu-row {
   display: flex;
   flex-direction: column;
@@ -329,7 +329,7 @@
 }
 
 /* ============================================
-   SECȚIUNEA PENTRU IMAGINI
+   SECTIUNEA PENTRU IMAGINI
    ============================================ */
 
 /* Container principal pentru imagini */
@@ -342,7 +342,7 @@
   gap: 10px;
 }
 
-/* Informații despre upload */
+/* Informatii despre upload */
 .teren-imagini-info {
   color: var(--primary-color-alpha);
   font-size: 15px;
@@ -376,7 +376,7 @@
   margin-left: 215px;
 }
 
-/* Lista cu imaginile încărcate */
+/* Lista cu imaginile incarcate */
 .teren-imagini-list {
   display: flex;
   flex-wrap: wrap;
@@ -405,7 +405,7 @@
   object-fit: cover;
 }
 
-/* Buton pentru ștergerea imaginilor */
+/* Buton pentru stergerea imaginilor */
 .teren-imagini-thumb .delete-btn {
   position: absolute;
   top: 3px;
@@ -431,10 +431,10 @@
 }
 
 /* ============================================
-   CÂMPURI DE TIP ȘI FORMULARE
+   CAMPURI DE TIP SI FORMULARE
    ============================================ */
 
-/* Rând pentru tipul de teren */
+/* Rand pentru tipul de teren */
 .teren-tip-row {
   display: flex;
   flex-direction: column;
@@ -445,7 +445,7 @@
   max-width: 400px;
 }
 
-/* Labels pentru câmpuri teren */
+/* Labels pentru campuri teren */
 .teren-field label,
 .teren-field label:hover,
 .teren-tip-label,
@@ -476,10 +476,10 @@
 }
 
 /* ============================================
-   RÂNDURI DE CÂMPURI
+   RANDURI DE CAMPURI
    ============================================ */
 
-/* Rând cu mai multe câmpuri */
+/* Rand cu mai multe campuri */
 .teren-fields-row {
   display: flex;
   gap: 32px;
@@ -489,7 +489,7 @@
   align-items: flex-end;
 }
 
-/* Câmp individual */
+/* Camp individual */
 .teren-field {
   display: flex;
   flex-direction: column;
@@ -575,10 +575,10 @@
 }
 
 /* ============================================
-   CÂMPUL PENTRU COMISION
+   CAMPUL PENTRU COMISION
    ============================================ */
 
-/* Wrapper pentru câmpul de comision */
+/* Wrapper pentru campul de comision */
 .teren-comision-field .input-suffix-wrapper {
   display: flex;
   align-items: stretch;
@@ -653,7 +653,7 @@
 }
 
 /* ============================================
-   CÂMPURI SPECIFICE ȘI DESCRIERE
+   CAMPURI SPECIFICE SI DESCRIERE
    ============================================ */
 
 /* Input pentru localizare */
@@ -688,10 +688,10 @@
 }
 
 /* ============================================
-   SPAȚIERE ȘI MARJINE SPECIFICE
+   SPATIERE SI MARJINE SPECIFICE
    ============================================ */
 
-/* Marjine pentru rânduri specifice */
+/* Marjine pentru randuri specifice */
 .localizare-row, 
 .space-row {
   margin-top: var(--spacing-xl) !important;
@@ -718,13 +718,13 @@
   margin-top: 10px;
 }
 
-/* Ajustare specială pentru spațiul comercial */
+/* Ajustare speciala pentru spatiul comercial */
 .teren-field[data-property-type="spatiu-comercial"] {
   margin-bottom: -130px !important;
 }
 
 /* ============================================
-   CONTAINERE PENTRU CARDURI ȘI NAVIGARE
+   CONTAINERE PENTRU CARDURI SI NAVIGARE
    ============================================ */
 
 /* Container pentru cardurile de imobile */
@@ -743,7 +743,7 @@
   z-index: 10;
 }
 
-/* Informații despre imobil */
+/* Informatii despre imobil */
 .imobil-info {
   display: flex;
   justify-content: space-between;
@@ -760,10 +760,10 @@
 }
 
 /* ============================================
-   LAYOUT PENTRU CONȚINUT PRINCIPAL
+   LAYOUT PENTRU CONTINUT PRINCIPAL
    ============================================ */
 
-/* Container principal pentru conținut */
+/* Container principal pentru continut */
 #mainContent {
   position: relative;
   max-width: 600px;

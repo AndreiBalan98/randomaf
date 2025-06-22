@@ -3,14 +3,14 @@ let navbar = null;
 let menuBtn = null;
 let mainDiv = null;
 
-// Încărcare conținut dinamic
+// Incarcare continut dinamic
 function loadContent(file) {
   fetch(file)
     .then(res => res.text())
     .then(html => {
       document.getElementById("content").innerHTML = html;
 
-      // Execută inițializarea după încărcarea HTML-ului
+      // Executa initializarea dupa incarcarea HTML-ului
       if (file.includes('home.html')) {
         initializeHome();
       }
@@ -30,19 +30,19 @@ function loadContent(file) {
         initializeFavorites();
       }
     })
-    .catch(err => console.error("Eroare la încărcarea fișierului:", err));
+    .catch(err => console.error("Eroare la incarcarea fisierului:", err));
 }
 
-// Verifică autentificarea și redirectează dacă e necesar
+// Verifica autentificarea si redirecteaza daca e necesar
 async function checkAuthAndLoad(file) {
-  // Paginile care necesită autentificare
+  // Paginile care necesita autentificare
   const protectedPages = ['add-imobile.html', 'favorites.html', 'profile.html'];
   
-  // Verifică dacă pagina necesită autentificare
+  // Verifica daca pagina necesita autentificare
   const needsAuth = protectedPages.some(page => file.includes(page));
   
   if (needsAuth) {
-    // Verifică dacă user-ul este conectat
+    // Verifica daca user-ul este conectat
     try {
       const response = await fetch('http://localhost:3001/api/auth/current-user', {
         method: 'GET',
@@ -52,12 +52,12 @@ async function checkAuthAndLoad(file) {
       const result = await response.json();
       
       if (!result.success || !result.user) {
-        // Nu este conectat, încarcă pagina de auth
+        // Nu este conectat, incarca pagina de auth
         loadContent('html/auth.html');
         return;
       }
       
-      // Este conectat, salvează user-ul și încarcă pagina
+      // Este conectat, salveaza user-ul si incarca pagina
       sessionStorage.setItem('currentUser', JSON.stringify(result.user));
       loadContent(file);
     } catch (error) {
@@ -65,12 +65,12 @@ async function checkAuthAndLoad(file) {
       loadContent('html/auth.html');
     }
   } else {
-    // Pagina nu necesită autentificare
+    // Pagina nu necesita autentificare
     loadContent(file);
   }
 }
 
-// Ascunde meniu și extinde conținut
+// Ascunde meniu si extinde continut
 function hideMenuAndExpandContent() {
   navbar.style.display = 'none';
   if(mainDiv) {
@@ -79,7 +79,7 @@ function hideMenuAndExpandContent() {
   }
 }
 
-// Afișează meniu și restrânge conținut
+// Afiseaza meniu si restrange continut
 function showMenuAndShrinkContent() {
   navbar.style.display = 'block';
   if(mainDiv) {
@@ -97,13 +97,13 @@ function toggleMenu() {
   }
 }
 
-// Activare link navigație
+// Activare link navigatie
 function activateNavLink(clickedLink) {
   document.querySelectorAll('nav li a').forEach(l => l.classList.remove('active'));
   clickedLink.classList.add('active');
 }
 
-// Inițializare stare meniu
+// Initializare stare meniu
 function initializeMenuState() {
   if (window.innerWidth > 768) {
     showMenuAndShrinkContent();
@@ -125,7 +125,7 @@ function handleResize() {
   }
 }
 
-// Event listeners și inițializare
+// Event listeners si initializare
 window.addEventListener('DOMContentLoaded', function() {
   // Elemente DOM
   navbar = document.getElementById('navbar');

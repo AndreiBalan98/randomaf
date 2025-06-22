@@ -8,49 +8,49 @@ function handleCoordsGet(req, res) {
         const parsedUrl = url.parse(req.url, true);
         const { numeOras, numeLocalitate } = parsedUrl.query;
 
-        // Verifică dacă parametrii sunt prezenți
+        // Verifica daca parametrii sunt prezenti
         if (!numeOras || !numeLocalitate) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Parametrii numeOras și numeLocalitate sunt obligatorii' }));
+            res.end(JSON.stringify({ error: 'Parametrii numeOras si numeLocalitate sunt obligatorii' }));
             return;
         }
 
-        // Construiește calea către fișierul coordinates.json
+        // Construieste calea catre fisierul coordinates.json
         const coordsFilePath = path.join(__dirname, '..', 'coords', 'coordinates.json');
 
-        // Verifică dacă fișierul există
+        // Verifica daca fisierul exista
         if (!fs.existsSync(coordsFilePath)) {
             res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ error: 'Fișierul coordinates.json nu a fost găsit' }));
+            res.end(JSON.stringify({ error: 'Fisierul coordinates.json nu a fost gasit' }));
             return;
         }
 
-        // Citește fișierul coordinates.json
+        // Citeste fisierul coordinates.json
         const coordsData = JSON.parse(fs.readFileSync(coordsFilePath, 'utf8'));
 
-        // Construiește cheia pentru căutare (format: "numeOras/numeLocalitate")
+        // Construieste cheia pentru cautare (format: "numeOras/numeLocalitate")
         const searchKey = `${numeOras}/${numeLocalitate}`;
 
-        // Caută coordonatele în fișier
+        // Cauta coordonatele in fisier
         const coordinates = coordsData[searchKey];
 
         if (coordinates) {
-            // Returnează coordonatele găsite
+            // Returneaza coordonatele gasite
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({
                 lat: coordinates.lat,
                 lon: coordinates.lon
             }));
         } else {
-            // Returnează null dacă nu s-au găsit coordonate
+            // Returneaza null daca nu s-au gasit coordonate
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify(null));
         }
 
     } catch (error) {
-        console.error('Eroare în handleCoordsGet:', error);
+        console.error('Eroare in handleCoordsGet:', error);
         res.writeHead(500, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({ error: 'Eroare internă a serverului' }));
+        res.end(JSON.stringify({ error: 'Eroare interna a serverului' }));
     }
 }
 

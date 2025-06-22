@@ -12,7 +12,7 @@ function initializeAdd() {
   // === VARIABILE GLOBALE ===
   let terenImages = [];
 
-  // === FUNCȚII HELPER ===
+  // === FUNCTII HELPER ===
   function checkTeren() {
     terenExtra.style.display = terenRadio.checked ? 'flex' : 'none';
   }
@@ -29,7 +29,7 @@ function initializeAdd() {
     let arr = Array.from(files);
     if (terenImages.length + arr.length > 16) {
       arr = arr.slice(0, 16 - terenImages.length);
-      alert('Poți adăuga maxim 16 imagini.');
+      alert('Poti adauga maxim 16 imagini.');
     }
     terenImages = terenImages.concat(arr);
     updateImageList();
@@ -98,12 +98,12 @@ function initializeAdd() {
       const failedUploads = results.filter(result => result.status !== 'ok');
       
       if (failedUploads.length > 0) {
-        console.error('Unele imagini nu au fost încărcate:', failedUploads);
+        console.error('Unele imagini nu au fost incarcate:', failedUploads);
         return false;
       }
       return true;
     } catch (error) {
-      console.error('Eroare la încărcarea imaginilor:', error);
+      console.error('Eroare la incarcarea imaginilor:', error);
       return false;
     }
   }
@@ -150,7 +150,7 @@ function initializeAdd() {
   document.getElementById('adauga-imobil-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // Colectează câmpurile
+    // Colecteaza campurile
     const titlu = document.getElementById('terenTitlu')?.value.trim();
     const pret = parseFloat(document.getElementById('terenPret')?.value.trim()) || 0;
     const locatie = document.getElementById('terenLocalizare')?.value.trim();
@@ -161,7 +161,7 @@ function initializeAdd() {
     const comisionSelect = document.getElementById('comisionSelect')?.value;
     const comisionValue = comisionSelect === 'nu' ? 0 : parseFloat(document.getElementById('comisionCumparator')?.value.trim()) || 0;
 
-    // Colectează câmpuri specifice pe tip
+    // Colecteaza campuri specifice pe tip
     let detaliiSpecifice = {};
     
     if (tip === 'apartament') {
@@ -197,13 +197,13 @@ function initializeAdd() {
       };
     }
 
-    // Validare de bază
+    // Validare de baza
     if (!titlu || !pret || !locatie || !descriere || !tip || !tranzactie || terenImages.length === 0) {
-      alert('Completează toate câmpurile obligatorii și adaugă cel puțin o imagine!');
+      alert('Completeaza toate campurile obligatorii si adauga cel putin o imagine!');
       return;
     }
 
-    // Creează obiectul anunț
+    // Creeaza obiectul anunt
     const anunt = {
       tip_imobil: tip === 'spatiu-comercial' ? 'spatiu_comercial' : tip,
       tip_oferta: tranzactie,
@@ -217,7 +217,7 @@ function initializeAdd() {
     };
 
     try {
-      // Adaugă anunțul în baza de date
+      // Adauga anuntul in baza de date
       const response = await fetch('http://localhost:3001/api/imobile', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -232,19 +232,19 @@ function initializeAdd() {
         const uploadSuccess = await uploadImages(data.id);
         
         if (uploadSuccess) {
-          alert('Anunțul și imaginile au fost adăugate cu succes!');
+          alert('Anuntul si imaginile au fost adaugate cu succes!');
           // Reset form
           document.getElementById('adauga-imobil-form').reset();
           terenImages = [];
           updateImageList();
-          // Navighează la pagina de detalii a anunțului nou creat
+          // Navigheaza la pagina de detalii a anuntului nou creat
           loadContent(`html/detalii.html?id=${data.id}`);
           initializeDetalii(data.id);
         } else {
-          alert('Anunțul a fost adăugat, dar au apărut probleme la încărcarea imaginilor.');
+          alert('Anuntul a fost adaugat, dar au aparut probleme la incarcarea imaginilor.');
         }
       } else {
-        alert('Eroare la adăugarea anunțului: ' + (data.mesaj || 'Eroare necunoscută'));
+        alert('Eroare la adaugarea anuntului: ' + (data.mesaj || 'Eroare necunoscuta'));
       }
     } catch (error) {
       console.error('Eroare:', error);
@@ -252,7 +252,7 @@ function initializeAdd() {
     }
   });
 
-  // === INIȚIALIZARE ===
+  // === INITIALIZARE ===
   checkTeren();
   updatePropertyTypeSections();
 }

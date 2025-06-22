@@ -1,47 +1,47 @@
-// Funcția de inițializare pentru hartă
+// Functia de initializare pentru harta
 async function initializeMap() {
     const API_BASE_URL = 'http://localhost:3001';
     
-    // Verifică dacă div-ul pentru hartă există
+    // Verifica daca div-ul pentru harta exista
     const mapElement = document.getElementById('map');
     if (!mapElement) {
-        console.error('Elementul cu id="map" nu a fost găsit');
+        console.error('Elementul cu id="map" nu a fost gasit');
         return;
     }
 
-    // Verifică dacă Leaflet este încărcat
+    // Verifica daca Leaflet este incarcat
     if (typeof L === 'undefined') {
-        console.error('Leaflet nu este încărcat');
+        console.error('Leaflet nu este incarcat');
         return;
     }
 
-    // Inițializează harta centrată pe București
+    // Initializeaza harta centrata pe Bucuresti
     const map = L.map('map', {
-        center: [44.4268, 26.1025], // Coordonatele Bucureștiului
+        center: [44.4268, 26.1025], // Coordonatele Bucurestiului
         zoom: 10,
         zoomControl: true,
         scrollWheelZoom: true
     });
 
-    // Adaugă layer-ul de tile-uri OpenStreetMap
+    // Adauga layer-ul de tile-uri OpenStreetMap
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Adaugă un marker pe București
+    // Adauga un marker pe Bucuresti
     const marker = L.marker([44.4268, 26.1025]).addTo(map);
     
-    // Adaugă un popup pentru marker
-    marker.bindPopup('<b>București</b><br>Capitala României').openPopup();
+    // Adauga un popup pentru marker
+    marker.bindPopup('<b>Bucuresti</b><br>Capitala Romaniei').openPopup();
 
-    // Încarcă imobilele
+    // Incarca imobilele
     try {
         const imobileResponse = await fetch(`${API_BASE_URL}/api/imobile`);
         const imobile = await imobileResponse.json();
 
 
-        // Plasează markeri pentru fiecare imobil
+        // Plaseaza markeri pentru fiecare imobil
         for (const imobil of imobile) {
             try {
                 const { numeOras, numeLocalitate } = parseLocalizare(imobil.localizare);
@@ -54,7 +54,7 @@ async function initializeMap() {
                     
                     const imobilMarker = L.marker([parseFloat(coord.lat), parseFloat(coord.lon)]).addTo(map);
                     
-                    // Adaugă popup cu cardul imobilului
+                    // Adauga popup cu cardul imobilului
                     const cardHTML = createImobilCard(imobil);
                     imobilMarker.bindPopup(cardHTML);
 
@@ -68,7 +68,7 @@ async function initializeMap() {
                         }
                     });
                 } else {
-                    console.warn(`Coordonate nu au fost găsite pentru: ${imobil.localizare}`);
+                    console.warn(`Coordonate nu au fost gasite pentru: ${imobil.localizare}`);
                 }
             } catch (error) {
                 console.error(`Eroare la procesarea imobilului ${imobil.id}:`, error);
@@ -76,26 +76,26 @@ async function initializeMap() {
         }
 
     } catch (error) {
-        console.error('Eroare la încărcarea datelor:', error);
+        console.error('Eroare la incarcarea datelor:', error);
     }
 
-    console.log('Harta Leaflet a fost inițializată cu succes');
+    console.log('Harta Leaflet a fost initializata cu succes');
 }
 
-// Funcție pentru a parsa localizarea și a extrage numele orașului și localității
+// Functie pentru a parsa localizarea si a extrage numele orasului si localitatii
 function parseLocalizare(localizare) {
-    // Separă orașul și localitatea
+    // Separa orasul si localitatea
     const parts = localizare.split(', ');
     if (parts.length !== 2) {
         throw new Error(`Format localizare invalid: ${localizare}`);
     }
     
     const numeOras = parts[0].toLowerCase()
-        .replace(/ă/g, 'a')
-        .replace(/â/g, 'a')
-        .replace(/î/g, 'i')
-        .replace(/ș/g, 's')
-        .replace(/ț/g, 't')
+        .replace(/a/g, 'a')
+        .replace(/a/g, 'a')
+        .replace(/i/g, 'i')
+        .replace(/s/g, 's')
+        .replace(/t/g, 't')
         .replace(/\s+/g, '-');
     
     const numeLocalitate = parts[1];
@@ -106,8 +106,8 @@ function parseLocalizare(localizare) {
 function createImobilCard(imobil) {
     const API_BASE_URL = 'http://localhost:3001';
     const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
-    const price = imobil.pret ? `${imobil.pret} €` : 'Preț la cerere';
-    const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vânzare' : 'Închiriere';
+    const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
+    const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
     const surface = imobil.tip_imobil === 'teren' ? 
         (imobil.detalii_specifice?.suprafata_teren || '-') : 
         (imobil.detalii_specifice?.suprafata_utila || '-');

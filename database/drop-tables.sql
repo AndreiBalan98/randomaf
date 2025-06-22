@@ -2,7 +2,7 @@
 -- DROP TABLES SCRIPT
 -- =========================
 
--- Drop tabelele în ordine inversă pentru a respecta foreign key constraints
+-- Drop tabelele in ordine inversa pentru a respecta foreign key constraints
 DROP TABLE IF EXISTS imagini CASCADE;
 DROP TABLE IF EXISTS apartamente CASCADE;
 DROP TABLE IF EXISTS casee CASCADE;

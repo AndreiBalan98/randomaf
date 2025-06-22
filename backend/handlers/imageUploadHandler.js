@@ -42,9 +42,9 @@ async function handleImageUpload(req, res) {
 
         if (anunt_id && ordine && fileBuffer && originalFileName) {
             try {
-                // Extrage extensia fișierului original
+                // Extrage extensia fisierului original
                 const fileExtension = path.extname(originalFileName);
-                // Creează numele nou în formatul {id}x{ordine}.{extensie}
+                // Creeaza numele nou in formatul {id}x{ordine}.{extensie}
                 const newFileName = `${anunt_id}x${ordine}${fileExtension}`;
                 
                 const imagesDir = path.join(__dirname, '..', 'images');
@@ -55,7 +55,7 @@ async function handleImageUpload(req, res) {
                 const filePath = path.join(imagesDir, newFileName);
                 fs.writeFileSync(filePath, fileBuffer);
                 
-                // Salvează în baza de date cu URL-ul complet
+                // Salveaza in baza de date cu URL-ul complet
                 const fullImageUrl = `http://localhost:3001/images/${newFileName}`;
                 await pool.query(
                     'INSERT INTO imagini (anunt_id, url, ordine) VALUES ($1, $2, $3)',

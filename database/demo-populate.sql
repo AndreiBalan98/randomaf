@@ -66,7 +66,7 @@ DECLARE
     v_localitati_giurgiu TEXT[] := ARRAY['Centru', 'Tineretului', 'Smarda', 'Oinacu', 'Steaua Dunarii'];
     v_localitati_iasi TEXT[] := ARRAY['Centru', 'Copou', 'Tatarasi', 'Nicolina', 'Pacurari', 'CUG', 'Galata', 'Dacia'];
     v_localitati_medias TEXT[] := ARRAY['Centru', 'Gura Campului', 'Vitrometan', 'Dupa Zid', 'Mosnei'];
-    v_localitati_miercurea_ciuc TEXT[] := ARRAY['Centru', 'Szeceny', 'Spicului', 'Nagymező', 'Harghita'];
+    v_localitati_miercurea_ciuc TEXT[] := ARRAY['Centru', 'Szeceny', 'Spicului', 'Nagymezo', 'Harghita'];
     v_localitati_oradea TEXT[] := ARRAY['Centru', 'Rogerius', 'Nufarul', 'Iosia', 'Velenta', 'Oncea', 'Episcopia'];
     v_localitati_petrosani TEXT[] := ARRAY['Centru', 'Aeroport', 'Colonie', 'Dalja', 'Sasa', 'Livezeni'];
     v_localitati_piatra_neamt TEXT[] := ARRAY['Centru', 'Darmanesti', 'Precista', 'Maratei', 'Valeni', 'Ciritei'];
@@ -204,10 +204,10 @@ BEGIN
         END;
         
         -- Generare descriere
-        v_descriere := 'Apartament cu ' || v_nr_camere || ' camere și ' || v_nr_bai || ' băi, suprafața utilă ' || 
+        v_descriere := 'Apartament cu ' || v_nr_camere || ' camere si ' || v_nr_bai || ' bai, suprafata utila ' || 
                       round(v_suprafata_utila) || ' mp. Compartimentare: ' || v_compartimentare || 
                       ', confort: ' || v_confort || '. Situat la etajul ' || v_etaj || 
-                      ', construit în anul ' || v_an_constructie || '. Locație: ' || v_localizare || '.';
+                      ', construit in anul ' || v_an_constructie || '. Locatie: ' || v_localizare || '.';
         
         v_data_publicare := CURRENT_TIMESTAMP - (random() * 30 || ' days')::INTERVAL;
         
@@ -319,9 +319,9 @@ BEGIN
         END;
         
         -- Generare descriere
-        v_descriere := 'Casă cu ' || v_nr_camere || ' camere și ' || v_nr_bai || ' băi, suprafața utilă ' || 
+        v_descriere := 'Casa cu ' || v_nr_camere || ' camere si ' || v_nr_bai || ' bai, suprafata utila ' || 
                       round(v_suprafata_utila) || ' mp, teren ' || round(v_suprafata_teren) || ' mp. ' ||
-                      'Construită în anul ' || v_an_constructie || '. Locație: ' || v_localizare || '.';
+                      'Construita in anul ' || v_an_constructie || '. Locatie: ' || v_localizare || '.';
         
         v_data_publicare := CURRENT_TIMESTAMP - (random() * 30 || ' days')::INTERVAL;
         
@@ -424,9 +424,9 @@ BEGIN
         v_titlu := 'Vand teren ' || round(v_suprafata_teren) || ' mp, ' || v_tip_teren || ', ' || v_localizare;
         
         -- Generare descriere
-        v_descriere := 'Teren ' || v_tip_teren || ' cu suprafața de ' || round(v_suprafata_teren) || 
+        v_descriere := 'Teren ' || v_tip_teren || ' cu suprafata de ' || round(v_suprafata_teren) || 
                       ' mp, clasificare ' || v_clasificare || ', front stradal ' || round(v_front_stradal) || 
-                      ' m. Locație: ' || v_localizare || '.';
+                      ' m. Locatie: ' || v_localizare || '.';
         
         v_data_publicare := CURRENT_TIMESTAMP - (random() * 30 || ' days')::INTERVAL;
         
@@ -537,9 +537,9 @@ BEGIN
         END;
         
         -- Generare descriere
-        v_descriere := 'Spațiu comercial cu suprafața utilă de ' || round(v_suprafata_utila) || 
-                      ' mp, ' || v_nr_camere || ' spații și ' || v_nr_bai || ' băi. ' ||
-                      'Construit în anul ' || v_an_constructie || '. Locație: ' || v_localizare || '.';
+        v_descriere := 'Spatiu comercial cu suprafata utila de ' || round(v_suprafata_utila) || 
+                      ' mp, ' || v_nr_camere || ' spatii si ' || v_nr_bai || ' bai. ' ||
+                      'Construit in anul ' || v_an_constructie || '. Locatie: ' || v_localizare || '.';
         
         v_data_publicare := CURRENT_TIMESTAMP - (random() * 30 || ' days')::INTERVAL;
         

@@ -19,7 +19,7 @@ function handleImobileAdd(req, res) {
                 return;
             }
             
-            // 1. Inserare în tabela anunturi
+            // 1. Inserare in tabela anunturi
             const anuntSql = `
                 INSERT INTO anunturi (tip_imobil, tip_oferta, titlu, pret, comision, localizare, descriere, data_publicare)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -48,12 +48,12 @@ function handleImobileAdd(req, res) {
                 const anuntId = result.rows[0].id;
                 console.log('Anunt ID creat:', anuntId);
 
-                // Obține user-ul din sesiune
+                // Obtine user-ul din sesiune
                 const cookies = parseCookies(req.headers.cookie || '');
                 const sessionToken = cookies.session_token;
                 const userSession = getActiveSession(sessionToken);
 
-                // Salvează ownership dacă user-ul e autentificat
+                // Salveaza ownership daca user-ul e autentificat
                 if (userSession && userSession.id) {
                     const ownershipSql = 'INSERT INTO ownership (user_id, anunt_id) VALUES ($1, $2)';
                     pool.query(ownershipSql, [userSession.id, anuntId], (err) => {
@@ -65,7 +65,7 @@ function handleImobileAdd(req, res) {
                     });
                 }
                 
-                // 2. Inserare date specifice în funcție de tip
+                // 2. Inserare date specifice in functie de tip
                 insertSpecificData(pool, anunt.tip_imobil, anuntId, anunt.detalii_specifice, (err) => {
                     if (err) {
                         console.error('Eroare inserare detalii specifice:', err);
@@ -74,7 +74,7 @@ function handleImobileAdd(req, res) {
                         return;
                     }
                     
-                    // 3. Inserare imagini (dacă există)
+                    // 3. Inserare imagini (daca exista)
                     if (anunt.imagini && anunt.imagini.length > 0) {
                         console.log('Inserez imagini pentru anuntId:', anuntId);
                         insertImages(pool, anuntId, anunt.imagini, (err) => {
@@ -88,7 +88,7 @@ function handleImobileAdd(req, res) {
                             res.writeHead(201, { 'Content-Type': 'application/json' });
                             res.end(JSON.stringify({ 
                                 status: 'success', 
-                                mesaj: 'Anunt adăugat cu succes!',
+                                mesaj: 'Anunt adaugat cu succes!',
                                 id: anuntId,
                                 anunt: {
                                     id: anuntId,
@@ -109,7 +109,7 @@ function handleImobileAdd(req, res) {
                         res.writeHead(201, { 'Content-Type': 'application/json' });
                         res.end(JSON.stringify({ 
                             status: 'success', 
-                            mesaj: 'Anunt adăugat cu succes!',
+                            mesaj: 'Anunt adaugat cu succes!',
                             id: anuntId,
                             anunt: {
                                 id: anuntId,

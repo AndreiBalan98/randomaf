@@ -1,29 +1,29 @@
-// Funcția principală pentru încărcarea detaliilor imobilului
+// Functia principala pentru incarcarea detaliilor imobilului
 async function initializeDetalii(id) {
-  // Încarcă datele imobilului
+  // Incarca datele imobilului
   const card = await obtineImobil(id);
 
   if (!card) return;
 
-  // Încarcă imaginile imobilului
+  // Incarca imaginile imobilului
   const imagini = await obtineImagini(id);
 
-  // Generează și afișează conținutul
+  // Genereaza si afiseaza continutul
   afiseazaDetaliiImobil(card, imagini);
   configureazaGalerieModal();
 
-  // Încarcă și afișează anunțurile relevante
+  // Incarca si afiseaza anunturile relevante
   await incarcaAnunturiRelevante(id, card);
 }
 
-// Obține datele imobilului după ID
+// Obtine datele imobilului dupa ID
 async function obtineImobil(id) {
   const res = await fetch(`${API_BASE_URL}/api/imobile`);
   const anunturi = await res.json();
   return anunturi.find(c => c.id == id);
 }
 
-// Obține imaginile pentru imobil
+// Obtine imaginile pentru imobil
 async function obtineImagini(id) {
   let imagini = [];
   try {
@@ -33,7 +33,7 @@ async function obtineImagini(id) {
   return imagini;
 }
 
-// Generează HTML-ul pentru galeria de imagini
+// Genereaza HTML-ul pentru galeria de imagini
 function genereazaGalerie(imagini, currentSlide = 0) {
   if (!imagini.length) return '';
   return `
@@ -50,52 +50,52 @@ function genereazaGalerie(imagini, currentSlide = 0) {
       </div>
     </div>
     <div id="galerie-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.92);align-items:center;justify-content:center;z-index:9999;">
-      <button id="modal-prev" title="Imaginea anterioară" style="position:absolute;left:3vw;top:50%;transform:translateY(-50%);background:none;border:none;">
+      <button id="modal-prev" title="Imaginea anterioara" style="position:absolute;left:3vw;top:50%;transform:translateY(-50%);background:none;border:none;">
         <svg viewBox="0 0 48 48" width="48" height="48" fill="#fff"><path d="M31.5 39.1 17.4 24l14.1-15.1-2.8-2.8L11.6 24l17.5 19.9z"/></svg>
       </button>
       <img id="modal-img" src="" alt="imagine mare" style="max-width:90vw;max-height:80vh;border-radius:12px;box-shadow:0 4px 32px #0008;">
-      <button id="modal-next" title="Imaginea următoare" style="position:absolute;right:3vw;top:50%;transform:translateY(-50%);background:none;border:none;">
+      <button id="modal-next" title="Imaginea urmatoare" style="position:absolute;right:3vw;top:50%;transform:translateY(-50%);background:none;border:none;">
         <svg viewBox="0 0 48 48" width="48" height="48" fill="#fff"><path d="M16.5 8.9 30.6 24l-14.1 15.1 2.8 2.8L36.4 24 18.9 4.1z"/></svg>
       </button>
-      <button id="modal-close" title="Închide" style="position:absolute;top:3vh;right:3vw;background:#fff8;border:none;font-size:2.2rem;color:#444;border-radius:50%;width:40px;height:40px;cursor:pointer;z-index:10002;">&times;</button>
+      <button id="modal-close" title="Inchide" style="position:absolute;top:3vh;right:3vw;background:#fff8;border:none;font-size:2.2rem;color:#444;border-radius:50%;width:40px;height:40px;cursor:pointer;z-index:10002;">&times;</button>
     </div>
   `;
 }
 
-// Generează HTML-ul pentru detaliile de bază ale imobilului
+// Genereaza HTML-ul pentru detaliile de baza ale imobilului
 function genereazaDetaliiDeBaza(card) {
   const locatie = card.localizare || card.locatie || '-';
   const tranzactie = card.tip_oferta || card.tranzactie || '';
   return `
     <h2 class="detalii-titlu">${card.titlu}</h2>
     <p><strong>Tip:</strong> ${card.tip_imobil || card.tip || '-'}</p>
-    <p><strong>Tranzacție:</strong> ${tranzactie === 'vanzare' ? 'De vânzare' : tranzactie === 'inchiriat' ? 'De închiriat' : ''}</p>
-    <p><strong>Locație:</strong> ${locatie}</p>
-    <p><strong>Suprafață:</strong> ${card.detalii_specifice?.suprafata_utila ? card.detalii_specifice.suprafata_utila + ' mp' : (card.suprafata ? card.suprafata + ' mp' : '-')}</p>
+    <p><strong>Tranzactie:</strong> ${tranzactie === 'vanzare' ? 'De vanzare' : tranzactie === 'inchiriat' ? 'De inchiriat' : ''}</p>
+    <p><strong>Locatie:</strong> ${locatie}</p>
+    <p><strong>Suprafata:</strong> ${card.detalii_specifice?.suprafata_utila ? card.detalii_specifice.suprafata_utila + ' mp' : (card.suprafata ? card.suprafata + ' mp' : '-')}</p>
     <p><strong>Descriere:</strong> ${card.descriere}</p>
   `;
 }
 
-// Generează HTML-ul pentru detaliile specifice după tipul imobilului
+// Genereaza HTML-ul pentru detaliile specifice dupa tipul imobilului
 function genereazaDetaliiSpecifice(card) {
   let detaliiSpecifice = '';
   const detalii = card.detalii_specifice || {};
   if ((card.tip_imobil || card.tip) === 'apartament') {
     detaliiSpecifice = `
       <p><strong>Nr. camere:</strong> ${detalii.nr_camere || card.nr_camere || card.nrCamere || '-'}</p>
-      <p><strong>Nr. băi:</strong> ${detalii.nr_bai || card.nr_bai || card.nrBai || '-'}</p>
+      <p><strong>Nr. bai:</strong> ${detalii.nr_bai || card.nr_bai || card.nrBai || '-'}</p>
       <p><strong>Compartimentare:</strong> ${detalii.compartimentare || card.compartimentare || '-'}</p>
       <p><strong>Confort:</strong> ${detalii.confort || card.confort || '-'}</p>
       <p><strong>Etaj:</strong> ${detalii.etaj || card.etaj || '-'}</p>
-      <p><strong>An construcție:</strong> ${detalii.an_constructie || card.an_constructie || card.anConstructie || '-'}</p>
+      <p><strong>An constructie:</strong> ${detalii.an_constructie || card.an_constructie || card.anConstructie || '-'}</p>
     `;
   } else if ((card.tip_imobil || card.tip) === 'casa' || (card.tip_imobil || card.tip) === 'casee') {
     detaliiSpecifice = `
-      <p><strong>Suprafață teren:</strong> ${detalii.suprafata_teren || card.suprafata_teren || card.suprafataTeren || '-'}</p>
+      <p><strong>Suprafata teren:</strong> ${detalii.suprafata_teren || card.suprafata_teren || card.suprafataTeren || '-'}</p>
       <p><strong>Nr. camere:</strong> ${detalii.nr_camere || card.nr_camere || card.nrCamere || '-'}</p>
-      <p><strong>Nr. băi:</strong> ${detalii.nr_bai || card.nr_bai || card.nrBai || '-'}</p>
-      <p><strong>An construcție:</strong> ${detalii.an_constructie || card.an_constructie || card.anConstructie || '-'}</p>
-      <p><strong>Alte dotări:</strong> ${detalii.alte_dotari || card.alte_dotari || card.alteDotari || '-'}</p>
+      <p><strong>Nr. bai:</strong> ${detalii.nr_bai || card.nr_bai || card.nrBai || '-'}</p>
+      <p><strong>An constructie:</strong> ${detalii.an_constructie || card.an_constructie || card.anConstructie || '-'}</p>
+      <p><strong>Alte dotari:</strong> ${detalii.alte_dotari || card.alte_dotari || card.alteDotari || '-'}</p>
     `;
   } else if ((card.tip_imobil || card.tip) === 'teren') {
     detaliiSpecifice = `
@@ -105,13 +105,13 @@ function genereazaDetaliiSpecifice(card) {
     `;
   } else if ((card.tip_imobil || card.tip) === 'spatiu-comercial' || (card.tip_imobil || card.tip) === 'spatiu_comercial') {
     detaliiSpecifice = `
-      <p><strong>Alte dotări:</strong> ${detalii.alte_dotari || card.alte_dotari || card.alteDotari || '-'}</p>
+      <p><strong>Alte dotari:</strong> ${detalii.alte_dotari || card.alte_dotari || card.alteDotari || '-'}</p>
     `;
   }
   return detaliiSpecifice;
 }
 
-// Afișează detaliile complete ale imobilului
+// Afiseaza detaliile complete ale imobilului
 function afiseazaDetaliiImobil(card, imagini) {
   let currentSlide = 0;
   function renderSlider() {
@@ -194,7 +194,7 @@ function afiseazaDetaliiImobil(card, imagini) {
   renderSlider();
 }
 
-// Configurează funcționalitatea modalului pentru galeria de imagini
+// Configureaza functionalitatea modalului pentru galeria de imagini
 function configureazaGalerieModal() {
   document.querySelectorAll('.galerie-img').forEach(img => {
     img.onclick = function() {
@@ -207,7 +207,7 @@ function configureazaGalerieModal() {
   });
 }
 
-// Încarcă și afișează anunțurile relevante
+// Incarca si afiseaza anunturile relevante
 async function incarcaAnunturiRelevante(idCurent, cardCurent) {
   const res = await fetch(`${API_BASE_URL}/api/imobile`);
   const anunturi = await res.json();
@@ -221,15 +221,15 @@ async function incarcaAnunturiRelevante(idCurent, cardCurent) {
     const imagePath = r.imagine
       ? `${API_BASE_URL}/${r.imagine}`
       : `${API_BASE_URL}/images/casa1.jpg`;
-    const price = r.pret ? `${r.pret} €` : 'Preț la cerere';
+    const price = r.pret ? `${r.pret} €` : 'Pret la cerere';
     const transactionType = r.tip_oferta === 'vanzare'
-      ? 'De vânzare'
+      ? 'De vanzare'
       : r.tip_oferta === 'inchiriat'
-        ? 'De închiriat'
+        ? 'De inchiriat'
         : (r.tranzactie === 'vanzare'
-          ? 'De vânzare'
+          ? 'De vanzare'
           : r.tranzactie === 'inchiriat'
-            ? 'De închiriat'
+            ? 'De inchiriat'
             : '');
     const surface = r.detalii_specifice?.suprafata_utila || r.suprafata || '-';
     return `
@@ -259,7 +259,7 @@ async function incarcaAnunturiRelevante(idCurent, cardCurent) {
 
   document.getElementById('relevante-container').innerHTML = htmlRelevante;
 
-  // Adaugă event listeners pentru butoanele de detalii (SPA)
+  // Adauga event listeners pentru butoanele de detalii (SPA)
   document.querySelectorAll('.imobil-detalii-btn').forEach(btn => {
     btn.addEventListener('click', function() {
       const cardId = this.getAttribute('data-id');

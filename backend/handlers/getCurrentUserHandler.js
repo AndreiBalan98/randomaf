@@ -7,7 +7,7 @@ function handleGetCurrentUser(req, res) {
         const sessionToken = cookies.session_token;
         
         if (!sessionToken) {
-            // Nu există session token
+            // Nu exista session token
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ 
                 success: true, 
@@ -17,31 +17,31 @@ function handleGetCurrentUser(req, res) {
             return;
         }
         
-        // Verifică dacă sesiunea există și este validă
+        // Verifica daca sesiunea exista si este valida
         const userSession = getActiveSession(sessionToken);
         
         if (!userSession) {
             // Session token invalid sau expirat
             res.writeHead(200, { 
                 'Content-Type': 'application/json',
-                'Set-Cookie': 'session_token=; HttpOnly; Path=/; Max-Age=0' // Șterge cookie-ul invalid
+                'Set-Cookie': 'session_token=; HttpOnly; Path=/; Max-Age=0' // Sterge cookie-ul invalid
             });
             res.end(JSON.stringify({ 
                 success: true, 
                 user: null, 
-                message: 'Sesiune expirată' 
+                message: 'Sesiune expirata' 
             }));
             return;
         }
         
-        console.log('User conectat găsit:', userSession.username);
+        console.log('User conectat gasit:', userSession.username);
         
-        // Returnează datele user-ului conectat
+        // Returneaza datele user-ului conectat
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ 
             success: true, 
             user: userSession,
-            message: 'Utilizator conectat găsit'
+            message: 'Utilizator conectat gasit'
         }));
         
     } catch (error) {
@@ -62,13 +62,13 @@ function handleLogout(req, res) {
         const sessionToken = cookies.session_token;
         
         if (sessionToken) {
-            // Șterge sesiunea din memorie
+            // Sterge sesiunea din memorie
             const { deleteSession } = require('./signInHandler');
             deleteSession(sessionToken);
-            console.log('Sesiune ștearsă pentru token:', sessionToken.substring(0, 8) + '...');
+            console.log('Sesiune stearsa pentru token:', sessionToken.substring(0, 8) + '...');
         }
         
-        // Șterge cookie-ul
+        // Sterge cookie-ul
         res.writeHead(200, { 
             'Content-Type': 'application/json',
             'Set-Cookie': 'session_token=; HttpOnly; Path=/; Max-Age=0'
@@ -76,7 +76,7 @@ function handleLogout(req, res) {
         
         res.end(JSON.stringify({ 
             success: true, 
-            message: 'Deconectare reușită' 
+            message: 'Deconectare reusita' 
         }));
         
     } catch (error) {
@@ -89,7 +89,7 @@ function handleLogout(req, res) {
     }
 }
 
-// Funcție helper pentru parsarea cookie-urilor
+// Functie helper pentru parsarea cookie-urilor
 function parseCookies(cookieString) {
     const cookies = {};
     if (!cookieString) return cookies;

@@ -17,17 +17,17 @@ function handleSignUp(req, res) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     success: false, 
-                    message: 'Toate câmpurile sunt obligatorii!' 
+                    message: 'Toate campurile sunt obligatorii!' 
                 }));
                 return;
             }
             
-            // Validare lungime username și password
+            // Validare lungime username si password
             if (username.length < 3) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     success: false, 
-                    message: 'Username-ul trebuie să aibă minim 3 caractere!' 
+                    message: 'Username-ul trebuie sa aiba minim 3 caractere!' 
                 }));
                 return;
             }
@@ -36,12 +36,12 @@ function handleSignUp(req, res) {
                 res.writeHead(400, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     success: false, 
-                    message: 'Parola trebuie să aibă minim 6 caractere!' 
+                    message: 'Parola trebuie sa aiba minim 6 caractere!' 
                 }));
                 return;
             }
             
-            // Verificare dacă username sau email există deja
+            // Verificare daca username sau email exista deja
             const checkSql = `
                 SELECT id FROM users 
                 WHERE username = $1 OR email = $2
@@ -62,7 +62,7 @@ function handleSignUp(req, res) {
                     res.writeHead(400, { 'Content-Type': 'application/json' });
                     res.end(JSON.stringify({ 
                         success: false, 
-                        message: 'Username-ul sau email-ul există deja!' 
+                        message: 'Username-ul sau email-ul exista deja!' 
                     }));
                     return;
                 }
