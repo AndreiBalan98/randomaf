@@ -1,0 +1,37 @@
+<!-- PAGINA DE AUTENTIFICARE SIMPLIFICATA -->
+<div class="auth-container">
+    <!-- Toggle Sign In / Sign Up -->
+    <div class="auth-toggle">
+        <div class="toggle-btn active" data-mode="signin">Conectează-te</div>
+        <div class="toggle-btn" data-mode="signup">Înregistrează-te</div>
+    </div>
+
+    <!-- Formular -->
+    <form id="auth-form" class="auth-form">
+        <h2 id="auth-title">Conectează-te</h2>
+        
+        <div class="auth-field">
+            <label>Nume utilizator:</label>
+            <input type="text" id="username" placeholder="Introdu numele de utilizator" required>
+        </div>
+
+        <div class="auth-field hidden" id="email-field">
+            <label>Email:</label>
+            <input type="email" id="email" placeholder="Introdu adresa de email">
+        </div>
+
+        <div class="auth-field">
+            <label>Parolă:</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" placeholder="Introdu parola" required>
+                <button type="button" class="toggle-password">👁</button>
+            </div>
+        </div>
+
+        <div id="messages"></div>
+
+        <button type="submit" id="submit-btn">
+            <span id="submit-text">Conectează-te</span>
+        </button>
+    </form>
+</div>

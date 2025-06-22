@@ -1,18 +1,24 @@
-/* CSS AUTENTIFICARE SIMPLIFICAT */
-
-:root {
-    --auth-primary: #431164;
-    --auth-primary-light: rgba(67, 17, 100, 0.1);
-    --auth-error: #c00;
-    --auth-success: #0a0;
-    --auth-border: #ddd;
-    --auth-text: #333;
-    --auth-disabled: #999;
-}
-
 /* Profile Container */
 .profile-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Profile Card */
+.profile-card {
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 12px rgba(67, 17, 100, 0.1);
+    border: 1.5px solid #e2d6f3;
     text-align: center;
+}
+
+.profile-card h2 {
+    color: #431164;
+    margin-bottom: 20px;
 }
 
 .profile-info {
@@ -27,10 +33,7 @@
     font-size: 16px;
 }
 
-.profile-actions {
-    margin-top: 30px;
-}
-
+/* Logout Button */
 .logout-btn {
     background: #dc3545;
     color: white;
@@ -46,160 +49,21 @@
     background: #c82333;
 }
 
-/* Auth Container - Toate stilurile sunt scopate */
-.auth-container {
-    max-width: 400px;
-    margin: 40px auto;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+/* My Announcements Section */
+.my-announcements {
+    margin-top: 40px;
 }
 
-.auth-container * {
-    box-sizing: border-box;
+.my-announcements h2 {
+    color: #431164;
+    margin-bottom: 20px;
+    font-size: 1.8em;
 }
 
-.auth-toggle {
+/* Refolosim stilurile din imobile-cards.css */
+.my-announcements .imobile-cards {
     display: flex;
-    background: #f8f9fa;
-    border-radius: 8px;
-    padding: 4px;
-    margin-bottom: 30px;
-}
-
-.auth-toggle .toggle-btn {
-    flex: 1;
-    padding: 12px;
-    text-align: center;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s;
-    font-weight: 500;
-}
-
-.auth-toggle .toggle-btn.active {
-    background: var(--auth-primary);
-    color: white;
-}
-
-.auth-container h2 {
-    text-align: center;
-    color: var(--auth-primary);
-    margin: 0 0 30px;
-    font-size: 1.8rem;
-}
-
-.auth-field {
-    margin-bottom: 20px;
-}
-
-.auth-field.hidden { 
-    display: none; 
-}
-
-.auth-container label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--auth-text);
-    font-weight: 500;
-}
-
-.auth-container input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid var(--auth-border);
-    border-radius: 6px;
-    font-size: 16px;
-    transition: border-color 0.3s;
-}
-
-.auth-container input:focus {
-    outline: none;
-    border-color: var(--auth-primary);
-    box-shadow: 0 0 0 3px var(--auth-primary-light);
-}
-
-.auth-container input.error { 
-    border-color: var(--auth-error); 
-}
-
-.password-wrapper {
-    position: relative;
-}
-
-.password-wrapper input {
-    padding-right: 45px;
-}
-
-.toggle-password {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-}
-
-#messages {
-    min-height: 20px;
-    margin-bottom: 20px;
-}
-
-.auth-container .message {
-    padding: 12px;
-    border-radius: 6px;
-    font-size: 14px;
-    margin-bottom: 10px;
-}
-
-.auth-container .message.error {
-    background: #ffebee;
-    color: var(--auth-error);
-    border: 1px solid var(--auth-error);
-}
-
-.auth-container .message.success {
-    background: #e8f5e8;
-    color: var(--auth-success);
-    border: 1px solid var(--auth-success);
-}
-
-.auth-container .field-error {
-    color: var(--auth-error);
-    font-size: 12px;
-    margin-top: 4px;
-}
-
-#submit-btn {
-    width: 100%;
-    padding: 14px;
-    background: var(--auth-primary);
-    color: white;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-#submit-btn:hover {
-    background: #5a1a7a;
-    transform: translateY(-1px);
-}
-
-#submit-btn:disabled {
-    background: var(--auth-disabled);
-    cursor: not-allowed;
-    transform: none;
-}
-
-@media (max-width: 768px) {
-    .auth-container {
-        margin: 20px;
-        padding: 20px;
-    }
+    gap: 2em;
+    justify-content: center;
+    flex-wrap: wrap;
 }

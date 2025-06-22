@@ -1,5 +1,7 @@
 function handleImobileAdd(req, res) {
     const pool = require('../config/database');
+    const { getActiveSession } = require('./signInHandler');
+    const { parseCookies } = require('./getCurrentUserHandler');
     
     let body = '';
     req.on('data', chunk => {
@@ -45,6 +47,23 @@ function handleImobileAdd(req, res) {
                 
                 const anuntId = result.rows[0].id;
                 console.log('Anunt ID creat:', anuntId);
+
+                // Obține user-ul din sesiune
+                const cookies = parseCookies(req.headers.cookie || '');
+                const sessionToken = cookies.session_token;
+                const userSession = getActiveSession(sessionToken);
+
+                // Salvează ownership dacă user-ul e autentificat
+                if (userSession && userSession.id) {
+                    const ownershipSql = 'INSERT INTO ownership (user_id, anunt_id) VALUES ($1, $2)';
+                    pool.query(ownershipSql, [userSession.id, anuntId], (err) => {
+                        if (err) {
+                            console.error('Eroare ownership:', err);
+                        } else {
+                            console.log('Ownership salvat pentru user:', userSession.username);
+                        }
+                    });
+                }
                 
                 // 2. Inserare date specifice în funcție de tip
                 insertSpecificData(pool, anunt.tip_imobil, anuntId, anunt.detalii_specifice, (err) => {

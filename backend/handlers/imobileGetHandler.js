@@ -92,6 +92,17 @@ function handleImobileGet(req, res) {
         paramIndex++;
     }
 
+    // Filtrare după ownership
+    if (query.get('userId')) {
+        sql = sql.replace(
+            'WHERE 1=1',
+            `INNER JOIN ownership o ON a.id = o.anunt_id
+            WHERE o.user_id = $${paramIndex}`
+        );
+        params.push(parseInt(query.get('userId')));
+        paramIndex++;
+    }
+
     console.log('SQL Query:', sql);
     console.log('Params:', params);
 

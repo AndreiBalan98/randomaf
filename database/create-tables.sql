@@ -76,3 +76,15 @@ CREATE TABLE users (
 -- Index pentru performanta
 CREATE INDEX idx_users_username ON users(username);
 CREATE INDEX idx_users_email ON users(email);
+
+-- TABELA OWNERSHIP (relație user-anunț)
+CREATE TABLE ownership (
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    anunt_id INTEGER NOT NULL REFERENCES anunturi(id) ON DELETE CASCADE,
+    data_adaugare TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, anunt_id)
+);
+
+-- Index pentru performanță
+CREATE INDEX idx_ownership_user ON ownership(user_id);
+CREATE INDEX idx_ownership_anunt ON ownership(anunt_id);

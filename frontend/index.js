@@ -23,7 +23,7 @@ function loadContent(file) {
       if (file.includes('add-imobile.html')) {
         initializeAdd();
       }
-      if (file.includes('profile.html')) {
+      if (file.includes('auth.html')) {
         initializeAuthentication();
       }
     })
