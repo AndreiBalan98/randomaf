@@ -1,11 +1,67 @@
-// SISTEM AUTENTIFICARE SIMPLIFICAT
+// SISTEM AUTENTIFICARE CU COOKIES SI SESIUNI
 
 let currentMode = 'signin';
+let currentUser = null; // Variabila globala pentru user-ul conectat
 
 // Inițializare
 function initializeAuthentication() {
     setupEventListeners();
+    checkCurrentUser(); // Verifică dacă există user conectat
     console.log('Sistem autentificare inițializat');
+}
+
+// Verifică user-ul conectat la încărcarea paginii
+async function checkCurrentUser() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/current-user`, {
+            method: 'GET',
+            credentials: 'include' // Include cookies
+        });
+        
+        const result = await response.json();
+        
+        if (result.success && result.user) {
+            currentUser = result.user;
+            console.log('User conectat:', currentUser.username);
+            
+            // Salvează și în sessionStorage pentru acces rapid
+            sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Dacă user-ul este conectat, redirectează la profil
+            showUserProfile();
+        } else {
+            currentUser = null;
+            sessionStorage.removeItem('currentUser');
+            console.log('Niciun user conectat');
+        }
+    } catch (error) {
+        console.error('Eroare verificare user conectat:', error);
+        currentUser = null;
+        sessionStorage.removeItem('currentUser');
+    }
+}
+
+// Afișează profilul user-ului conectat
+function showUserProfile() {
+    if (!currentUser) return;
+    
+    const container = document.querySelector('.auth-container');
+    container.innerHTML = `
+        <div class="profile-container">
+            <h2>Bun venit, ${currentUser.username}!</h2>
+            <div class="profile-info">
+                <p><strong>Username:</strong> ${currentUser.username}</p>
+                <p><strong>Email:</strong> ${currentUser.email}</p>
+                <p><strong>Membru din:</strong> ${new Date(currentUser.data_inregistrare).toLocaleDateString('ro-RO')}</p>
+            </div>
+            <div class="profile-actions">
+                <button id="logout-btn" class="logout-btn">Deconectează-te</button>
+            </div>
+        </div>
+    `;
+    
+    // Event listener pentru logout
+    document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
 }
 
 // Event listeners
@@ -154,9 +210,10 @@ async function handleSubmit(e) {
     
     try {
         const endpoint = currentMode === 'signin' ? '/api/auth/login' : '/api/auth/register';
-        const response = await fetch(endpoint, {
+        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'include', // Include cookies
             body: JSON.stringify(data)
         });
         
@@ -165,7 +222,12 @@ async function handleSubmit(e) {
         if (result.success) {
             if (currentMode === 'signin') {
                 showMessage('Conectare reușită!', 'success');
-                loadContent('html/profile.html');
+                currentUser = result.user;
+                sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
+                
+                setTimeout(() => {
+                    showUserProfile();
+                }, 1000);
             } else {
                 showMessage('Cont creat cu succes!', 'success');
                 setTimeout(() => {
@@ -184,31 +246,78 @@ async function handleSubmit(e) {
     }
 }
 
+// Handle logout
+async function handleLogout() {
+    try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            currentUser = null;
+            sessionStorage.removeItem('currentUser');
+            
+            // Reîncarcă pagina de autentificare
+            location.reload();
+        }
+    } catch (error) {
+        console.error('Eroare logout:', error);
+        // Forțează logout local chiar dacă server-ul nu răspunde
+        currentUser = null;
+        sessionStorage.removeItem('currentUser');
+        location.reload();
+    }
+}
+
 // Utility functions
 function showMessage(text, type) {
     const container = document.getElementById('messages');
-    container.innerHTML = `<div class="message ${type}">${text}</div>`;
-    setTimeout(clearMessages, 5000);
+    if (container) {
+        container.innerHTML = `<div class="message ${type}">${text}</div>`;
+        setTimeout(clearMessages, 5000);
+    }
 }
 
 function clearMessages() {
-    document.getElementById('messages').innerHTML = '';
+    const container = document.getElementById('messages');
+    if (container) {
+        container.innerHTML = '';
+    }
 }
 
 function resetForm() {
-    document.getElementById('auth-form').reset();
-    document.querySelectorAll('.field-error').forEach(el => el.remove());
-    document.querySelectorAll('input').forEach(input => input.classList.remove('error'));
+    const form = document.getElementById('auth-form');
+    if (form) {
+        form.reset();
+        document.querySelectorAll('.field-error').forEach(el => el.remove());
+        document.querySelectorAll('input').forEach(input => input.classList.remove('error'));
+    }
 }
 
 function setLoading(loading) {
     const btn = document.getElementById('submit-btn');
     const text = document.getElementById('submit-text');
     
-    btn.disabled = loading;
-    text.textContent = loading ? 'Se procesează...' : 
-        (currentMode === 'signin' ? 'Conectează-te' : 'Înregistrează-te');
+    if (btn && text) {
+        btn.disabled = loading;
+        text.textContent = loading ? 'Se procesează...' : 
+            (currentMode === 'signin' ? 'Conectează-te' : 'Înregistrează-te');
+    }
+}
+
+// Funcții globale pentru accesul la user-ul conectat
+function getCurrentUser() {
+    return currentUser;
+}
+
+function isUserLoggedIn() {
+    return currentUser !== null;
 }
 
 // Export pentru utilizare globală
 window.initializeAuthentication = initializeAuthentication;
+window.getCurrentUser = getCurrentUser;
+window.isUserLoggedIn = isUserLoggedIn;
