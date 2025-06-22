@@ -7,7 +7,8 @@ const handleImageUpload     = require('./handlers/imageUploadHandler');
 const handleImagesGet       = require('./handlers/imagesGetHandler');
 const handleSignUp          = require('./handlers/signUpHandler');
 const { handleSignIn }      = require('./handlers/signInHandler');
-const { handleGetCurrentUser, handleLogout } = require('./handlers/getCurrentUserHandler');
+const { handleLikeToggle, handleGetFavorites }  = require('./handlers/likesHandler');
+const { handleGetCurrentUser, handleLogout }    = require('./handlers/getCurrentUserHandler');
 
 const hostname              = 'localhost';
 const port                  = 3001;
@@ -49,6 +50,12 @@ const server = http.createServer((req, res) => {
         handleGetCurrentUser(req, res);
     } else if (req.method === 'POST' && req.url === '/api/auth/logout') {
         handleLogout(req, res);
+    } else if (req.method === 'POST' && req.url.startsWith('/api/likes/')) {
+        handleLikeToggle(req, res);
+    } else if (req.method === 'GET' && req.url.startsWith('/api/likes/')) {
+        handleLikeToggle(req, res);
+    } else if (req.method === 'GET' && req.url === '/api/favorites') {
+        handleGetFavorites(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ status: 'error', mesaj: 'Not found' }));

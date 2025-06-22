@@ -88,3 +88,15 @@ CREATE TABLE ownership (
 -- Index pentru performanță
 CREATE INDEX idx_ownership_user ON ownership(user_id);
 CREATE INDEX idx_ownership_anunt ON ownership(anunt_id);
+
+-- TABELA LIKES (pentru favorite)
+CREATE TABLE likes (
+    user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
+    anunt_id INTEGER NOT NULL REFERENCES anunturi(id) ON DELETE CASCADE,
+    data_adaugare TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (user_id, anunt_id)
+);
+
+-- Index pentru performanță
+CREATE INDEX idx_likes_user ON likes(user_id);
+CREATE INDEX idx_likes_anunt ON likes(anunt_id);
