@@ -34,6 +34,7 @@ async function loadMyAnnouncements(userId) {
         
         // Generează cardurile folosind funcția din home.js
         container.innerHTML = myAnnouncements.map(imobil => createImobilCard(imobil)).join('');
+        await addLikeEventListeners();
         
         // Event listeners pentru butoanele de detalii
         document.querySelectorAll('.imobil-detalii-btn').forEach(btn => {

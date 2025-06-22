@@ -426,14 +426,15 @@ async function addLikeEventListeners() {
     for (const btn of likeButtons) {
         const anuntId = btn.getAttribute('data-anunt-id');
         
+        // IMPORTANT: Resetează clasa înainte de verificare
+        btn.classList.remove('liked');
+        
         // Verifică dacă user-ul este conectat
         const user = JSON.parse(sessionStorage.getItem('currentUser'));
         if (user) {
             const isLiked = await checkLikeStatus(anuntId);
             if (isLiked) {
                 btn.classList.add('liked');
-            } else {
-                btn.classList.remove('liked'); // IMPORTANT: elimină clasa dacă nu e liked
             }
         }
         

@@ -53,12 +53,13 @@ function renderFavoriteCards(favorites) {
         return;
     }
     
-    container.innerHTML = favorites.map(favorite => createImobilCard(favorite, true)).join('');
+    // SCHIMBAREA IMPORTANTĂ: Nu mai forțăm isLiked = true
+    container.innerHTML = favorites.map(favorite => createImobilCard(favorite, false)).join('');
     
     // Event listeners pentru butoanele de detalii
     addCardEventListeners(favorites);
     
-    // Event listeners pentru butoanele de like (unlike în acest caz)
+    // Event listeners pentru butoanele de like
     addLikeEventListeners();
 }
 
@@ -66,8 +67,19 @@ async function addLikeEventListeners() {
     const likeButtons = document.querySelectorAll('.imobil-like-btn');
     
     for (const btn of likeButtons) {
-        // În favorites, toate sunt deja liked
-        btn.classList.add('liked');
+        const cardElement = btn.closest('.imobil-card');
+        const anuntId = cardElement.querySelector('.imobil-detalii-btn').getAttribute('data-id');
+        
+        // SCHIMBAREA IMPORTANTĂ: Verifică statusul real în loc să forțezi liked
+        const user = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (user) {
+            const isLiked = await checkLikeStatus(anuntId);
+            if (isLiked) {
+                btn.classList.add('liked');
+            } else {
+                btn.classList.remove('liked');
+            }
+        }
         
         btn.addEventListener('click', async function(e) {
             e.stopPropagation();
@@ -79,6 +91,57 @@ async function addLikeEventListeners() {
             // Refresh favorites după unlike
             setTimeout(() => loadFavorites(), 500);
         });
+    }
+}
+
+async function checkLikeStatus(anuntId) {
+    try {
+        const user = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (!user) {
+            return false; // Dacă nu e conectat, sigur nu are like
+        }
+        
+        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            return result.liked;
+        }
+    } catch (error) {
+        console.error('Eroare verificare like:', error);
+    }
+    return false;
+}
+
+async function toggleLike(anuntId, buttonElement) {
+    try {
+        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        
+        if (!response.ok) {
+            if (response.status === 401) {
+                alert('Trebuie să fii conectat pentru a adăuga la favorite!');
+                return;
+            }
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        // Update visual al butonului
+        if (result.liked) {
+            buttonElement.classList.add('liked');
+        } else {
+            buttonElement.classList.remove('liked');
+        }
+        
+    } catch (error) {
+        console.error('Eroare la toggle like:', error);
     }
 }
 
