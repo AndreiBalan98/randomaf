@@ -44,7 +44,7 @@ async function checkAuthAndLoad(file) {
   if (needsAuth) {
     // Verifica daca user-ul este conectat
     try {
-      const response = await fetch('http://localhost:3001/api/auth/current-user', {
+      const response = await fetch(CONFIG.getBackendUrl('/api/auth/current-user'), {
         method: 'GET',
         credentials: 'include'
       });

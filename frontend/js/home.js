@@ -344,7 +344,7 @@ function displayError(message) {
 // Functii pentru like
 async function toggleLike(anuntId, buttonElement) {
     try {
-        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+        const response = await fetch(CONFIG.getBackendUrl(CONFIG.BACKEND.API.LIKES + '/' + anuntId), {
             method: 'POST',
             credentials: 'include'
         });
@@ -378,7 +378,7 @@ async function checkLikeStatus(anuntId) {
             return false; // Daca nu e conectat, sigur nu are like
         }
         
-        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+        const response = await fetch(CONFIG.getBackendUrl(CONFIG.BACKEND.API.LIKES + '/' + anuntId), {
             method: 'GET',
             credentials: 'include'
         });

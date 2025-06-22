@@ -1,3 +1,4 @@
+const CONFIG = require('./config/config');
 const http                  = require('http');
 const handleImobileGet      = require('./handlers/imobileGetHandler');
 const handleImobileAdd      = require('./handlers/imobileAddHandler');
@@ -10,14 +11,14 @@ const { handleSignIn }      = require('./handlers/signInHandler');
 const { handleLikeToggle, handleGetFavorites }  = require('./handlers/likesHandler');
 const { handleGetCurrentUser, handleLogout }    = require('./handlers/getCurrentUserHandler');
 
-const hostname              = 'localhost';
-const port                  = 3001;
+const hostname = CONFIG.BACKEND.HOST;
+const port = CONFIG.BACKEND.PORT;
 
 const server = http.createServer((req, res) => {
     console.log('Cerere primita:', req.method, req.url);
     
     // CORS
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+    res.setHeader('Access-Control-Allow-Origin', CONFIG.FRONTEND.BASE_URL);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Cookie');

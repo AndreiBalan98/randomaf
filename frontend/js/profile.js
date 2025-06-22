@@ -22,7 +22,7 @@ async function initializeProfile() {
 async function loadMyAnnouncements(userId) {
     try {
         // Foloseste parametrul userId pentru a filtra anunturile
-        const response = await fetch(`http://localhost:3001/api/imobile?userId=${userId}`);
+        const response = await fetch(CONFIG.getBackendUrl(CONFIG.BACKEND.API.IMOBILE + '?userId=' + userId));
         const myAnnouncements = await response.json();
         
         const container = document.getElementById('myImobileCards');
@@ -53,7 +53,7 @@ async function loadMyAnnouncements(userId) {
 
 async function handleLogout() {
     try {
-        await fetch('http://localhost:3001/api/auth/logout', {
+        await fetch(CONFIG.getBackendUrl('/api/auth/logout'), {
             method: 'POST',
             credentials: 'include'
         });
