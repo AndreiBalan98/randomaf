@@ -227,7 +227,7 @@ async function handleSubmit(e) {
     
                 setTimeout(() => {
                     loadContent('html/profile.html');
-                setTimeout(() => initializeProfile(), 100);
+                    setTimeout(() => initializeProfile(), 100);
                 }, 1000);
             } else {
                 showMessage('Cont creat cu succes!', 'success');

@@ -14,9 +14,6 @@ function loadContent(file) {
       if (file.includes('home.html')) {
         initializeHome();
       }
-      // if (file.includes('detalii.html')) { se apeleaza in alta parte, in home.js
-      //   initializeDetalii();
-      // }
       if (file.includes('map.html')) {
         initializeMap();
       }
@@ -26,9 +23,52 @@ function loadContent(file) {
       if (file.includes('auth.html')) {
         initializeAuthentication();
       }
+      if (file.includes('profile.html')) {
+        initializeProfile();
+      }
+      if (file.includes('favorites.html')) {
+        initializeFavorites();
+      }
     })
     .catch(err => console.error("Eroare la încărcarea fișierului:", err));
+}
+
+// Verifică autentificarea și redirectează dacă e necesar
+async function checkAuthAndLoad(file) {
+  // Paginile care necesită autentificare
+  const protectedPages = ['add-imobile.html', 'favorites.html', 'profile.html'];
+  
+  // Verifică dacă pagina necesită autentificare
+  const needsAuth = protectedPages.some(page => file.includes(page));
+  
+  if (needsAuth) {
+    // Verifică dacă user-ul este conectat
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/current-user', {
+        method: 'GET',
+        credentials: 'include'
+      });
+      
+      const result = await response.json();
+      
+      if (!result.success || !result.user) {
+        // Nu este conectat, încarcă pagina de auth
+        loadContent('html/auth.html');
+        return;
+      }
+      
+      // Este conectat, salvează user-ul și încarcă pagina
+      sessionStorage.setItem('currentUser', JSON.stringify(result.user));
+      loadContent(file);
+    } catch (error) {
+      console.error('Eroare verificare auth:', error);
+      loadContent('html/auth.html');
+    }
+  } else {
+    // Pagina nu necesită autentificare
+    loadContent(file);
   }
+}
 
 // Ascunde meniu și extinde conținut
 function hideMenuAndExpandContent() {
@@ -105,3 +145,4 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 window.loadContent = loadContent;
+window.checkAuthAndLoad = checkAuthAndLoad;

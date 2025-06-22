@@ -1,4 +1,5 @@
-function initializeProfile() {
+async function initializeProfile() {
+    // Verifică din nou dacă user-ul este conectat
     const user = JSON.parse(sessionStorage.getItem('currentUser'));
     if (!user) {
         loadContent('html/auth.html');
@@ -11,30 +12,18 @@ function initializeProfile() {
     document.getElementById('email-display').textContent = user.email;
     document.getElementById('date-display').textContent = new Date(user.data_inregistrare).toLocaleDateString('ro-RO');
     
-    // Logout
+    // Event listener pentru logout
     document.getElementById('logout-btn').addEventListener('click', handleLogout);
     
-    // Încarcă anunțurile
-    loadMyAnnouncements();
+    // Încarcă anunțurile user-ului
+    await loadMyAnnouncements(user.id);
 }
 
-async function loadMyAnnouncements() {
-    const user = JSON.parse(sessionStorage.getItem('currentUser'));
-    
-    // Trimite user_id ca parametru
-    const response = await fetch(`${API_BASE_URL}/api/imobile?userId=${user.id}`);
-    const myAnnouncements = await response.json();
-    
+async function loadMyAnnouncements(userId) {
     try {
-        // Încarcă toate anunțurile
-        const response = await fetch(`${API_BASE_URL}/api/imobile`);
-        const allAnnouncements = await response.json();
-        
-        // Filtrează doar anunțurile user-ului curent
-        const user = JSON.parse(sessionStorage.getItem('currentUser'));
-        const myAnnouncements = allAnnouncements.filter(anunt => 
-            anunt.user_id === user.id || anunt.username === user.username
-        );
+        // Folosește parametrul userId pentru a filtra anunțurile
+        const response = await fetch(`http://localhost:3001/api/imobile?userId=${userId}`);
+        const myAnnouncements = await response.json();
         
         const container = document.getElementById('myImobileCards');
         
@@ -43,15 +32,15 @@ async function loadMyAnnouncements() {
             return;
         }
         
-        // Generează cardurile (refolosim logica din home.js)
+        // Generează cardurile folosind funcția din home.js
         container.innerHTML = myAnnouncements.map(imobil => createImobilCard(imobil)).join('');
         
-        // Event listeners pentru detalii
+        // Event listeners pentru butoanele de detalii
         document.querySelectorAll('.imobil-detalii-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const cardId = this.getAttribute('data-id');
                 loadContent(`html/detalii.html?id=${cardId}`);
-                initializeDetalii(cardId);
+                setTimeout(() => initializeDetalii(cardId), 100);
             });
         });
         
@@ -61,19 +50,25 @@ async function loadMyAnnouncements() {
     }
 }
 
-// Funcția handleLogout
 async function handleLogout() {
     try {
-        await fetch(`${API_BASE_URL}/api/auth/logout`, {
+        await fetch('http://localhost:3001/api/auth/logout', {
             method: 'POST',
             credentials: 'include'
         });
         
         sessionStorage.removeItem('currentUser');
-        loadContent('html/auth.html');
-        setTimeout(() => initializeAuthentication(), 100);
+        loadContent('html/home.html');
+        setTimeout(() => initializeHome(), 100);
         
     } catch (error) {
         console.error('Eroare logout:', error);
+        // Forțează logout local
+        sessionStorage.removeItem('currentUser');
+        loadContent('html/home.html');
+        setTimeout(() => initializeHome(), 100);
     }
 }
+
+// Export global
+window.initializeProfile = initializeProfile;
