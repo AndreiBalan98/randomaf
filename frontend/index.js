@@ -142,6 +142,8 @@ window.addEventListener('DOMContentLoaded', function() {
   
   initializeMenuState();
   window.addEventListener('resize', handleResize);
+  
+  loadContent('html/home.html');
 });
 
 window.loadContent = loadContent;
