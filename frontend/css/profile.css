@@ -1,0 +1,254 @@
+/* ============================================
+   CSS pentru pagina de autentificare
+   ============================================ */
+
+/* Container principal */
+.auth-container {
+  max-width: 450px;
+  margin: 40px auto;
+  padding: var(--spacing-xl);
+  background: var(--form-background);
+  border-radius: var(--border-radius-medium);
+  box-shadow: 0 4px 12px rgba(67, 17, 100, 0.1);
+}
+
+/* Toggle pentru Sign In / Sign Up */
+.auth-toggle {
+  display: flex;
+  background: var(--light-background);
+  border-radius: var(--border-radius);
+  padding: 4px;
+  margin-bottom: var(--spacing-xl);
+  border: 1px solid var(--border-color);
+}
+
+.toggle-option {
+  flex: 1;
+}
+
+.toggle-option input[type="radio"] {
+  display: none;
+}
+
+.toggle-option label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-small);
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius-small);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  color: var(--text-color);
+  font-weight: 500;
+  min-height: var(--input-height);
+}
+
+.toggle-option label:hover {
+  background: var(--primary-color-light);
+}
+
+.toggle-option input[type="radio"]:checked + label {
+  background: var(--primary-color);
+  color: white;
+  box-shadow: 0 2px 4px rgba(67, 17, 100, 0.2);
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-container svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Formular */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-large);
+}
+
+.auth-title {
+  text-align: center;
+  color: var(--primary-color);
+  margin: 0 0 var(--spacing-large) 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+/* Câmpuri formular */
+.auth-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-small);
+}
+
+.auth-field label {
+  color: var(--text-color);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.auth-field input {
+  height: var(--input-height);
+  padding: 0 var(--spacing-medium);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.auth-field input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px var(--primary-color-light);
+}
+
+.auth-field input::placeholder {
+  color: var(--disabled-color);
+}
+
+/* Wrapper pentru câmpul de parolă */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 50px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--text-color);
+  transition: color 0.3s ease;
+}
+
+.toggle-password:hover {
+  color: var(--primary-color);
+}
+
+.toggle-password svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Mesaje de feedback */
+.auth-messages {
+  min-height: 20px;
+}
+
+.auth-message {
+  padding: var(--spacing-medium);
+  border-radius: var(--border-radius);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.auth-message--error {
+  background: var(--error-background);
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+}
+
+.auth-message--success {
+  background: var(--success-background);
+  color: var(--success-color);
+  border: 1px solid var(--success-color);
+}
+
+.auth-message--info {
+  background: var(--light-background);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+}
+
+/* Buton de submit */
+.auth-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-small);
+  height: var(--input-height);
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: var(--spacing-medium);
+}
+
+.auth-submit:hover {
+  background: var(--primary-color-alpha);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(67, 17, 100, 0.3);
+}
+
+.auth-submit:active {
+  transform: translateY(0);
+}
+
+.auth-submit:disabled {
+  background: var(--disabled-color);
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.submit-icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Animație pentru loading */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Erori la nivel de câmp */
+.field-error {
+  color: var(--error-color);
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .auth-container {
+    margin: 20px;
+    padding: var(--spacing-large);
+  }
+  
+  .auth-title {
+    font-size: 1.5rem;
+  }
+  
+  .toggle-option label {
+    padding: var(--spacing-small);
+    font-size: 0.9rem;
+  }
+  
+  .icon-container svg {
+    width: 18px;
+    height: 18px;
+  }
+}

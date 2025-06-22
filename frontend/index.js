@@ -23,6 +23,9 @@ function loadContent(file) {
       if (file.includes('add-imobile.html')) {
         initializeAdd();
       }
+      if (file.includes('profile.html')) {
+        initializeAuthentication();
+      }
     })
     .catch(err => console.error("Eroare la încărcarea fișierului:", err));
   }
