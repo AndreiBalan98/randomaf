@@ -18,7 +18,7 @@ async function initializeDetalii(id) {
 
 // Obtine datele imobilului dupa ID
 async function obtineImobil(id) {
-  const res = await fetch(`${API_BASE_URL}/api/imobile`);
+  const res = await fetch(APP_CONFIG.API.BASE_URL + "/api/imobile`);
   const anunturi = await res.json();
   return anunturi.find(c => c.id == id);
 }
@@ -27,7 +27,7 @@ async function obtineImobil(id) {
 async function obtineImagini(id) {
   let imagini = [];
   try {
-    const resImg = await fetch(`${API_BASE_URL}/api/imagini/${id}`);
+    const resImg = await fetch(`${APP_CONFIG.API.BASE_URL}/api/imagini/${id}`);
     imagini = await resImg.json();
   } catch {}
   return imagini;
@@ -35,7 +35,7 @@ async function obtineImagini(id) {
 
 // Genereaza HTML-ul pentru galeria de imagini
 function genereazaGalerie(imagini, currentSlide = 0) {
-  if (!imagini.length) return '';
+  if (!imagini.length) return "';
   return `
     <div class="slider-container" style="display:flex;justify-content:center;align-items:center;position:relative;">
       <button class="slider-arrow" id="slider-prev" ${currentSlide === 0 ? 'disabled' : ''} style="position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:2;">
@@ -144,7 +144,7 @@ function afiseazaDetaliiImobil(card, imagini) {
     let current = idx;
 
     function showImg(i) {
-      modalImg.src = `${API_BASE_URL}/${imagini[i].url}`;
+      modalImg.src = `${APP_CONFIG.API.BASE_URL}/${imagini[i].url}`;
       console.log("Modal: " + modalImg.src);
       modalImg.dataset.idx = i;
     }
@@ -209,18 +209,18 @@ function configureazaGalerieModal() {
 
 // Incarca si afiseaza anunturile relevante
 async function incarcaAnunturiRelevante(idCurent, cardCurent) {
-  const res = await fetch(`${API_BASE_URL}/api/imobile`);
+  const res = await fetch(APP_CONFIG.API.BASE_URL + "/api/imobile`);
   const anunturi = await res.json();
 
-  const locatieCurenta = cardCurent.localizare || cardCurent.locatie || '';
+  const locatieCurenta = cardCurent.localizare || cardCurent.locatie || "';
   const relevante = anunturi.filter(a =>
     a.id != idCurent && ((a.localizare || a.locatie) === locatieCurenta || a.titlu.toLowerCase().includes(cardCurent.titlu.toLowerCase()))
   ).slice(0, 4);
 
   const htmlRelevante = relevante.map(r => {
     const imagePath = r.imagine
-      ? `${API_BASE_URL}/${r.imagine}`
-      : `${API_BASE_URL}/images/casa1.jpg`;
+      ? `${APP_CONFIG.API.BASE_URL}/${r.imagine}`
+      : `${APP_CONFIG.API.BASE_URL}/images/casa1.jpg`;
     const price = r.pret ? `${r.pret} €` : 'Pret la cerere';
     const transactionType = r.tip_oferta === 'vanzare'
       ? 'De vanzare'

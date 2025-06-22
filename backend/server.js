@@ -30,31 +30,31 @@ const server = http.createServer((req, res) => {
     }
 
     // Routing
-    if (req.method === 'GET' && req.url.startsWith('/api/imobile')) {
+    if (req.method === 'GET' && req.url.startsWith(APP_CONFIG.API.ENDPOINTS.IMOBILE)) {
         handleImobileGet(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/imobile') {
+    } else if (req.method === 'POST' && req.url === APP_CONFIG.API.ENDPOINTS.IMOBILE) {
         handleImobileAdd(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/api/coords')) {
+    } else if (req.method === 'GET' && req.url.startsWith(APP_CONFIG.API.ENDPOINTS.COORDS)) {
         handleCoordsGet(req, res);
     } else if (req.method === 'GET' && req.url.startsWith('/api/imagini/')) {
         handleImagesGet(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/upload-imagine') {
+    } else if (req.method === 'POST' && req.url === APP_CONFIG.API.ENDPOINTS.UPLOAD_IMAGINE) {
         handleImageUpload(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/images/')) {
+    } else if (req.method === 'GET' && req.url.startsWith(APP_CONFIG.STATIC.IMAGES + "/")) {
         handleImagesStatic(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/auth/register') {
+    } else if (req.method === 'POST' && req.url === APP_CONFIG.API.ENDPOINTS.AUTH.REGISTER) {
         handleSignUp(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/auth/login') {
+    } else if (req.method === 'POST' && req.url === APP_CONFIG.API.ENDPOINTS.AUTH.LOGIN) {
         handleSignIn(req, res);
-    } else if (req.method === 'GET' && req.url === '/api/auth/current-user') {
+    } else if (req.method === 'GET' && req.url === APP_CONFIG.API.ENDPOINTS.AUTH.CURRENT_USER) {
         handleGetCurrentUser(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/auth/logout') {
+    } else if (req.method === 'POST' && req.url === APP_CONFIG.API.ENDPOINTS.AUTH.LOGOUT) {
         handleLogout(req, res);
     } else if (req.method === 'POST' && req.url.startsWith('/api/likes/')) {
         handleLikeToggle(req, res);
     } else if (req.method === 'GET' && req.url.startsWith('/api/likes/')) {
         handleLikeToggle(req, res);
-    } else if (req.method === 'GET' && req.url === '/api/favorites') {
+    } else if (req.method === 'GET' && req.url === APP_CONFIG.API.ENDPOINTS.FAVORITES) {
         handleGetFavorites(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });

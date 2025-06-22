@@ -2,7 +2,7 @@
 // CONSTANTE SI CONFIGURATII
 // ========================================
 
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = APP_CONFIG.API.BASE_URL;
 
 // Optiuni pentru selectoarele din filtre
 const FILTER_OPTIONS = {
@@ -202,7 +202,7 @@ async function loadImobileData(filters = {}) {
  
   try {
     const queryParams = new URLSearchParams(filters).toString();
-    const response = await fetch(`${API_BASE_URL}/api/imobile?${queryParams}`);
+    const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/imobile?${queryParams}`);
    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -213,7 +213,7 @@ async function loadImobileData(filters = {}) {
     renderImobileCards(imobileData);
    
   } catch (error) {
-    console.error('Eroare la incarcarea imobilelor:', error);
+    console.error("Eroare la incarcarea imobilelor:', error);
     displayError('Eroare la incarcarea anunturilor!');
   }
 }
@@ -251,7 +251,7 @@ async function renderImobileCards(imobileData) {
  * Creeaza HTML-ul pentru un card de imobil
  */
 function createImobilCard(imobil, isLiked = false) {
-  const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
+  const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${APP_CONFIG.API.BASE_URL}/images/casa1.jpg`;
   const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
   const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
   const surface = imobil.tip_imobil === 'teren' ? 
@@ -344,8 +344,8 @@ function displayError(message) {
 // Functii pentru like
 async function toggleLike(anuntId, buttonElement) {
     try {
-        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
-            method: 'POST',
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}`, {
+            method: "POST',
             credentials: 'include'
         });
         
@@ -378,8 +378,8 @@ async function checkLikeStatus(anuntId) {
             return false; // Daca nu e conectat, sigur nu are like
         }
         
-        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
-            method: 'GET',
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}`, {
+            method: "GET',
             credentials: 'include'
         });
         

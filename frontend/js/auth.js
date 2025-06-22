@@ -13,8 +13,8 @@ function initializeAuthentication() {
 // Verifica user-ul conectat la incarcarea paginii
 async function checkCurrentUser() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/current-user`, {
-            method: 'GET',
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/auth/current-user`, {
+            method: "GET',
             credentials: 'include' // Include cookies
         });
         
@@ -209,9 +209,9 @@ async function handleSubmit(e) {
     setLoading(true);
     
     try {
-        const endpoint = currentMode === 'signin' ? '/api/auth/login' : '/api/auth/register';
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-            method: 'POST',
+        const endpoint = currentMode === 'signin' ? APP_CONFIG.API.ENDPOINTS.AUTH.LOGIN : APP_CONFIG.API.ENDPOINTS.AUTH.REGISTER;
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "${endpoint}`, {
+            method: "POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include', // Include cookies
             body: JSON.stringify(data)
@@ -250,8 +250,8 @@ async function handleSubmit(e) {
 // Handle logout
 async function handleLogout() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
-            method: 'POST',
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/auth/logout`, {
+            method: "POST',
             credentials: 'include'
         });
         

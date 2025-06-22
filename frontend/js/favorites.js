@@ -11,7 +11,7 @@ async function initializeFavorites() {
 
 async function loadFavorites() {
     try {
-        const response = await fetch('http://localhost:3001/api/favorites', {
+        const response = await fetch(APP_CONFIG.API.BASE_URL + APP_CONFIG.API.ENDPOINTS.FAVORITES, {
             method: 'GET',
             credentials: 'include'
         });
@@ -26,7 +26,7 @@ async function loadFavorites() {
         const favoritesWithImages = await Promise.all(
             favorites.map(async (favorite) => {
                 try {
-                    const imgResponse = await fetch(`http://localhost:3001/api/imagini/${favorite.id}`);
+                    const imgResponse = await fetch(APP_CONFIG.API.BASE_URL + "/api/imagini/${favorite.id}`);
                     const imagini = await imgResponse.json();
                     return { ...favorite, imagini };
                 } catch (error) {
@@ -39,7 +39,7 @@ async function loadFavorites() {
         renderFavoriteCards(favoritesWithImages);
         
     } catch (error) {
-        console.error('Eroare la incarcarea favoritelor:', error);
+        console.error("Eroare la incarcarea favoritelor:', error);
         displayFavoritesError('Eroare la incarcarea favoritelor!');
     }
 }
@@ -101,8 +101,8 @@ async function checkLikeStatus(anuntId) {
             return false; // Daca nu e conectat, sigur nu are like
         }
         
-        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
-            method: 'GET',
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}`, {
+            method: "GET',
             credentials: 'include'
         });
         
@@ -118,8 +118,8 @@ async function checkLikeStatus(anuntId) {
 
 async function toggleLike(anuntId, buttonElement) {
     try {
-        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
-            method: 'POST',
+        const response = await fetch(APP_CONFIG.API.BASE_URL + "/api/likes/${anuntId}`, {
+            method: "POST',
             credentials: 'include'
         });
         
