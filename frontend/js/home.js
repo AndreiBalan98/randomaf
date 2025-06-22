@@ -221,7 +221,7 @@ async function loadImobileData(filters = {}) {
 /**
  * Renderizează cardurile de imobile
  */
-function renderImobileCards(imobileData) {
+async function renderImobileCards(imobileData) {
   console.log('Renderizare carduri imobile...', imobileData.length);
   
   const container = document.getElementById('imobileCards');
@@ -234,19 +234,23 @@ function renderImobileCards(imobileData) {
   
   container.innerHTML = '';
   
+  // Generează cardurile fără verificarea like-ului (se va face în addLikeEventListeners)
   imobileData.forEach((imobil, index) => {
-    const cardHTML = createImobilCard(imobil);
+    const cardHTML = createImobilCard(imobil, false); // Mereu false aici
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
   
   // Adaugă event listeners pentru butoanele de detalii
   addCardEventListeners(imobileData);
+  
+  // Adaugă event listeners pentru butoanele de like (și verifică statusul)
+  await addLikeEventListeners();
 }
 
 /**
  * Creează HTML-ul pentru un card de imobil
  */
-function createImobilCard(imobil) {
+function createImobilCard(imobil, isLiked = false) {
   const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
   const price = imobil.pret ? `${imobil.pret} €` : 'Preț la cerere';
   const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vânzare' : 'Închiriere';
@@ -254,10 +258,12 @@ function createImobilCard(imobil) {
     (imobil.detalii_specifice?.suprafata_teren || '-') : 
     (imobil.detalii_specifice?.suprafata_utila || '-');
   
+  const likeButtonClass = isLiked ? 'imobil-like-btn liked' : 'imobil-like-btn';
+  
   return `
     <div class="imobil-card">
       <div class="imobil-card-img" style="background-image:url('${imagePath}');">
-        <button class="imobil-like-btn" title="Favorite">&#10084;</button>
+        <button class="${likeButtonClass}" title="Favorite" data-anunt-id="${imobil.id}">&#10084;</button>
         <div class="imobil-card-labels">
           <div class="imobil-pret">${price}</div>
           <div class="imobil-tip">${transactionType}</div>
@@ -333,6 +339,111 @@ function displayError(message) {
   if (container) {
     container.innerHTML = `<p style="color:red">${message}</p>`;
   }
+}
+
+// Funcții pentru like
+async function toggleLike(anuntId, buttonElement) {
+    try {
+        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        
+        if (!response.ok) {
+            if (response.status === 401) {
+                alert('Trebuie să fii conectat pentru a adăuga la favorite!');
+                return;
+            }
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        // Update visual al butonului
+        if (result.liked) {
+            buttonElement.classList.add('liked');
+        } else {
+            buttonElement.classList.remove('liked');
+        }
+        
+    } catch (error) {
+        console.error('Eroare la toggle like:', error);
+    }
+}
+
+async function checkLikeStatus(anuntId) {
+    try {
+        const user = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (!user) {
+            return false; // Dacă nu e conectat, sigur nu are like
+        }
+        
+        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            return result.liked;
+        }
+    } catch (error) {
+        console.error('Eroare verificare like:', error);
+    }
+    return false;
+}
+
+// Modifică renderImobileCards pentru a include like listeners
+function renderImobileCards(imobileData) {
+  console.log('Renderizare carduri imobile...', imobileData.length);
+  
+  const container = document.getElementById('imobileCards');
+  if (!container) return;
+  
+  if (!imobileData || imobileData.length === 0) {
+    container.innerHTML = '<p>Nu sunt imobile disponibile.</p>';
+    return;
+  }
+  
+  container.innerHTML = '';
+  
+  imobileData.forEach((imobil, index) => {
+    const cardHTML = createImobilCard(imobil);
+    container.insertAdjacentHTML('beforeend', cardHTML);
+  });
+  
+  // Adaugă event listeners pentru butoanele de detalii
+  addCardEventListeners(imobileData);
+  
+  // Adaugă event listeners pentru butoanele de like
+  addLikeEventListeners();
+}
+
+async function addLikeEventListeners() {
+    const likeButtons = document.querySelectorAll('.imobil-like-btn');
+    
+    // Pentru fiecare buton, verifică statusul de like
+    for (const btn of likeButtons) {
+        const anuntId = btn.getAttribute('data-anunt-id');
+        
+        // Verifică dacă user-ul este conectat
+        const user = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (user) {
+            const isLiked = await checkLikeStatus(anuntId);
+            if (isLiked) {
+                btn.classList.add('liked');
+            } else {
+                btn.classList.remove('liked'); // IMPORTANT: elimină clasa dacă nu e liked
+            }
+        }
+        
+        // Adaugă event listener pentru click
+        btn.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            const anuntId = this.getAttribute('data-anunt-id');
+            await toggleLike(anuntId, this);
+        });
+    }
 }
 
 // ========================================
