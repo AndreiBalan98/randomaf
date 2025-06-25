@@ -3,31 +3,99 @@ let navbar = null;
 let menuBtn = null;
 let mainDiv = null;
 
-// Încărcare conținut dinamic
-function loadContent(file) {
+// Incarcare continut dinamic cu istoric
+function loadContent(file, push = true) {
   fetch(file)
     .then(res => res.text())
     .then(html => {
       document.getElementById("content").innerHTML = html;
 
-      // Execută inițializarea după încărcarea HTML-ului
+      // Executa initializarea dupa incarcarea HTML-ului
       if (file.includes('home.html')) {
         initializeHome();
       }
-      // if (file.includes('detalii.html')) { se apeleaza in alta parte, in home.js
-      //   initializeDetalii();
-      // }
       if (file.includes('map.html')) {
         initializeMap();
       }
       if (file.includes('add-imobile.html')) {
         initializeAdd();
       }
-    })
-    .catch(err => console.error("Eroare la încărcarea fișierului:", err));
-  }
+      if (file.includes('auth.html')) {
+        initializeAuthentication();
+      }
+      if (file.includes('profile.html')) {
+        initializeProfile();
+      }
+      if (file.includes('favorites.html')) {
+        initializeFavorites();
+      }
 
-// Ascunde meniu și extinde conținut
+      // Adauga in istoric daca e nevoie
+      if (push) {
+        history.pushState({ file }, '', '#' + file);
+      }
+    })
+    .catch(err => console.error("Eroare la incarcarea fisierului:", err));
+}
+
+// Modifica checkAuthAndLoad sa transmita push=false la back/forward
+async function checkAuthAndLoad(file, push = true) {
+  const protectedPages = ['add-imobile.html', 'favorites.html', 'profile.html'];
+  const needsAuth = protectedPages.some(page => file.includes(page));
+  if (needsAuth) {
+    try {
+      const response = await fetch('http://localhost:3001/api/auth/current-user', {
+        method: 'GET',
+        credentials: 'include'
+      });
+      const result = await response.json();
+      if (!result.success || !result.user) {
+        loadContent('html/auth.html', push);
+        return;
+      }
+      sessionStorage.setItem('currentUser', JSON.stringify(result.user));
+      loadContent(file, push);
+    } catch (error) {
+      console.error('Eroare verificare auth:', error);
+      loadContent('html/auth.html', push);
+    }
+  } else {
+    loadContent(file, push);
+  }
+}
+
+// La incarcare, incarca din hash daca exista
+window.addEventListener('DOMContentLoaded', function() {
+  navbar = document.getElementById('navbar');
+  menuBtn = document.getElementById('menuBtn');
+  mainDiv = document.getElementById('content');
+
+  menuBtn.addEventListener('click', toggleMenu);
+
+  document.querySelectorAll('nav li a').forEach(link => {
+    link.addEventListener('click', function() {
+      activateNavLink(this);
+    });
+  });
+
+  initializeMenuState();
+  window.addEventListener('resize', handleResize);
+
+  // Incarca pagina din hash daca exista
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
+      checkAuthAndLoad(hash, false);
+    } else {
+      loadContent(hash, false);
+    }
+  } else {
+    loadContent('html/home.html', false);
+  }
+});
+
+
+// Ascunde meniu si extinde continut
 function hideMenuAndExpandContent() {
   navbar.style.display = 'none';
   if(mainDiv) {
@@ -36,7 +104,7 @@ function hideMenuAndExpandContent() {
   }
 }
 
-// Afișează meniu și restrânge conținut
+// Afiseaza meniu si restrange continut
 function showMenuAndShrinkContent() {
   navbar.style.display = 'block';
   if(mainDiv) {
@@ -54,13 +122,13 @@ function toggleMenu() {
   }
 }
 
-// Activare link navigație
+// Activare link navigatie
 function activateNavLink(clickedLink) {
   document.querySelectorAll('nav li a').forEach(l => l.classList.remove('active'));
   clickedLink.classList.add('active');
 }
 
-// Inițializare stare meniu
+// Initializare stare meniu
 function initializeMenuState() {
   if (window.innerWidth > 768) {
     showMenuAndShrinkContent();
@@ -82,23 +150,50 @@ function handleResize() {
   }
 }
 
-// Event listeners și inițializare
+// La incarcare, incarca din hash daca exista
 window.addEventListener('DOMContentLoaded', function() {
-  // Elemente DOM
   navbar = document.getElementById('navbar');
   menuBtn = document.getElementById('menuBtn');
   mainDiv = document.getElementById('content');
-  
+
   menuBtn.addEventListener('click', toggleMenu);
-  
+
   document.querySelectorAll('nav li a').forEach(link => {
     link.addEventListener('click', function() {
       activateNavLink(this);
     });
   });
-  
+
   initializeMenuState();
   window.addEventListener('resize', handleResize);
+
+  // Incarca pagina din hash daca exista
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
+      checkAuthAndLoad(hash, false);
+    } else {
+      loadContent(hash, false);
+    }
+  } else {
+    loadContent('html/home.html', false);
+  }
 });
 
+// Navigare cu back/forward in browser
+window.onpopstate = function(event) {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
+      checkAuthAndLoad(hash, false);
+    } else {
+      loadContent(hash, false);
+    }
+  } else {
+    loadContent('html/home.html', false);
+  }
+};
+
+
 window.loadContent = loadContent;
+window.checkAuthAndLoad = checkAuthAndLoad;

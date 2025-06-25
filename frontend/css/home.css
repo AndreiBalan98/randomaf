@@ -16,7 +16,7 @@
   --text-black: #000000;
   --text-light: #f1f1f1;
   
-  /* Dimensiuni și spațiere */
+  /* Dimensiuni si spatiere */
   --icon-small: 20px;
   --icon-medium: 24px;
   --icon-large: 40px;
@@ -62,16 +62,16 @@
   height: var(--icon-medium);
 }
 
-/* ===== TITLURI SECȚIUNI ===== */
+/* ===== TITLURI SECTIUNI ===== */
 
-/* Titlu general pentru secțiuni */
+/* Titlu general pentru sectiuni */
 .section-title {
   display: flex;
   align-items: center;
   gap: var(--gap-small);
 }
 
-/* Titlu pentru secțiunea de filtre */
+/* Titlu pentru sectiunea de filtre */
 .filters-title {
   display: flex;
   align-items: center;
@@ -93,7 +93,7 @@
   font-weight: 700;
 }
 
-/* Titlu pentru secțiunea de straturi */
+/* Titlu pentru sectiunea de straturi */
 .layers-title {
   display: flex;
   align-items: center;
@@ -108,7 +108,7 @@
   font-weight: 700;
 }
 
-/* Titlu pentru secțiunea de imobile */
+/* Titlu pentru sectiunea de imobile */
 .imobile-title {
   display: flex;
   align-items: center;
@@ -145,7 +145,7 @@
   box-shadow: var(--shadow-medium);
 }
 
-/* ===== SECȚIUNEA FILTRE ===== */
+/* ===== SECTIUNEA FILTRE ===== */
 
 /* Container interior pentru filtre */
 .filters-inner {
@@ -169,7 +169,7 @@
   justify-content: flex-start;
 }
 
-/* Dimensiuni specifice pentru câmpurile de filtrare */
+/* Dimensiuni specifice pentru campurile de filtrare */
 .filters-form-flex .pret {
   width: 120px;
   min-width: 0;
@@ -208,7 +208,7 @@
 
 /* ===== STILURI PENTRU CONTROALE FILTRE ===== */
 
-/* Stiluri de bază pentru input-uri, select-uri și butoane */
+/* Stiluri de baza pentru input-uri, select-uri si butoane */
 .filters input, 
 .filters select, 
 .filters button {
@@ -220,7 +220,7 @@
   box-shadow: var(--shadow-light);
 }
 
-/* Stiluri pentru hover și focus */
+/* Stiluri pentru hover si focus */
 .filters input:hover,
 .filters input:focus,
 .filters select:hover,
@@ -233,7 +233,7 @@
 
 /* Stiluri specifice pentru butoane */
 .filters button {
-  background: var(--primary-color-light);
+  background: var(--primary-color);
   color: var(--background-white);
   border: none;
   cursor: pointer;
@@ -245,9 +245,9 @@
   color: var(--primary-color);
 }
 
-/* ===== SECȚIUNEA STRATURI (LAYERS) ===== */
+/* ===== SECTIUNEA STRATURI (LAYERS) ===== */
 
-/* Stiluri pentru etichete în layers */
+/* Stiluri pentru etichete in layers */
 .layers label {
   margin-right: 1.5em;
   font-size: 1em;

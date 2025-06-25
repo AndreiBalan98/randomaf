@@ -1,125 +1,59 @@
 // ========================================
-// CONSTANTE ȘI CONFIGURAȚII
+// CONSTANTE SI CONFIGURATII
 // ========================================
 
 const API_BASE_URL = 'http://localhost:3001';
 
-// Opțiuni pentru selectoarele din filtre
+// Optiuni pentru selectoarele din filtre
 const FILTER_OPTIONS = {
   tip: [
     { value: 'apartament', text: 'Apartament' },
-    { value: 'casa', text: 'Casă' },
+    { value: 'casa', text: 'Casa' },
     { value: 'teren', text: 'Teren' },
-    { value: 'spații comerciale', text: 'Spații comerciale' }
-  ],
-  stare: [
-    { value: 'nou', text: 'Nou' },
-    { value: 'renovat', text: 'Renovat' },
-    { value: 'vechi', text: 'Vechi' }
+    { value: 'spatiu_comercial', text: 'Spatii comerciale' }
   ],
   oferta: [
-    { value: 'vanzare', text: 'De vânzare' },
-    { value: 'inchiriat', text: 'De închiriat' }
+    { value: 'vanzare', text: 'De vanzare' },
+    { value: 'inchiriat', text: 'De inchiriat' }
   ]
 };
 
-// Straturi disponibile pentru hartă
+// Straturi disponibile pentru harta
 const AVAILABLE_LAYERS = [
   { id: 'poluare', name: 'Poluare' },
-  { id: 'aglomeratie', name: 'Aglomerație' },
+  { id: 'aglomeratie', name: 'Aglomeratie' },
   { id: 'jafuri', name: 'Jafuri' },
   { id: 'cost_trai', name: 'Cost mediu de trai' },
-  { id: 'temperatura', name: 'Temperatura medie anuală' },
-  { id: 'parcari', name: 'Parcări' },
+  { id: 'temperatura', name: 'Temperatura medie anuala' },
+  { id: 'parcari', name: 'Parcari' },
   { id: 'magazine', name: 'Magazine' }
 ];
 
-// Orașe și localități
-const LOCALITIES_BY_CITY = {
-  "alba-iulia": ["Centru", "Partos", "Ampoi", "Cetate", "Tolstoi", "Barabant", "Micesti", "Oarda"],
-  "arad": ["Centru", "Aurel Vlaicu", "Grădiște", "Micălaca", "Gai", "Bujac", "Sânnicolau Mic", "Vladimirescu"],
-  "bacau": ["Centru", "Nord", "Sud", "Serbanesti", "Gheraiesti", "Izvoare", "Letea", "Mioritei"],
-  "baia-mare": ["Centru", "Valea Roșie", "Vasile Alecsandri", "Săsar", "Ferneziu", "Griviței", "Gara", "Recea"],
-  "bistrita": ["Centru", "Unirea", "Subcetate", "Viisoara", "Sigmir", "Slatinita", "Ghinda"],
-  "botosani": ["Centru", "Parcul Tineretului", "Cătămărăști", "Pacea", "Tudora", "Curtești"],
-  "braila": ["Centru", "Viziru", "Hipodrom", "Chercea", "Obor", "Radu Negru", "Lacu Dulce"],
-  "brasov": ["Centru", "Tractorul", "Răcădău", "Bartolomeu", "Noua", "Astra", "Schei", "Stupini"],
-  "bucuresti": [
-    "Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6",
-    "Băneasa", "Aviatorilor", "Cotroceni", "Drumul Taberei", "Militari", "Titan", "Berceni", "Colentina"
-  ],
-  "buzau": ["Centru", "Micro 14", "Micro 5", "Dorobanți", "Bălcescu", "Simileasca", "Broșteni"],
-  "calafat": ["Centru", "Basarabi", "Ciupercenii Vechi", "Golenți"],
-  "calarași": ["Centru", "Mircea Vodă", "Oborul Nou", "Măgureni", "Dumbrava", "Ostroveni"],
-  "campina": ["Centru", "Slobozia", "Voila", "Câmpinița", "Turnătorie"],
-  "campulung": ["Centru", "Grui", "Vișoi", "Valea Româneștilor", "Schei"],
-  "cluj-napoca": ["Centru", "Mănăștur", "Gheorgheni", "Grigorescu", "Zorilor", "Bună Ziua", "Iris", "Someșeni"],
-  "constanta": ["Centru", "Tomis Nord", "Tomis III", "Faleză Nord", "Inel II", "Palas", "Coiciu", "Km 4-5"],
-  "craiova": ["Centru", "Rovine", "Brazda lui Novac", "Lăpuș", "Valea Roșie", "Craiovița Nouă", "Bariera Vâlcii"],
-  "deva": ["Centru", "Micro 15", "Micro 16", "Micro 4", "Micro 5", "Aurel Vlaicu", "Grigorescu"],
-  "drobeta-turnu-severin": ["Centru", "Crihala", "Schela", "Gura Văii", "Dudașu", "Banovița"],
-  "focsani": ["Centru", "Sud", "Nord", "Obor", "Bahne", "Gara", "Mândrești"],
-  "galati": ["Centru", "Mazepa", "Micro 19", "Micro 21", "Micro 40", "Țiglina", "Dunărea"],
-  "giurgiu": ["Centru", "Tineretului", "Smârda", "Oinacu", "Steaua Dunării"],
-  "iasi": ["Centru", "Copou", "Tătărași", "Nicolina", "Păcurari", "CUG", "Galata", "Dacia"],
-  "medias": ["Centru", "Gura Câmpului", "Vitrometan", "După Zid", "Moșnei"],
-  "miercurea-ciuc": ["Centru", "Szécseny", "Spicului", "Nagymező", "Harghita"],
-  "oradea": ["Centru", "Rogerius", "Nufărul", "Ioșia", "Velența", "Oncea", "Episcopia"],
-  "petrosani": ["Centru", "Aeroport", "Colonie", "Dâlja", "Sașa", "Livezeni"],
-  "piatra-neamt": ["Centru", "Dărmănești", "Precista", "Mărăței", "Văleni", "Ciritei"],
-  "pitesti": ["Centru", "Trivale", "Găvana", "Prundu", "Războieni", "Eremia Grigorescu"],
-  "ploiesti": ["Centru", "Nord", "Sud", "Vest", "Malul Roșu", "Bariera București", "Mimiu"],
-  "ramnicu-valcea": ["Centru", "Nord", "Ostroveni", "Traian", "Petrișor", "Căzănești"],
-  "ramnicu-sarat": ["Centru", "Anghel Saligny", "Podgoria", "Bariera Focșani"],
-  "reghin": ["Centru", "Apalina", "Iernuțeni", "Dedrad", "Breaza"],
-  "resita": ["Centru", "Govândari", "Lunca Bârzavei", "Muncitoresc", "Dealul Crucii"],
-  "roman": ["Centru", "Favorit", "Petru Rareș", "Mihai Viteazu", "Nicolae Bălcescu"],
-  "rosiorii-de-vede": ["Centru", "Spitalului", "Nord", "Sud", "Est"],
-  "satu-mare": ["Centru", "Micro 17", "Micro 16", "Carpați", "Soarelui", "Horea"],
-  "sibiu": ["Centru", "Ștrand", "Vasile Aaron", "Hipodrom", "Turnișor", "Terezian", "Lazaret"],
-  "sighetu-marmatiei": ["Centru", "Valea Cufundoasă", "Iapa", "Șugău", "Lazu Baciului"],
-  "slatina": ["Centru", "Progresul", "Steaua", "Clocociov", "Cireașov"],
-  "slobozia": ["Centru", "Gării Noi", "Mihai Viteazu", "Sud", "Vest"],
-  "suceava": ["Centru", "Burdujeni", "Obcini", "Ițcani", "George Enescu", "Areni"],
-  "targoviste": ["Centru", "Micro 6", "Micro 9", "Priseaca", "Sagricom"],
-  "targu-jiu": ["Centru", "9 Mai", "Debarcader", "Griviței", "Bârsești"],
-  "targu-mures": ["Centru", "Dâmbul Pietros", "Unirii", "Tudor", "Aleea Carpați", "Cornișa"],
-  "targu-neamt": ["Centru", "Blebea", "Condreni", "Humulești", "Ozana"],
-  "targu-secuiesc": ["Centru", "Fabricii", "Kanta", "Molnar János", "Turia"],
-  "timisoara": ["Centru", "Soarelui", "Girocului", "Circumvalațiunii", "Lipovei", "Aradului", "Mehala", "Iosefin"],
-  "turda": ["Centru", "Oprișani", "Micro 3", "Poiana", "Turda Nouă"],
-  "turnu-magurele": ["Centru", "Odaia", "Magurele", "Combinat"],
-  "urziceni": ["Centru", "Tineretului", "Sud", "Vest", "Est"],
-  "vaslui": ["Centru", "Moara Grecilor", "Gara", "Rediu", "Bălteni"],
-  "zalau": ["Centru", "Dumbrava Nord", "Brădet", "Porolissum", "Meseș"],
-  "zarnesti": ["Centru", "Tohanu Vechi", "Tohanu Nou", "Prund", "Bălăceanca"]
-};
-
 // ========================================
-// FUNCȚII DE INIȚIALIZARE
+// FUNCTII DE INITIALIZARE
 // ========================================
 
 /**
- * Inițializează aplicația când DOM-ul este încărcat
+ * Initializeaza aplicatia cand DOM-ul este incarcat
  */
 function initializeHome() {
-  console.log('Inițializare aplicație home...');
+  console.log('Initializare aplicatie home...');
   
-  // Inițializează componentele
+  // Initializeaza componentele
   initializeFilterSelects();
   initializeLayers();
   initializeLocationFilters();
   initializeFormHandlers();
   
-  // Încarcă datele
+  // Incarca datele
   loadImobileData();
 }
 
 /**
- * Inițializează selectoarele din filtre cu opțiuni
+ * Initializeaza selectoarele din filtre cu optiuni
  */
 function initializeFilterSelects() {
-  console.log('Inițializare selectoare filtre...');
+  console.log('Initializare selectoare filtre...');
   
   Object.entries(FILTER_OPTIONS).forEach(([selectName, options]) => {
     const selectElement = document.getElementById(`${selectName}Select`);
@@ -135,10 +69,10 @@ function initializeFilterSelects() {
 }
 
 /**
- * Inițializează straturile pentru hartă
+ * Initializeaza straturile pentru harta
  */
 function initializeLayers() {
-  console.log('Inițializare straturi...');
+  console.log('Initializare straturi...');
   
   const layersContainer = document.getElementById('layersContainer');
   if (!layersContainer) return;
@@ -153,41 +87,62 @@ function initializeLayers() {
     layersContainer.insertAdjacentHTML('beforeend', layerHTML);
   });
   
-  // Adaugă event listeners pentru straturi
+  // Adauga event listeners pentru straturi
   layersContainer.addEventListener('change', handleLayerChange);
 }
 
 /**
- * Inițializează filtrele de localizare (oraș și localitate)
+ * Initializeaza filtrele de localizare (oras si localitate)
  */
-function initializeLocationFilters() {
-  console.log('Inițializare filtre localizare...');
-  
+async function initializeLocationFilters() {
+  console.log('Initializare filtre localizare dinamic...');
   const orasSelect = document.getElementById('orasSelect');
   const localitateSelect = document.getElementById('localitateSelect');
-  
   if (!orasSelect || !localitateSelect) return;
-  
-  // Populează selectorul de orașe
-  Object.keys(LOCALITIES_BY_CITY).forEach(city => {
-    const option = document.createElement('option');
-    option.value = city;
-    option.textContent = formatCityName(city);
-    orasSelect.appendChild(option);
-  });
-  
-  // Event listener pentru schimbarea orașului
-  orasSelect.addEventListener('change', function() {
-    const selectedCity = this.value;
-    updateLocalitateSelect(selectedCity, localitateSelect);
+
+  // Populează orașele din backend
+  try {
+    const oraseResponse = await fetch('http://localhost:3001/api/orase');
+    const orase = await oraseResponse.json();
+    orasSelect.innerHTML = '<option value="">Alege orasul</option>';
+    orase.forEach(oras => {
+      const option = document.createElement('option');
+      option.value = oras.id;
+      option.textContent = oras.nume;
+      orasSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error('Eroare la incarcarea oraselor:', err);
+  }
+
+  // La schimbarea orașului, populează localitățile aferente
+  orasSelect.addEventListener('change', async function() {
+    const selectedOrasId = this.value;
+    localitateSelect.innerHTML = '<option value="">Alege localitatea</option>';
+    localitateSelect.disabled = true;
+    if (selectedOrasId) {
+      try {
+        const localitatiResponse = await fetch(`http://localhost:3001/api/localitati?oras_id=${selectedOrasId}`);
+        const localitati = await localitatiResponse.json();
+        localitati.forEach(loc => {
+          const option = document.createElement('option');
+          option.value = loc.id;
+          option.textContent = loc.nume;
+          localitateSelect.appendChild(option);
+        });
+        localitateSelect.disabled = false;
+      } catch (err) {
+        console.error('Eroare la incarcarea localitatilor:', err);
+      }
+    }
   });
 }
 
 /**
- * Inițializează gestionarea formularelor
+ * Initializeaza gestionarea formularelor
  */
 function initializeFormHandlers() {
-  console.log('Inițializare gestionare formulare...');
+  console.log('Initializare gestionare formulare...');
   
   const filtersForm = document.getElementById('filtersForm');
   if (filtersForm) {
@@ -196,14 +151,14 @@ function initializeFormHandlers() {
 }
 
 // ========================================
-// FUNCȚII PENTRU GESTIONAREA DATELOR
+// FUNCTII PENTRU GESTIONAREA DATELOR
 // ========================================
 
 /**
- * Încarcă datele imobilelor de la server
+ * Incarca datele imobilelor de la server
  */
 async function loadImobileData(filters = {}) {
-  console.log('Încărcare date imobile...');
+  console.log('Incarcare date imobile...');
  
   try {
     const queryParams = new URLSearchParams(filters).toString();
@@ -214,18 +169,19 @@ async function loadImobileData(filters = {}) {
     }
    
     const imobileData = await response.json();
+    console.log(imobileData);
     renderImobileCards(imobileData);
    
   } catch (error) {
-    console.error('Eroare la încărcarea imobilelor:', error);
-    displayError('Eroare la încărcarea anunțurilor!');
+    console.error('Eroare la incarcarea imobilelor:', error);
+    displayError('Eroare la incarcarea anunturilor!');
   }
 }
 
 /**
- * Renderizează cardurile de imobile
+ * Renderizeaza cardurile de imobile
  */
-function renderImobileCards(imobileData) {
+async function renderImobileCards(imobileData) {
   console.log('Renderizare carduri imobile...', imobileData.length);
   
   const container = document.getElementById('imobileCards');
@@ -238,28 +194,36 @@ function renderImobileCards(imobileData) {
   
   container.innerHTML = '';
   
+  // Genereaza cardurile fara verificarea like-ului (se va face in addLikeEventListeners)
   imobileData.forEach((imobil, index) => {
-    const cardHTML = createImobilCard(imobil);
+    const cardHTML = createImobilCard(imobil, false); // Mereu false aici
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
   
-  // Adaugă event listeners pentru butoanele de detalii
+  // Adauga event listeners pentru butoanele de detalii
   addCardEventListeners(imobileData);
+  
+  // Adauga event listeners pentru butoanele de like (si verifica statusul)
+  await addLikeEventListeners();
 }
 
 /**
- * Creează HTML-ul pentru un card de imobil
+ * Creeaza HTML-ul pentru un card de imobil
  */
-function createImobilCard(imobil) {
-  const imagePath = imobil.imagine ? `${API_BASE_URL}/${imobil.imagine}` : `${API_BASE_URL}/images/casa1.jpg`;
-  const price = imobil.pret ? `${imobil.pret} €` : 'Preț la cerere';
-  const transactionType = getTransactionTypeText(imobil.tranzactie);
-  const surface = imobil.suprafata || '-';
+function createImobilCard(imobil, isLiked = false) {
+  const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
+  const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
+  const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
+  const surface = imobil.tip_imobil === 'teren' ? 
+    (imobil.detalii_specifice?.suprafata_teren || '-') : 
+    (imobil.detalii_specifice?.suprafata_utila || '-');
+  
+  const likeButtonClass = isLiked ? 'imobil-like-btn liked' : 'imobil-like-btn';
   
   return `
     <div class="imobil-card">
       <div class="imobil-card-img" style="background-image:url('${imagePath}');">
-        <button class="imobil-like-btn" title="Favorite">&#10084;</button>
+        <button class="${likeButtonClass}" title="Favorite" data-anunt-id="${imobil.id}">&#10084;</button>
         <div class="imobil-card-labels">
           <div class="imobil-pret">${price}</div>
           <div class="imobil-tip">${transactionType}</div>
@@ -269,7 +233,7 @@ function createImobilCard(imobil) {
         <div class="imobil-titlu">${imobil.titlu}</div>
         <div class="imobil-locatie">
           <span class="icon-locatie">📍</span>
-          ${imobil.locatie}
+          ${imobil.localizare}
         </div>
         <div class="imobil-info">
           <span class="imobil-mp">${surface} mp</span>
@@ -282,11 +246,11 @@ function createImobilCard(imobil) {
 }
 
 // ========================================
-// FUNCȚII HELPER
+// FUNCTII HELPER
 // ========================================
 
 /**
- * Formatează numele unui oraș pentru afișare
+ * Formateaza numele unui oras pentru afisare
  */
 function formatCityName(citySlug) {
   return citySlug.split('-').map(word => 
@@ -295,7 +259,7 @@ function formatCityName(citySlug) {
 }
 
 /**
- * Actualizează selectorul de localități în funcție de orașul selectat
+ * Actualizeaza selectorul de localitati in functie de orasul selectat
  */
 function updateLocalitateSelect(selectedCity, localitateSelect) {
   localitateSelect.innerHTML = '<option value="">Alege localitatea</option>';
@@ -314,21 +278,21 @@ function updateLocalitateSelect(selectedCity, localitateSelect) {
 }
 
 /**
- * Returnează textul pentru tipul de tranzacție
+ * Returneaza textul pentru tipul de tranzactie
  */
 function getTransactionTypeText(tranzactie) {
   switch(tranzactie) {
     case 'vanzare':
-      return 'De vânzare';
+      return 'De vanzare';
     case 'inchiriat':
-      return 'De închiriat';
+      return 'De inchiriat';
     default:
       return '';
   }
 }
 
 /**
- * Afișează mesaj de eroare
+ * Afiseaza mesaj de eroare
  */
 function displayError(message) {
   const container = document.getElementById('imobileCards');
@@ -337,12 +301,118 @@ function displayError(message) {
   }
 }
 
+// Functii pentru like
+async function toggleLike(anuntId, buttonElement) {
+    try {
+        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+            method: 'POST',
+            credentials: 'include'
+        });
+        
+        if (!response.ok) {
+            if (response.status === 401) {
+                alert('Trebuie sa fii conectat pentru a adauga la favorite!');
+                return;
+            }
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const result = await response.json();
+        
+        // Update visual al butonului
+        if (result.liked) {
+            buttonElement.classList.add('liked');
+        } else {
+            buttonElement.classList.remove('liked');
+        }
+        
+    } catch (error) {
+        console.error('Eroare la toggle like:', error);
+    }
+}
+
+async function checkLikeStatus(anuntId) {
+    try {
+        const user = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (!user) {
+            return false; // Daca nu e conectat, sigur nu are like
+        }
+        
+        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+            method: 'GET',
+            credentials: 'include'
+        });
+        
+        if (response.ok) {
+            const result = await response.json();
+            return result.liked;
+        }
+    } catch (error) {
+        console.error('Eroare verificare like:', error);
+    }
+    return false;
+}
+
+// Modifica renderImobileCards pentru a include like listeners
+function renderImobileCards(imobileData) {
+  console.log('Renderizare carduri imobile...', imobileData.length);
+  
+  const container = document.getElementById('imobileCards');
+  if (!container) return;
+  
+  if (!imobileData || imobileData.length === 0) {
+    container.innerHTML = '<p>Nu sunt imobile disponibile.</p>';
+    return;
+  }
+  
+  container.innerHTML = '';
+  
+  imobileData.forEach((imobil, index) => {
+    const cardHTML = createImobilCard(imobil);
+    container.insertAdjacentHTML('beforeend', cardHTML);
+  });
+  
+  // Adauga event listeners pentru butoanele de detalii
+  addCardEventListeners(imobileData);
+  
+  // Adauga event listeners pentru butoanele de like
+  addLikeEventListeners();
+}
+
+async function addLikeEventListeners() {
+    const likeButtons = document.querySelectorAll('.imobil-like-btn');
+    
+    // Pentru fiecare buton, verifica statusul de like
+    for (const btn of likeButtons) {
+        const anuntId = btn.getAttribute('data-anunt-id');
+        
+        // IMPORTANT: Reseteaza clasa inainte de verificare
+        btn.classList.remove('liked');
+        
+        // Verifica daca user-ul este conectat
+        const user = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (user) {
+            const isLiked = await checkLikeStatus(anuntId);
+            if (isLiked) {
+                btn.classList.add('liked');
+            }
+        }
+        
+        // Adauga event listener pentru click
+        btn.addEventListener('click', async function(e) {
+            e.stopPropagation();
+            const anuntId = this.getAttribute('data-anunt-id');
+            await toggleLike(anuntId, this);
+        });
+    }
+}
+
 // ========================================
 // EVENT HANDLERS
 // ========================================
 
 /**
- * Gestionează schimbarea straturilor
+ * Gestioneaza schimbarea straturilor
  */
 function handleLayerChange(event) {
   if (event.target.classList.contains('layer-checkbox')) {
@@ -358,7 +428,7 @@ function handleLayerChange(event) {
 }
 
 /**
- * Gestionează submisia formularului de filtre
+ * Gestioneaza submisia formularului de filtre
  */
 function handleFormSubmit(event) {
   event.preventDefault();
@@ -369,7 +439,6 @@ function handleFormSubmit(event) {
     minPrice: formData.get('minPrice') || '',
     maxPrice: formData.get('maxPrice') || '',
     tip: formData.get('tip') || '',
-    stare: formData.get('stare') || '',
     oferta: formData.get('oferta') || '',
     oras: formData.get('oras') || '',
     localitate: formData.get('localitate') || ''
@@ -380,7 +449,7 @@ function handleFormSubmit(event) {
 }
 
 /**
- * Adaugă event listeners pentru butoanele de detalii
+ * Adauga event listeners pentru butoanele de detalii
  */
 function addCardEventListeners(imobileData) {
   const detailButtons = document.querySelectorAll('.imobil-detalii-btn');

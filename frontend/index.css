@@ -3,15 +3,15 @@
   --primary-color: #431164c2;      /* Header, buton profil, link-uri nav */
   --primary-solid: #431164;        /* Text hover nav, iconuri hover */
   --secondary-color: #adadaf;      /* Hover states, borduri */
-  --background-light: rgb(231, 231, 231); /* Fundal navigație */
+  --background-light: rgb(231, 231, 231); /* Fundal navigatie */
   --text-white: #ffffff;           /* Text header, link-uri nav */
-  --text-dark: #431164;            /* Text hover navigație */
-  --shadow-light: rgba(67,17,100,0.07);   /* Umbră link-uri nav */
-  --shadow-medium: rgba(67,17,100,0.10);  /* Umbră container nav */
-  --shadow-dark: rgba(67,17,100,0.15);    /* Umbră hover nav */
+  --text-dark: #431164;            /* Text hover navigatie */
+  --shadow-light: rgba(67,17,100,0.07);   /* Umbra link-uri nav */
+  --shadow-medium: rgba(67,17,100,0.10);  /* Umbra container nav */
+  --shadow-dark: rgba(67,17,100,0.15);    /* Umbra hover nav */
 }
 
-/* Setări generale */
+/* Setari generale */
 body, input, select, button, textarea {
   font-family: 'Open Sans', sans-serif;
 }
@@ -84,7 +84,7 @@ header h1 {
   fill: var(--primary-color);
 }
 
-/* Navigație - container */
+/* Navigatie - container */
 nav ul {
   list-style-type: none;
   margin: 0;
@@ -103,7 +103,7 @@ nav li {
   margin-bottom: 8px;
 }
 
-/* Link-uri navigație */
+/* Link-uri navigatie */
 nav li a {
   display: flex;
   align-items: center;
@@ -129,7 +129,7 @@ nav li a.active {
   box-shadow: 0 4px 16px var(--shadow-dark);
 }
 
-/* Iconuri navigație */
+/* Iconuri navigatie */
 .icon-profile,
 .icon-favorites,
 .icon-chat,
@@ -161,7 +161,7 @@ nav li a.active .icon-profile {
   color: var(--primary-color);
 }
 
-/* Conținut principal */
+/* Continut principal */
 main {
   margin-left: 15%;
   padding: 20px;

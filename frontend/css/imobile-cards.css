@@ -213,6 +213,17 @@
   margin-left: 1em;
 }
 
+/* Stiluri pentru butonul de like */
+.imobil-like-btn.liked {
+  background: rgba(220, 53, 69, 0.9);
+  color: white;
+}
+
+.imobil-like-btn.liked:hover {
+  background: rgba(220, 53, 69, 1);
+  color: white;
+}
+
 /* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 1000px) {
   .imobile-cards {

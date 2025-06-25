@@ -1,0 +1,30 @@
+/* Folosesc aceleasi stiluri ca in home.css pentru consistenta */
+.favorites-section {
+    margin: 20px 0;
+}
+
+.favorites-section .section-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+    margin-bottom: 1em;
+}
+
+.favorites-section .section-icon {
+    width: 40px;
+    height: 40px;
+    color: #431164;
+    margin-top: 25px;
+}
+
+.favorites-section h1 {
+    margin: 0;
+    margin-top: 25px;
+    font-size: 1.9em;
+    color: #431164;
+    font-weight: 700;
+}
+
+.favorites-container {
+    padding: 20px;
+}
