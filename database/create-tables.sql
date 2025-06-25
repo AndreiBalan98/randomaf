@@ -41,7 +41,7 @@ CREATE TABLE anunturi (
     titlu TEXT NOT NULL,
     pret NUMERIC(12, 2) NOT NULL,
     comision NUMERIC(5, 2),
-    oras_id INTEGER REFERENCES orasi(id),
+    oras_id INTEGER REFERENCES orase(id),
     localitate_id INTEGER REFERENCES localitati(id),
     strada VARCHAR(200),
     latitudine NUMERIC(10, 8),
