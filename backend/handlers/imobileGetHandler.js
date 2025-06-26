@@ -12,7 +12,11 @@ function handleImobileGet(req, res) {
             a.titlu,
             a.pret,
             a.comision,
-            a.localizare,
+            o.nume AS oras,
+            l.nume AS localitate,
+            a.strada,
+            a.latitudine,
+            a.longitudine,
             a.descriere,
             a.data_publicare,
             -- Apartamente
@@ -40,6 +44,8 @@ function handleImobileGet(req, res) {
             sc.nr_bai as sc_nr_bai,
             sc.an_constructie as sc_an_constructie
         FROM anunturi a
+        LEFT JOIN orase o ON a.oras_id = o.id
+        LEFT JOIN localitati l ON a.localitate_id = l.id
         LEFT JOIN apartamente ap ON a.id = ap.anunt_id
         LEFT JOIN casee c ON a.id = c.anunt_id
         LEFT JOIN terenuri t ON a.id = t.anunt_id
@@ -78,17 +84,17 @@ function handleImobileGet(req, res) {
         paramIndex++;
     }
 
-    // Filtrare dupa oras
+    // Filtrare dupa oras (ID)
     if (query.get('oras')) {
-        sql += ` AND LOWER(SPLIT_PART(a.localizare, ',', 1)) = $${paramIndex}`;
-        params.push(query.get('oras').toLowerCase());
+        sql += ` AND a.oras_id = $${paramIndex}`;
+        params.push(parseInt(query.get('oras')));
         paramIndex++;
     }
 
-    // Filtrare dupa localitate
+    // Filtrare dupa localitate (ID)
     if (query.get('localitate')) {
-        sql += ` AND LOWER(TRIM(SPLIT_PART(a.localizare, ',', 2))) = $${paramIndex}`;
-        params.push(query.get('localitate').toLowerCase());
+        sql += ` AND a.localitate_id = $${paramIndex}`;
+        params.push(parseInt(query.get('localitate')));
         paramIndex++;
     }
 
@@ -178,7 +184,9 @@ function handleImobileGet(req, res) {
                     titlu: row.titlu,
                     pret: parseFloat(row.pret),
                     comision: row.comision ? parseFloat(row.comision) : null,
-                    localizare: row.localizare,
+                    localizare: [row.oras, row.localitate, row.strada].filter(Boolean).join(', '),
+                    latitudine: row.latitudine,
+                    longitudine: row.longitudine,
                     descriere: row.descriere,
                     data_publicare: row.data_publicare,
                     imagini: imaginiMap[row.id] || []

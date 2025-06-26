@@ -3,8 +3,8 @@ let navbar = null;
 let menuBtn = null;
 let mainDiv = null;
 
-// Incarcare continut dinamic
-function loadContent(file) {
+// Incarcare continut dinamic cu istoric
+function loadContent(file, push = true) {
   fetch(file)
     .then(res => res.text())
     .then(html => {
@@ -29,46 +29,71 @@ function loadContent(file) {
       if (file.includes('favorites.html')) {
         initializeFavorites();
       }
+
+      // Adauga in istoric daca e nevoie
+      if (push) {
+        history.pushState({ file }, '', '#' + file);
+      }
     })
     .catch(err => console.error("Eroare la incarcarea fisierului:", err));
 }
 
-// Verifica autentificarea si redirecteaza daca e necesar
-async function checkAuthAndLoad(file) {
-  // Paginile care necesita autentificare
+// Modifica checkAuthAndLoad sa transmita push=false la back/forward
+async function checkAuthAndLoad(file, push = true) {
   const protectedPages = ['add-imobile.html', 'favorites.html', 'profile.html'];
-  
-  // Verifica daca pagina necesita autentificare
   const needsAuth = protectedPages.some(page => file.includes(page));
-  
   if (needsAuth) {
-    // Verifica daca user-ul este conectat
     try {
       const response = await fetch('http://localhost:3001/api/auth/current-user', {
         method: 'GET',
         credentials: 'include'
       });
-      
       const result = await response.json();
-      
       if (!result.success || !result.user) {
-        // Nu este conectat, incarca pagina de auth
-        loadContent('html/auth.html');
+        loadContent('html/auth.html', push);
         return;
       }
-      
-      // Este conectat, salveaza user-ul si incarca pagina
       sessionStorage.setItem('currentUser', JSON.stringify(result.user));
-      loadContent(file);
+      loadContent(file, push);
     } catch (error) {
       console.error('Eroare verificare auth:', error);
-      loadContent('html/auth.html');
+      loadContent('html/auth.html', push);
     }
   } else {
-    // Pagina nu necesita autentificare
-    loadContent(file);
+    loadContent(file, push);
   }
 }
+
+// La incarcare, incarca din hash daca exista
+window.addEventListener('DOMContentLoaded', function() {
+  navbar = document.getElementById('navbar');
+  menuBtn = document.getElementById('menuBtn');
+  mainDiv = document.getElementById('content');
+
+  menuBtn.addEventListener('click', toggleMenu);
+
+  document.querySelectorAll('nav li a').forEach(link => {
+    link.addEventListener('click', function() {
+      activateNavLink(this);
+    });
+  });
+
+  initializeMenuState();
+  window.addEventListener('resize', handleResize);
+
+  // Incarca pagina din hash daca exista
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
+      checkAuthAndLoad(hash, false);
+    } else {
+      loadContent(hash, false);
+    }
+  } else {
+    loadContent('html/home.html', false);
+  }
+});
+
 
 // Ascunde meniu si extinde continut
 function hideMenuAndExpandContent() {
@@ -125,26 +150,50 @@ function handleResize() {
   }
 }
 
-// Event listeners si initializare
+// La incarcare, incarca din hash daca exista
 window.addEventListener('DOMContentLoaded', function() {
-  // Elemente DOM
   navbar = document.getElementById('navbar');
   menuBtn = document.getElementById('menuBtn');
   mainDiv = document.getElementById('content');
-  
+
   menuBtn.addEventListener('click', toggleMenu);
-  
+
   document.querySelectorAll('nav li a').forEach(link => {
     link.addEventListener('click', function() {
       activateNavLink(this);
     });
   });
-  
+
   initializeMenuState();
   window.addEventListener('resize', handleResize);
-  
-  loadContent('html/home.html');
+
+  // Incarca pagina din hash daca exista
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
+      checkAuthAndLoad(hash, false);
+    } else {
+      loadContent(hash, false);
+    }
+  } else {
+    loadContent('html/home.html', false);
+  }
 });
+
+// Navigare cu back/forward in browser
+window.onpopstate = function(event) {
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
+      checkAuthAndLoad(hash, false);
+    } else {
+      loadContent(hash, false);
+    }
+  } else {
+    loadContent('html/home.html', false);
+  }
+};
+
 
 window.loadContent = loadContent;
 window.checkAuthAndLoad = checkAuthAndLoad;
