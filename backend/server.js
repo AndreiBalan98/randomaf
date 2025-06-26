@@ -9,6 +9,8 @@ const handleSignUp          = require('./handlers/signUpHandler');
 const { handleSignIn }      = require('./handlers/signInHandler');
 const { handleLikeToggle, handleGetFavorites }  = require('./handlers/likesHandler');
 const { handleGetCurrentUser, handleLogout }    = require('./handlers/getCurrentUserHandler');
+const { handleOraseGet } = require('./handlers/getOraseHandler');
+const { handleLocalitatiGet } = require('./handlers/getLocalitatiHandler');
 
 const hostname              = 'localhost';
 const port                  = 3001;
@@ -17,7 +19,7 @@ const server = http.createServer((req, res) => {
     console.log('Cerere primita:', req.method, req.url);
     
     // CORS
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost');
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Cookie');
@@ -56,6 +58,10 @@ const server = http.createServer((req, res) => {
         handleLikeToggle(req, res);
     } else if (req.method === 'GET' && req.url === '/api/favorites') {
         handleGetFavorites(req, res);
+    } else if (req.method === 'GET' && req.url.startsWith('/api/orase')) {
+        handleOraseGet(req, res);
+    } else if (req.method === 'GET' && req.url.startsWith('/api/localitati')) {
+        handleLocalitatiGet(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ status: 'error', mesaj: 'Not found' }));
