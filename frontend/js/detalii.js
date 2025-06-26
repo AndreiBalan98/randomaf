@@ -144,7 +144,7 @@ function afiseazaDetaliiImobil(card, imagini) {
     let current = idx;
 
     function showImg(i) {
-      modalImg.src = `${API_BASE_URL}/${imagini[i].url}`;
+      modalImg.src = imagini[i].url.startsWith('http') ? imagini[i].url : `${API_BASE_URL}/${imagini[i].url}`;
       console.log("Modal: " + modalImg.src);
       modalImg.dataset.idx = i;
     }
