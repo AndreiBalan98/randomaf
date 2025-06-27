@@ -29,67 +29,6 @@ const AVAILABLE_LAYERS = [
   { id: 'magazine', name: 'Magazine' }
 ];
 
-// Orase si localitati
-const LOCALITIES_BY_CITY = {
-  "alba-iulia": ["Centru", "Partos", "Ampoi", "Cetate", "Tolstoi", "Barabant", "Micesti", "Oarda"],
-  "arad": ["Centru", "Aurel Vlaicu", "Gradiste", "Micalaca", "Gai", "Bujac", "Sannicolau Mic", "Vladimirescu"],
-  "bacau": ["Centru", "Nord", "Sud", "Serbanesti", "Gheraiesti", "Izvoare", "Letea", "Mioritei"],
-  "baia-mare": ["Centru", "Valea Rosie", "Vasile Alecsandri", "Sasar", "Ferneziu", "Grivitei", "Gara", "Recea"],
-  "bistrita": ["Centru", "Unirea", "Subcetate", "Viisoara", "Sigmir", "Slatinita", "Ghinda"],
-  "botosani": ["Centru", "Parcul Tineretului", "Catamarasti", "Pacea", "Tudora", "Curtesti"],
-  "braila": ["Centru", "Viziru", "Hipodrom", "Chercea", "Obor", "Radu Negru", "Lacu Dulce"],
-  "brasov": ["Centru", "Tractorul", "Racadau", "Bartolomeu", "Noua", "Astra", "Schei", "Stupini"],
-  "bucuresti": [
-    "Sector 1", "Sector 2", "Sector 3", "Sector 4", "Sector 5", "Sector 6",
-    "Baneasa", "Aviatorilor", "Cotroceni", "Drumul Taberei", "Militari", "Titan", "Berceni", "Colentina"
-  ],
-  "buzau": ["Centru", "Micro 14", "Micro 5", "Dorobanti", "Balcescu", "Simileasca", "Brosteni"],
-  "calafat": ["Centru", "Basarabi", "Ciupercenii Vechi", "Golenti"],
-  "calarasi": ["Centru", "Mircea Voda", "Oborul Nou", "Magureni", "Dumbrava", "Ostroveni"],
-  "campina": ["Centru", "Slobozia", "Voila", "Campinita", "Turnatorie"],
-  "campulung": ["Centru", "Grui", "Visoi", "Valea Romanestilor", "Schei"],
-  "cluj-napoca": ["Centru", "Manastur", "Gheorgheni", "Grigorescu", "Zorilor", "Buna Ziua", "Iris", "Someseni"],
-  "constanta": ["Centru", "Tomis Nord", "Tomis III", "Faleza Nord", "Inel II", "Palas", "Coiciu", "Km 4-5"],
-  "craiova": ["Centru", "Rovine", "Brazda lui Novac", "Lapus", "Valea Rosie", "Craiovita Noua", "Bariera Valcii"],
-  "deva": ["Centru", "Micro 15", "Micro 16", "Micro 4", "Micro 5", "Aurel Vlaicu", "Grigorescu"],
-  "drobeta-turnu-severin": ["Centru", "Crihala", "Schela", "Gura Vaii", "Dudasu", "Banovita"],
-  "focsani": ["Centru", "Sud", "Nord", "Obor", "Bahne", "Gara", "Mandresti"],
-  "galati": ["Centru", "Mazepa", "Micro 19", "Micro 21", "Micro 40", "Tiglina", "Dunarea"],
-  "giurgiu": ["Centru", "Tineretului", "Smarda", "Oinacu", "Steaua Dunarii"],
-  "iasi": ["Centru", "Copou", "Tatarasi", "Nicolina", "Pacurari", "CUG", "Galata", "Dacia"],
-  "medias": ["Centru", "Gura Campului", "Vitrometan", "Dupa Zid", "Mosnei"],
-  "miercurea-ciuc": ["Centru", "Szeceny", "Spicului", "Nagymezo", "Harghita"],
-  "oradea": ["Centru", "Rogerius", "Nufarul", "Iosia", "Velenta", "Oncea", "Episcopia"],
-  "petrosani": ["Centru", "Aeroport", "Colonie", "Dalja", "Sasa", "Livezeni"],
-  "piatra-neamt": ["Centru", "Darmanesti", "Precista", "Maratei", "Valeni", "Ciritei"],
-  "pitesti": ["Centru", "Trivale", "Gavana", "Prundu", "Razboieni", "Eremia Grigorescu"],
-  "ploiesti": ["Centru", "Nord", "Sud", "Vest", "Malul Rosu", "Bariera Bucuresti", "Mimiu"],
-  "ramnicu-valcea": ["Centru", "Nord", "Ostroveni", "Traian", "Petrisor", "Cazanesti"],
-  "ramnicu-sarat": ["Centru", "Anghel Saligny", "Podgoria", "Bariera Focsani"],
-  "reghin": ["Centru", "Apalina", "Iernuteni", "Dedrad", "Breaza"],
-  "resita": ["Centru", "Govandari", "Lunca Barzavei", "Muncitoresc", "Dealul Crucii"],
-  "roman": ["Centru", "Favorit", "Petru Rares", "Mihai Viteazu", "Nicolae Balcescu"],
-  "rosiorii-de-vede": ["Centru", "Spitalului", "Nord", "Sud", "Est"],
-  "satu-mare": ["Centru", "Micro 17", "Micro 16", "Carpati", "Soarelui", "Horea"],
-  "sibiu": ["Centru", "Strand", "Vasile Aaron", "Hipodrom", "Turnisor", "Terezian", "Lazaret"],
-  "sighetu-marmatiei": ["Centru", "Valea Cufundoasa", "Iapa", "Sugau", "Lazu Baciului"],
-  "slatina": ["Centru", "Progresul", "Steaua", "Clocociov", "Cireasov"],
-  "slobozia": ["Centru", "Garii Noi", "Mihai Viteazu", "Sud", "Vest"],
-  "suceava": ["Centru", "Burdujeni", "Obcini", "Itcani", "George Enescu", "Areni"],
-  "targoviste": ["Centru", "Micro 6", "Micro 9", "Priseaca", "Sagricom"],
-  "targu-jiu": ["Centru", "9 Mai", "Debarcader", "Grivitei", "Barsesti"],
-  "targu-mures": ["Centru", "Dambul Pietros", "Unirii", "Tudor", "Aleea Carpati", "Cornisa"],
-  "targu-neamt": ["Centru", "Blebea", "Condreni", "Humulesti", "Ozana"],
-  "targu-secuiesc": ["Centru", "Fabricii", "Kanta", "Molnar Janos", "Turia"],
-  "timisoara": ["Centru", "Soarelui", "Girocului", "Circumvalatiunii", "Lipovei", "Aradului", "Mehala", "Iosefin"],
-  "turda": ["Centru", "Oprisani", "Micro 3", "Poiana", "Turda Noua"],
-  "turnu-magurele": ["Centru", "Odaia", "Magurele", "Combinat"],
-  "urziceni": ["Centru", "Tineretului", "Sud", "Vest", "Est"],
-  "vaslui": ["Centru", "Moara Grecilor", "Gara", "Rediu", "Balteni"],
-  "zalau": ["Centru", "Dumbrava Nord", "Bradet", "Porolissum", "Meses"],
-  "zarnesti": ["Centru", "Tohanu Vechi", "Tohanu Nou", "Prund", "Balaceanca"]
-};
-
 // ========================================
 // FUNCTII DE INITIALIZARE
 // ========================================
@@ -155,26 +94,47 @@ function initializeLayers() {
 /**
  * Initializeaza filtrele de localizare (oras si localitate)
  */
-function initializeLocationFilters() {
-  console.log('Initializare filtre localizare...');
-  
+async function initializeLocationFilters() {
+  console.log('Initializare filtre localizare dinamic...');
   const orasSelect = document.getElementById('orasSelect');
   const localitateSelect = document.getElementById('localitateSelect');
-  
   if (!orasSelect || !localitateSelect) return;
-  
-  // Populeaza selectorul de orase
-  Object.keys(LOCALITIES_BY_CITY).forEach(city => {
-    const option = document.createElement('option');
-    option.value = city;
-    option.textContent = formatCityName(city);
-    orasSelect.appendChild(option);
-  });
-  
-  // Event listener pentru schimbarea orasului
-  orasSelect.addEventListener('change', function() {
-    const selectedCity = this.value;
-    updateLocalitateSelect(selectedCity, localitateSelect);
+
+  // Populează orașele din backend
+  try {
+    const oraseResponse = await fetch('http://localhost:3001/api/orase');
+    const orase = await oraseResponse.json();
+    orasSelect.innerHTML = '<option value="">Alege orasul</option>';
+    orase.forEach(oras => {
+      const option = document.createElement('option');
+      option.value = oras.id;
+      option.textContent = oras.nume;
+      orasSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error('Eroare la incarcarea oraselor:', err);
+  }
+
+  // La schimbarea orașului, populează localitățile aferente
+  orasSelect.addEventListener('change', async function() {
+    const selectedOrasId = this.value;
+    localitateSelect.innerHTML = '<option value="">Alege localitatea</option>';
+    localitateSelect.disabled = true;
+    if (selectedOrasId) {
+      try {
+        const localitatiResponse = await fetch(`http://localhost:3001/api/localitati?oras_id=${selectedOrasId}`);
+        const localitati = await localitatiResponse.json();
+        localitati.forEach(loc => {
+          const option = document.createElement('option');
+          option.value = loc.id;
+          option.textContent = loc.nume;
+          localitateSelect.appendChild(option);
+        });
+        localitateSelect.disabled = false;
+      } catch (err) {
+        console.error('Eroare la incarcarea localitatilor:', err);
+      }
+    }
   });
 }
 

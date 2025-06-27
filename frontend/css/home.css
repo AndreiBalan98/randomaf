@@ -233,7 +233,7 @@
 
 /* Stiluri specifice pentru butoane */
 .filters button {
-  background: var(--primary-color-light);
+  background: var(--primary-color);
   color: var(--background-white);
   border: none;
   cursor: pointer;

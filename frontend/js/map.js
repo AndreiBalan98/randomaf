@@ -1,65 +1,141 @@
-// Functia de initializare pentru harta
+// ...existing code...
+
+// Functie pentru a extrage orasele unice din lista de imobile
+function getUniqueCities(imobile) {
+    const citySet = new Set();
+    imobile.forEach(imobil => {
+        if (imobil.localizare) {
+            // Extrage primul cuvant (orasul) din localizare
+            const oras = imobil.localizare.split(',')[0].trim();
+            if (oras) citySet.add(oras);
+        }
+    });
+    return Array.from(citySet);
+}
+
+// Functie pentru a obtine coordonatele unui oras (media tuturor anunturilor din acel oras)
+function getCityCoords(imobile, oras) {
+    const coords = imobile
+        .filter(imobil => imobil.localizare && imobil.localizare.split(',')[0].trim() === oras)
+        .map(imobil => ({
+            lat: parseFloat(imobil.latitudine),
+            lng: parseFloat(imobil.longitudine)
+        }))
+        .filter(coord => !isNaN(coord.lat) && !isNaN(coord.lng));
+    if (coords.length === 0) return null;
+    // Media coordonatelor
+    const avgLat = coords.reduce((sum, c) => sum + c.lat, 0) / coords.length;
+    const avgLng = coords.reduce((sum, c) => sum + c.lng, 0) / coords.length;
+    return [avgLat, avgLng];
+}
+
+// Modifica initializeMap pentru a adauga filtrul de orase
 async function initializeMap() {
     const API_BASE_URL = 'http://localhost:3001';
-    
-    // Verifica daca div-ul pentru harta exista
     const mapElement = document.getElementById('map');
     if (!mapElement) {
         console.error('Elementul cu id="map" nu a fost gasit');
         return;
     }
-
-    // Verifica daca Leaflet este incarcat
     if (typeof L === 'undefined') {
         console.error('Leaflet nu este incarcat');
         return;
     }
 
-    // Initializeaza harta centrata pe Bucuresti
     const map = L.map('map', {
-        center: [44.4268, 26.1025], // Coordonatele Bucurestiului
+        center: [44.4268, 26.1025],
         zoom: 10,
         zoomControl: true,
         scrollWheelZoom: true
     });
 
-    // Adauga layer-ul de tile-uri OpenStreetMap
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(map);
 
-    // Adauga un marker pe Bucuresti
-    const marker = L.marker([44.4268, 26.1025]).addTo(map);
-    
-    // Adauga un popup pentru marker
-    marker.bindPopup('<b>Bucuresti</b><br>Capitala Romaniei').openPopup();
-
-    // Incarca imobilele
     try {
         const imobileResponse = await fetch(`${API_BASE_URL}/api/imobile`);
         const imobile = await imobileResponse.json();
 
+        // === ADAUGA BUTONUL DE FILTRU ORASE ===
+        let filterContainer = document.getElementById('map-city-filter');
+        if (!filterContainer) {
+            filterContainer = document.createElement('div');
+            filterContainer.id = 'map-city-filter';
+            filterContainer.style.position = 'absolute';
+            filterContainer.style.top = '50px';
+            filterContainer.style.right = '110px';
+            filterContainer.style.zIndex = '1001';
+            filterContainer.style.background = '#fff';
+            filterContainer.style.padding = '10px 18px';
+            filterContainer.style.borderRadius = '10px';
+            filterContainer.style.boxShadow = '0 2px 10px rgba(0,0,0,0.15)';
+            filterContainer.style.display = 'none';
+            mapElement.parentNode.appendChild(filterContainer);
+        }
 
-        // Plaseaza markeri pentru fiecare imobil
+        // Creeaza butonul
+        let cityBtn = document.getElementById('city-filter-btn');
+        if (!cityBtn) {
+            cityBtn = document.createElement('button');
+            cityBtn.id = 'city-filter-btn';
+            cityBtn.innerHTML = 'Orase';
+            cityBtn.style.position = 'absolute';
+            cityBtn.style.top = '60px';
+            cityBtn.style.right = '30px';
+            cityBtn.style.zIndex = '1002';
+            cityBtn.style.background = '#431164c9';
+            cityBtn.style.color = '#fff';
+            cityBtn.style.border = 'none';
+            cityBtn.style.borderRadius = '8px';
+            cityBtn.style.padding = '8px 18px';
+            cityBtn.style.cursor = 'pointer';
+            cityBtn.style.fontWeight = 'bold';
+            cityBtn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.10)';
+            mapElement.parentNode.appendChild(cityBtn);
+        }
+
+        // Logica de afisare/ascundere dropdown la click pe buton
+        cityBtn.onclick = function () {
+            filterContainer.style.display = filterContainer.style.display === 'none' ? 'block' : 'none';
+        };
+
+        // Populeaza dropdown-ul cu orase
+        const cities = getUniqueCities(imobile);
+        filterContainer.innerHTML = `
+            <label for="citySelect" style="font-weight:bold;">Alege orasul: </label>
+            <select id="citySelect" style="padding:4px 10px; border-radius:6px;">
+                <option value="">Toate orasele</option>
+                ${cities.map(oras => `<option value="${oras}">${oras}</option>`).join('')}
+            </select>
+        `;
+        const citySelect = filterContainer.querySelector('#citySelect');
+        citySelect.addEventListener('change', function () {
+            const selectedCity = this.value;
+            if (selectedCity) {
+                const coords = getCityCoords(imobile, selectedCity);
+                if (coords) {
+                    map.setView(coords, 13); // Zoom pe oras
+                }
+            } else {
+                map.setView([44.4268, 26.1025], 10); // Reset la Bucuresti
+            }
+            filterContainer.style.display = 'none'; // ascunde dropdown-ul dupa selectie
+        });
+
+        // === END FILTRU ORASE ===
+
+        // Plaseaza markeri pentru fiecare imobil cu coordonate valide
         for (const imobil of imobile) {
             try {
-                const { numeOras, numeLocalitate } = parseLocalizare(imobil.localizare);
-                
-                // Face request pentru coordonate
-                const coordsResponse = await fetch(`${API_BASE_URL}/api/coords?numeOras=${encodeURIComponent(numeOras)}&numeLocalitate=${encodeURIComponent(numeLocalitate)}`);
-                
-                if (coordsResponse.ok) {
-                    const coord = await coordsResponse.json();
-                    
-                    const imobilMarker = L.marker([parseFloat(coord.lat), parseFloat(coord.lon)]).addTo(map);
-                    
-                    // Adauga popup cu cardul imobilului
+                if (imobil.latitudine && imobil.longitudine) {
+                    const imobilMarker = L.marker([parseFloat(imobil.latitudine), parseFloat(imobil.longitudine)]).addTo(map);
                     const cardHTML = createImobilCard(imobil);
                     imobilMarker.bindPopup(cardHTML);
 
                     imobilMarker.on('popupopen', () => {
-                    const detaliiBtn = document.querySelector(`[data-id="${imobil.id}"]`);
+                        const detaliiBtn = document.querySelector(`[data-id="${imobil.id}"]`);
                         if (detaliiBtn) {
                             detaliiBtn.addEventListener('click', () => {
                                 loadContent(`html/detalii.html?id=${imobil.id}`);
@@ -68,7 +144,7 @@ async function initializeMap() {
                         }
                     });
                 } else {
-                    console.warn(`Coordonate nu au fost gasite pentru: ${imobil.localizare}`);
+                    console.warn(`Coordonate lipsa pentru anuntul cu id ${imobil.id}`);
                 }
             } catch (error) {
                 console.error(`Eroare la procesarea imobilului ${imobil.id}:`, error);
@@ -82,27 +158,7 @@ async function initializeMap() {
     console.log('Harta Leaflet a fost initializata cu succes');
 }
 
-// Functie pentru a parsa localizarea si a extrage numele orasului si localitatii
-function parseLocalizare(localizare) {
-    // Separa orasul si localitatea
-    const parts = localizare.split(', ');
-    if (parts.length !== 2) {
-        throw new Error(`Format localizare invalid: ${localizare}`);
-    }
-    
-    const numeOras = parts[0].toLowerCase()
-        .replace(/a/g, 'a')
-        .replace(/a/g, 'a')
-        .replace(/i/g, 'i')
-        .replace(/s/g, 's')
-        .replace(/t/g, 't')
-        .replace(/\s+/g, '-');
-    
-    const numeLocalitate = parts[1];
-    
-    return { numeOras, numeLocalitate };
-}
-
+// Functie pentru a construi cardul de anunt pentru popup
 function createImobilCard(imobil) {
     const API_BASE_URL = 'http://localhost:3001';
     const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
