@@ -120,11 +120,14 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   padding: var(--spacing-medium) 10px;
   border-radius: var(--border-radius);
   transition: all 0.3s ease;
   border: 2px solid transparent;
+  text-align: center;
+  min-height: 120px;
 }
 
 /* Container pentru iconuri */
@@ -134,8 +137,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 10px;
+  margin: 0 auto 10px auto;
   color: var(--primary-color-alpha);
+}
+
+/* SVG-uri din iconuri */
+.icon-container svg {
+  width: 32px;
+  height: 32px;
+  display: block;
 }
 
 /* Hover state pentru optiunile de proprietate */
@@ -724,4 +734,262 @@
 #mainContent.menu-active {
   transition: margin-left 0.3s, left 0.3s;
   margin-left: 325px;
+}
+
+/* ============================================
+   RESPONSIVE DESIGN - MOBILE & TABLET
+   ============================================ */
+
+@media screen and (max-width: 768px) {
+  /* Container principal formular */
+  #adauga-imobil-form {
+    max-width: 100%;
+    margin: 15px;
+    padding: 15px;
+  }
+  
+  /* Selectia tipului de proprietate */
+  .property-type-selection {
+    flex-direction: column;
+    gap: 12px;
+    padding: 15px;
+  }
+  
+  .property-type-option {
+    flex: none;
+  }
+  
+  .property-type-option label {
+    flex-direction: row;
+    padding: 12px 15px;
+    text-align: left;
+    justify-content: flex-start;
+    align-items: center;
+    min-height: auto;
+  }
+  
+  .icon-container {
+    width: 40px;
+    height: 40px;
+    margin: 0 12px 0 0;
+  }
+  
+  .icon-container svg {
+    width: 24px;
+    height: 24px;
+  }
+  
+  /* Optiuni extra pentru teren */
+  .teren-extra-options {
+    margin-left: 0;
+    gap: 8px;
+  }
+  
+  .teren-extra-options .teren-radio-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .teren-extra-options label {
+    padding: 8px 15px;
+    font-size: 15px;
+  }
+  
+  /* Sectiunea pentru imagini */
+  .teren-imagini-section {
+    max-width: 100%;
+  }
+  
+  .teren-imagini-dropzone {
+    padding: 20px 12px;
+    font-size: 14px;
+  }
+  
+  .teren-imagini-dropzone .icon-img {
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+  }
+  
+  .teren-imagini-list {
+    gap: 10px;
+    justify-content: center;
+  }
+  
+  .teren-imagini-thumb {
+    width: 80px;
+    height: 80px;
+  }
+  
+  /* Inputs si labels */
+  #adauga-imobil-form input[type="text"],
+  #adauga-imobil-form input[type="email"],
+  #adauga-imobil-form input[type="number"],
+  #adauga-imobil-form textarea {
+    font-size: 16px;
+    padding: 12px;
+  }
+  
+  #adauga-imobil-form button {
+    font-size: 16px;
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Container principal */
+  #adauga-imobil-form {
+    margin: 10px;
+    padding: 12px;
+  }
+  
+  /* Selectia tipului de proprietate */
+  .property-type-selection {
+    padding: 12px;
+    gap: 10px;
+  }
+  
+  .property-type-option label {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+  
+  .icon-container {
+    width: 35px;
+    height: 35px;
+    margin: 0 10px 0 0;
+  }
+  
+  .icon-container svg {
+    width: 22px;
+    height: 22px;
+  }
+  
+  /* Optiuni teren */
+  .teren-extra-options label {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+  
+  .teren-extra-options input[type="radio"] {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Titlu teren */
+  .teren-titlu-row {
+    max-width: 100%;
+  }
+  
+  .teren-titlu-row input[type="text"] {
+    font-size: 14px;
+    padding: 8px 10px;
+  }
+  
+  /* Imagini */
+  .teren-imagini-dropzone {
+    padding: 15px 8px;
+    font-size: 13px;
+  }
+  
+  .teren-imagini-thumb {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .teren-imagini-list {
+    gap: 8px;
+  }
+  
+  /* Inputs */
+  #adauga-imobil-form input[type="text"],
+  #adauga-imobil-form input[type="email"],
+  #adauga-imobil-form input[type="number"],
+  #adauga-imobil-form textarea {
+    font-size: 14px;
+    padding: 10px;
+  }
+  
+  #adauga-imobil-form button {
+    font-size: 15px;
+    padding: 10px;
+  }
+  
+  #adauga-imobil-form label {
+    font-size: 13px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  /* Container principal */
+  #adauga-imobil-form {
+    margin: 8px;
+    padding: 10px;
+  }
+  
+  /* Selectia tipului */
+  .property-type-selection {
+    padding: 10px;
+    gap: 8px;
+  }
+  
+  .property-type-option label {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+  
+  .icon-container {
+    width: 30px;
+    height: 30px;
+    margin: 0 8px 0 0;
+  }
+  
+  .icon-container svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  /* Optiuni teren */
+  .teren-extra-options label {
+    padding: 5px 10px;
+    font-size: 13px;
+  }
+  
+  .teren-extra-options input[type="radio"] {
+    width: 14px;
+    height: 14px;
+  }
+  
+  /* Imagini */
+  .teren-imagini-dropzone {
+    padding: 12px 6px;
+    font-size: 12px;
+  }
+  
+  .teren-imagini-thumb {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .teren-imagini-list {
+    gap: 6px;
+  }
+  
+  /* Inputs */
+  #adauga-imobil-form input[type="text"],
+  #adauga-imobil-form input[type="email"],
+  #adauga-imobil-form input[type="number"],
+  #adauga-imobil-form textarea {
+    font-size: 13px;
+    padding: 8px;
+  }
+  
+  #adauga-imobil-form button {
+    font-size: 14px;
+    padding: 8px;
+  }
+  
+  #adauga-imobil-form label {
+    font-size: 12px;
+  }
 }
