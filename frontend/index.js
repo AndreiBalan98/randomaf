@@ -95,27 +95,60 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 
-// Ascunde meniu si extinde continut
-function hideMenuAndExpandContent() {
-  navbar.style.display = 'none';
-  if(mainDiv) {
-    mainDiv.style.marginLeft = '0';
-    mainDiv.style.transition = 'margin-left 0.3s';
+let menuOpen = window.innerWidth > 768; // meniu deschis pe desktop, închis pe mobil
+let menuOverlay = null;
+
+// Afișează meniu 
+function showMenuAndShrinkContent() {
+  if (window.innerWidth <= 768) {
+    // Pe mobil - folosește slide animation
+    const navUl = navbar.querySelector('ul');
+    navUl.classList.add('show');
+    
+    // Creează overlay dacă nu există
+    if (!menuOverlay) {
+      menuOverlay = document.createElement('div');
+      menuOverlay.className = 'menu-overlay';
+      document.body.appendChild(menuOverlay);
+      
+      // Adaugă event listener pentru închidere la click pe overlay
+      menuOverlay.addEventListener('click', hideMenuAndExpandContent);
+    }
+    menuOverlay.classList.add('show');
+  } else {
+    // Pe desktop - comportament normal
+    navbar.style.display = 'block';
+    if(mainDiv) {
+      mainDiv.style.marginLeft = '15%';
+      mainDiv.style.transition = 'margin-left 0.3s';
+    }
   }
+  menuOpen = true;
 }
 
-// Afiseaza meniu si restrange continut
-function showMenuAndShrinkContent() {
-  navbar.style.display = 'block';
-  if(mainDiv) {
-    mainDiv.style.marginLeft = '15%';
-    mainDiv.style.transition = 'margin-left 0.3s';
+// Ascunde meniu
+function hideMenuAndExpandContent() {
+  if (window.innerWidth <= 768) {
+    // Pe mobil - ascunde slide animation
+    const navUl = navbar.querySelector('ul');
+    navUl.classList.remove('show');
+    if (menuOverlay) {
+      menuOverlay.classList.remove('show');
+    }
+  } else {
+    // Pe desktop - comportament normal
+    navbar.style.display = 'none';
+    if(mainDiv) {
+      mainDiv.style.marginLeft = '0';
+      mainDiv.style.transition = 'margin-left 0.3s';
+    }
   }
+  menuOpen = false;
 }
 
 // Toggle meniu
 function toggleMenu() {
-  if (navbar.style.display === 'none') {
+  if (!menuOpen) {
     showMenuAndShrinkContent();
   } else {
     hideMenuAndExpandContent();
@@ -126,27 +159,59 @@ function toggleMenu() {
 function activateNavLink(clickedLink) {
   document.querySelectorAll('nav li a').forEach(l => l.classList.remove('active'));
   clickedLink.classList.add('active');
+  // Închide meniul pe mobil după click pe link
+  if (window.innerWidth <= 768) {
+    hideMenuAndExpandContent();
+  }
 }
 
 // Initializare stare meniu
 function initializeMenuState() {
+  const navUl = navbar.querySelector('ul');
   if (window.innerWidth > 768) {
-    showMenuAndShrinkContent();
+    // Pe desktop - afișează meniul
+    navbar.style.display = 'block';
+    navUl.classList.remove('show'); // Asigură-te că nu are clasa mobile
+    if (menuOverlay) {
+      menuOverlay.classList.remove('show');
+    }
+    menuOpen = true;
   } else {
-    hideMenuAndExpandContent();
+    // Pe mobil - ascunde meniul
+    navbar.style.display = 'block'; // Păstrează display block pentru slide animation
+    navUl.classList.remove('show');
+    if (menuOverlay) {
+      menuOverlay.classList.remove('show');
+    }
+    menuOpen = false;
   }
 }
 
 // Adaptare redimensionare
 function handleResize() {
+  const navUl = navbar.querySelector('ul');
   if (window.innerWidth > 768) {
-    if (navbar.style.display === 'none') {
-      showMenuAndShrinkContent();
+    // Trecem la desktop - afișează meniul normal
+    navbar.style.display = 'block';
+    navUl.classList.remove('show');
+    if (menuOverlay) {
+      menuOverlay.classList.remove('show');
     }
+    if(mainDiv) {
+      mainDiv.style.marginLeft = '15%';
+    }
+    menuOpen = true;
   } else {
-    if (navbar.style.display === 'block') {
-      hideMenuAndExpandContent();
+    // Trecem la mobil - resetează starea
+    navbar.style.display = 'block';
+    navUl.classList.remove('show');
+    if (menuOverlay) {
+      menuOverlay.classList.remove('show');
     }
+    if(mainDiv) {
+      mainDiv.style.marginLeft = '0';
+    }
+    menuOpen = false;
   }
 }
 

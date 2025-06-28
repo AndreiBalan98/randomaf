@@ -108,7 +108,7 @@ nav li a {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 20px 12px 44px;
+  padding: 12px 20px;
   color: var(--text-white);
   background: var(--primary-color);
   border-radius: 8px;
@@ -120,6 +120,7 @@ nav li a {
   position: relative;
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
   text-decoration: none;
+  gap: 8px;
 }
 
 nav li a:hover,
@@ -136,14 +137,11 @@ nav li a.active {
 .icon-home,
 .icon-map,
 .icon-add {
-  position: absolute;
-  left: 16px;
-  top: 50%;
-  transform: translateY(-50%);
   width: 20px;  
   height: 20px;
   color: var(--text-white);
   transition: color 0.2s;
+  flex-shrink: 0;
 }
 
 nav li a:hover .icon-home,
@@ -173,9 +171,177 @@ main.menu-hidden {
   margin-left: 0;
 }
 
-/* Responsive */
-@media (max-width: 600px) {
+/* Responsive Design */
+@media screen and (max-width: 1024px) {
+  /* Tablet styles */
+  nav ul {
+    width: 20%;
+  }
+  
   main {
-    padding: 1em;
+    margin-left: 20%;
+  }
+  
+  header h1 {
+    font-size: 1.3em;
+  }
+  
+  nav li a {
+    padding: 10px 16px;
+    font-size: 1em;
+    gap: 6px;
+  }
+  
+  .icon-profile,
+  .icon-favorites,
+  .icon-chat,
+  .icon-home,
+  .icon-map,
+  .icon-add {
+    width: 18px;
+    height: 18px;
   }
 }
+
+@media screen and (max-width: 768px) {
+  /* Mobile styles */
+  header {
+    padding: 8px 16px;
+  }
+  
+  header h1 {
+    font-size: 1.2em;
+    margin-top: 0.3em;
+  }
+  
+  #menuBtn {
+    top: 12px;
+    left: 12px;
+    padding: 6px;
+  }
+  
+  nav ul {
+    width: 240px;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+    z-index: 1150;
+    left: 0;
+    top: 60px;
+    height: calc(100vh - 60px);
+    background: var(--background-light);
+    box-shadow: 2px 0 16px var(--shadow-medium);
+    border-right: 2px solid var(--secondary-color);
+  }
+  
+  nav ul.show {
+    transform: translateX(0);
+  }
+  
+  /* Overlay pentru meniu mobil */
+  .menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.094);
+    z-index: 1149;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+  
+  .menu-overlay.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  
+  nav li a {
+    padding: 12px 16px;
+    margin: 6px 8px;
+    font-size: 0.95em;
+    gap: 6px;
+  }
+  
+  main {
+    margin-left: 0;
+    padding: 15px;
+  }
+  
+  main.menu-hidden {
+    margin-left: 0;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  /* Small mobile styles */
+  header {
+    padding: 6px 12px;
+  }
+  
+  header h1 {
+    font-size: 1.1em;
+  }
+  
+  nav ul {
+    width: 220px;
+  }
+  
+  nav li a {
+    padding: 10px 12px;
+    font-size: 0.9em;
+    margin: 4px 6px;
+    gap: 5px;
+  }
+  
+  .icon-profile,
+  .icon-favorites,
+  .icon-chat,
+  .icon-home,
+  .icon-map,
+  .icon-add {
+    width: 16px;
+    height: 16px;
+  }
+  
+  main {
+    padding: 12px;
+  }
+  
+  #profilBtn svg {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  /* Extra small mobile styles */
+  header h1 {
+    font-size: 1em;
+  }
+  
+  nav ul {
+    width: 200px;
+  }
+  
+  nav li a {
+    padding: 8px 10px;
+    font-size: 0.85em;
+    gap: 4px;
+  }
+  
+  .icon-profile,
+  .icon-favorites,
+  .icon-chat,
+  .icon-home,
+  .icon-map,
+  .icon-add {
+    width: 14px;
+    height: 14px;
+  }
+  
+  main {
+    padding: 10px;
+  }
+}
+
