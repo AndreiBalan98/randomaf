@@ -11,6 +11,9 @@ function initializeAdd() {
 
   // === VARIABILE GLOBALE ===
   let terenImages = [];
+  let addPropertyMap;
+  let selectedMarker;
+  let selectedCoords = null;
 
   // === FUNCTII HELPER ===
   function checkTeren() {
@@ -108,6 +111,51 @@ function initializeAdd() {
     }
   }
 
+  function initializeAddPropertyMap() {
+    const mapElement = document.getElementById('add-property-map');
+    if (!mapElement || typeof L === 'undefined') return;
+
+    if (addPropertyMap) {
+        addPropertyMap.remove(); // Sterge harta daca exista
+        addPropertyMap = null;
+        selectedMarker = null;
+        selectedCoords = null;
+    }
+
+    // Creează harta centrată pe Iași
+    addPropertyMap = L.map('add-property-map', {
+        center: [47.1585, 27.6014], // Coordonatele Iașului
+        zoom: 13,
+        zoomControl: true,
+        scrollWheelZoom: true
+    });
+
+    // Adaugă layer-ul de hartă
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(addPropertyMap);
+
+    // Event listener pentru click pe hartă
+    addPropertyMap.on('click', function(e) {
+        const lat = e.latlng.lat;
+        const lng = e.latlng.lng;
+        
+        // Șterge markerul anterior dacă există
+        if (selectedMarker) {
+            addPropertyMap.removeLayer(selectedMarker);
+        }
+        
+        // Adaugă noul marker
+        selectedMarker = L.marker([lat, lng]).addTo(addPropertyMap);
+        
+        // Salvează coordonatele
+        selectedCoords = { lat: lat, lng: lng };
+        
+        console.log('Coordonate selectate:', selectedCoords);
+    });
+  }
+
   // === EVENT LISTENERS ===
   allTypeRadios.forEach(radio => {
     radio.addEventListener('change', checkTeren);
@@ -198,10 +246,10 @@ function initializeAdd() {
     }
 
     // Validare de baza
-    if (!titlu || !pret || !locatie || !descriere || !tip || !tranzactie || terenImages.length === 0) {
-      alert('Completeaza toate campurile obligatorii si adauga cel putin o imagine!');
+    if (!titlu || !pret || !locatie || !descriere || !tip || !tranzactie || terenImages.length === 0 || !selectedCoords) {
+      alert('Completeaza toate campurile obligatorii, adauga cel putin o imagine si selecteaza locatia pe harta!');
       return;
-    }
+    } 
 
     // Creeaza obiectul anunt
     const anunt = {
@@ -213,7 +261,10 @@ function initializeAdd() {
       localizare: locatie,
       descriere: descriere,
       data_publicare: new Date().toISOString(),
-      detalii_specifice: detaliiSpecifice
+      detalii_specifice: detaliiSpecifice,
+      // ADAUGĂ ACESTE LINII:
+      latitudine: selectedCoords ? selectedCoords.lat : null,
+      longitudine: selectedCoords ? selectedCoords.lng : null
     };
 
     try {
@@ -255,6 +306,9 @@ function initializeAdd() {
   // === INITIALIZARE ===
   checkTeren();
   updatePropertyTypeSections();
+  setTimeout(() => {
+    initializeAddPropertyMap();
+  }, 100);
 }
 
 // Export global
