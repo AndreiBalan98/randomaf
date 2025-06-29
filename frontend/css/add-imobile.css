@@ -993,3 +993,88 @@
     font-size: 12px;
   }
 }
+
+/* ============================================
+   STILURI PENTRU LOCALIZARE CU CAMPURI SEPARATE
+   ============================================ */
+
+/* Container pentru câmpurile de localizare */
+.localizare-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Labels pentru câmpurile de localizare */
+.localizare-field label {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  background: none !important;
+  color: var(--primary-color-alpha) !important;
+  cursor: default !important;
+  margin-bottom: -8px !important;
+  margin-left: -20px !important;
+}
+
+/* Inputs pentru câmpurile de localizare */
+.localizare-field input[type="text"] {
+  padding: var(--spacing-small) 12px;
+  border: 1.5px solid var(--primary-color-light);
+  border-radius: var(--border-radius-small);
+  font-size: 15px;
+  transition: border-color 0.2s;
+  background: #fff;
+}
+
+.localizare-field input[type="text"]:focus {
+  border-color: var(--primary-color);
+  outline: none;
+}
+
+/* Ajustări pentru responsive design */
+@media screen and (max-width: 768px) {
+  .localizare-field {
+    max-width: 100%;
+    margin-top: 12px;
+  }
+  
+  .localizare-field label {
+    font-size: 13px !important;
+    margin-left: 0 !important;
+  }
+  
+  .localizare-field input[type="text"] {
+    font-size: 14px;
+    padding: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .localizare-field {
+    margin-top: 10px;
+  }
+  
+  .localizare-field label {
+    font-size: 12px !important;
+  }
+  
+  .localizare-field input[type="text"] {
+    font-size: 13px;
+    padding: 8px 10px;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .localizare-field {
+    margin-top: 8px;
+  }
+  
+  .localizare-field input[type="text"] {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+}
