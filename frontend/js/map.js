@@ -1,5 +1,3 @@
-// ...existing code...
-
 // Functie pentru a extrage orasele unice din lista de imobile
 function getUniqueCities(imobile) {
     const citySet = new Set();
