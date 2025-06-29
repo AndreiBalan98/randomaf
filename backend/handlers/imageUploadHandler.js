@@ -1,10 +1,10 @@
 require('../config/urls');
 
-async function handleImageUpload(req, res) {
-    const fs = require('fs');
-    const path = require('path');
-    const pool = require('../config/database');
-    
+const fs = require('fs');
+const path = require('path');
+const pool = require('../config/database');
+
+async function handleImageUpload(req, res) {    
     const boundary = req.headers['content-type'].split('boundary=')[1];
     let body = Buffer.alloc(0);
 
@@ -25,13 +25,16 @@ async function handleImageUpload(req, res) {
 
         for (const part of parts) {
             if (part.includes('name="anunt_id"')) {
-                anunt_id = part.split('\r\n\r\n')[1]?.trim();
+                anunt_id = parseInt(part.split('\r\n\r\n')[1]?.trim());
             }
+
             if (part.includes('name="ordine"')) {
                 ordine = parseInt(part.split('\r\n\r\n')[1]?.trim());
             }
+
             if (part.includes('name="imagine"')) {
                 const match = part.match(/filename="(.+?)"/);
+
                 if (match) {
                     originalFileName = match[1];
                     const fileStart = part.indexOf('\r\n\r\n') + 4;
@@ -44,21 +47,14 @@ async function handleImageUpload(req, res) {
 
         if (anunt_id && ordine && fileBuffer && originalFileName) {
             try {
-                // Extrage extensia fisierului original
                 const fileExtension = path.extname(originalFileName);
-                // Creeaza numele nou in formatul {id}x{ordine}.{extensie}
                 const newFileName = `${anunt_id}x${ordine}${fileExtension}`;
-                
                 const imagesDir = path.join(__dirname, '..', 'images');
-                if (!fs.existsSync(imagesDir)) {
-                    fs.mkdirSync(imagesDir, { recursive: true });
-                }
-                
                 const filePath = path.join(imagesDir, newFileName);
-                fs.writeFileSync(filePath, fileBuffer);
-                
-                // Salveaza in baza de date cu URL-ul complet
                 const fullImageUrl = `${BACKEND_URL}${API_IMAGES}/${newFileName}`;
+
+                fs.writeFileSync(filePath, fileBuffer);
+
                 await pool.query(
                     'INSERT INTO imagini (anunt_id, url, ordine) VALUES ($1, $2, $3)',
                     [anunt_id, fullImageUrl, ordine]
@@ -72,7 +68,6 @@ async function handleImageUpload(req, res) {
                 }));
                 
             } catch (error) {
-                console.error('Eroare la salvarea imaginii:', error);
                 res.writeHead(500, { 'Content-Type': 'application/json' });
                 res.end(JSON.stringify({ 
                     status: 'error', 

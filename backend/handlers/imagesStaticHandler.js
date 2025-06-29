@@ -1,9 +1,8 @@
-function handleImagesStatic(req, res) {
-    const fs = require('fs');
-    const path = require('path');
+const fs = require('fs');
+const path = require('path');
 
+function handleImagesStatic(req, res) {
     const filePath = path.join(__dirname, '..', req.url);
-    console.log('Calea fisierului:', filePath);
 
     fs.readFile(filePath, (err, data) => {
         if (err) {

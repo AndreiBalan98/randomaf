@@ -1,19 +1,17 @@
+const pool = require('../config/database');
+
 function handleImobileGet(req, res) {
-    const pool = require('../config/database');
-
-    const query = new URL(req.url, `http://${req.headers.host}`).searchParams;
-
-    // Query principal pentru anunturi cu JOIN-uri pentru datele specifice
     let sql = `
         SELECT 
             a.id,
+            a.id_user,
             a.tip_imobil,
             a.tip_oferta,
             a.titlu,
             a.pret,
             a.comision,
-            o.nume AS oras,
-            l.nume AS localitate,
+            a.oras_id,
+            a.localitate_id,
             a.strada,
             a.latitudine,
             a.longitudine,
@@ -44,8 +42,6 @@ function handleImobileGet(req, res) {
             sc.nr_bai as sc_nr_bai,
             sc.an_constructie as sc_an_constructie
         FROM anunturi a
-        LEFT JOIN orase o ON a.oras_id = o.id
-        LEFT JOIN localitati l ON a.localitate_id = l.id
         LEFT JOIN apartamente ap ON a.id = ap.anunt_id
         LEFT JOIN casee c ON a.id = c.anunt_id
         LEFT JOIN terenuri t ON a.id = t.anunt_id
@@ -53,81 +49,59 @@ function handleImobileGet(req, res) {
         WHERE 1=1
     `;
     
+    const query = new URL(req.url, `http://${req.headers.host}`).searchParams;
     const params = [];
     let paramIndex = 1;
 
-    // Filtrare dupa pret minim
     if (query.get('minPrice')) {
         sql += ` AND a.pret >= $${paramIndex}`;
         params.push(parseFloat(query.get('minPrice')));
         paramIndex++;
     }
 
-    // Filtrare dupa pret maxim
     if (query.get('maxPrice')) {
         sql += ` AND a.pret <= $${paramIndex}`;
         params.push(parseFloat(query.get('maxPrice')));
         paramIndex++;
     }
 
-    // Filtrare dupa tipul imobilului
     if (query.get('tip')) {
         sql += ` AND a.tip_imobil = $${paramIndex}`;
         params.push(query.get('tip'));
         paramIndex++;
     }
 
-    // Filtrare dupa tipul ofertei
     if (query.get('oferta')) {
         sql += ` AND a.tip_oferta = $${paramIndex}`;
         params.push(query.get('oferta'));
         paramIndex++;
     }
 
-    // Filtrare dupa oras (ID)
     if (query.get('oras')) {
         sql += ` AND a.oras_id = $${paramIndex}`;
         params.push(parseInt(query.get('oras')));
         paramIndex++;
     }
 
-    // Filtrare dupa localitate (ID)
     if (query.get('localitate')) {
         sql += ` AND a.localitate_id = $${paramIndex}`;
         params.push(parseInt(query.get('localitate')));
         paramIndex++;
     }
 
-    // Filtrare dupa ownership
     if (query.get('userId')) {
-        sql = sql.replace(
-            'WHERE 1=1',
-            `INNER JOIN ownership o ON a.id = o.anunt_id
-            WHERE o.user_id = $${paramIndex}`
-        );
+        sql += ` AND a.id_user = $${paramIndex}`;
         params.push(parseInt(query.get('userId')));
         paramIndex++;
     }
 
-    console.log('SQL Query:', sql);
-    console.log('Params:', params);
-
-    // Executare query principal
-    pool.query(sql, params, (err, result) => {
-        if (err) {
-            console.error('Eroare SQL:', err);
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ status: 'error', mesaj: 'Eroare la citire din baza de date!' }));
-            return;
-        }
-
+    pool.query(sql, params).then(result => {
         if (result.rows.length === 0) {
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify([]));
             return;
         }
 
-        // Filtrare dupa search in descriere
         let filteredRows = result.rows;
         if (query.get('search')) {
             const searchTerms = query.get('search').split(',').map(term => term.trim().toLowerCase()).filter(term => term.length > 0);
@@ -145,54 +119,42 @@ function handleImobileGet(req, res) {
             return;
         }
 
-        // Obtinere imagini pentru toate anunturile
         const anuntIds = filteredRows.map(row => row.id);
-        const imaginiSql = `
-            SELECT anunt_id, url, ordine 
-            FROM imagini 
-            WHERE anunt_id = ANY($1) 
-            ORDER BY anunt_id, ordine
-        `;
+        const imaginiSql = `SELECT anunt_id, url, ordine FROM imagini WHERE anunt_id = ANY($1) ORDER BY anunt_id, ordine`;
 
-        pool.query(imaginiSql, [anuntIds], (errImagini, resultImagini) => {
-            if (errImagini) {
-                console.error('Eroare la incarcarea imaginilor:', errImagini);
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ status: 'error', mesaj: 'Eroare la incarcarea imaginilor!' }));
-                return;
-            }
-
-            // Grupare imagini dupa anunt_id
+        pool.query(imaginiSql, [anuntIds]).then(resultImagini => {
             const imaginiMap = {};
             resultImagini.rows.forEach(img => {
                 if (!imaginiMap[img.anunt_id]) {
                     imaginiMap[img.anunt_id] = [];
                 }
-                imaginiMap[img.anunt_id].push({
-                    url: img.url,
-                    ordine: img.ordine
-                });
+
+                imaginiMap[img.anunt_id].push(
+                    {
+                        url: img.url,
+                        ordine: img.ordine
+                    }
+                );
             });
 
-            // Structurare raspuns final
             const anunturi = filteredRows.map(row => {
-                // Date comune pentru toate anunturile
                 const anunt = {
                     id: row.id,
+                    id_user: row.id_user,
                     tip_imobil: row.tip_imobil,
                     tip_oferta: row.tip_oferta,
                     titlu: row.titlu,
                     pret: parseFloat(row.pret),
                     comision: row.comision ? parseFloat(row.comision) : null,
-                    localizare: [row.oras, row.localitate, row.strada].filter(Boolean).join(', '),
+                    oras_id: row.oras_id,
+                    localitate_id: row.localitate_id,
+                    strada: row.strada,
                     latitudine: row.latitudine,
                     longitudine: row.longitudine,
                     descriere: row.descriere,
-                    data_publicare: row.data_publicare,
-                    imagini: imaginiMap[row.id] || []
+                    data_publicare: row.data_publicare
                 };
 
-                // Date specifice in functie de tipul imobilului
                 switch (row.tip_imobil) {
                     case 'apartament':
                         anunt.detalii_specifice = {
@@ -205,7 +167,6 @@ function handleImobileGet(req, res) {
                             suprafata_utila: row.ap_suprafata_utila ? parseFloat(row.ap_suprafata_utila) : null
                         };
                         break;
-
                     case 'casa':
                         anunt.detalii_specifice = {
                             nr_camere: row.c_nr_camere,
@@ -215,7 +176,6 @@ function handleImobileGet(req, res) {
                             suprafata_teren: row.c_suprafata_teren ? parseFloat(row.c_suprafata_teren) : null
                         };
                         break;
-
                     case 'teren':
                         anunt.detalii_specifice = {
                             suprafata_teren: row.t_suprafata_teren ? parseFloat(row.t_suprafata_teren) : null,
@@ -224,7 +184,6 @@ function handleImobileGet(req, res) {
                             front_stradal: row.front_stradal ? parseFloat(row.front_stradal) : null
                         };
                         break;
-
                     case 'spatiu_comercial':
                         anunt.detalii_specifice = {
                             suprafata_utila: row.sc_suprafata_utila ? parseFloat(row.sc_suprafata_utila) : null,
@@ -233,11 +192,12 @@ function handleImobileGet(req, res) {
                             an_constructie: row.sc_an_constructie
                         };
                         break;
-
                     default:
                         anunt.detalii_specifice = {};
                 }
 
+                anunt.imagini = imaginiMap[row.id] || [];
+                
                 return anunt;
             });
 

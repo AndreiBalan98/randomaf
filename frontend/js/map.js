@@ -155,7 +155,7 @@ async function initializeMap() {
 
 // Functie pentru a construi cardul de anunt pentru popup
 function createImobilCard(imobil) {
-    const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${BACKEND_URL}${API_IMAGES}/casa1.jpg`;
+    const imagePath = imobil.imagini[0].url;
     const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
     const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
     const surface = imobil.tip_imobil === 'teren' ? 

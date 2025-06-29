@@ -8,28 +8,27 @@ const handleImageUpload     = require('./handlers/imageUploadHandler');
 const handleImagesGet       = require('./handlers/imagesGetHandler');
 const handleSignUp          = require('./handlers/signUpHandler');
 const handleSignIn          = require('./handlers/signInHandler');
+const handleLogout          = require('./handlers/logoutHandler');
+const handleGetCurrentUser  = require('./handlers/getCurrentUserHandler');
+const handleOraseGet        = require('./handlers/getOraseHandler');
+const handleLocalitatiGet   = require('./handlers/getLocalitatiHandler');
 const { handleLikeToggle, handleGetFavorites }  = require('./handlers/likesHandler');
-const { handleGetCurrentUser, handleLogout }    = require('./handlers/getCurrentUserHandler');
-const { handleOraseGet } = require('./handlers/getOraseHandler');
-const { handleLocalitatiGet } = require('./handlers/getLocalitatiHandler');
 
 const server = http.createServer((req, res) => {
     console.log('Cerere primita:', req.method, req.url);
     
-    // CORS
     res.setHeader('Access-Control-Allow-Origin', FRONTEND_URL);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Cookie');
 
-    // Preflight
     if (req.method === 'OPTIONS') {
         res.writeHead(204);
         res.end();
+
         return;
     }
 
-    // Routing
     if (req.method === 'GET' && req.url.startsWith(API_IMOBILE)) {
         handleImobileGet(req, res);
     } else if (req.method === 'POST' && req.url === API_IMOBILE) {

@@ -1,8 +1,3 @@
--- =========================
--- BAZA DE DATE ANUNTURI IMOBILIARE
--- =========================
-
--- TABELA USERS PENTRU AUTENTIFICARE
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) UNIQUE NOT NULL,
@@ -11,17 +6,14 @@ CREATE TABLE users (
     data_inregistrare TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Index pentru performanta
 CREATE INDEX idx_users_username ON users(username);
 CREATE INDEX idx_users_email ON users(email);
 
--- TABELA ORASE
 CREATE TABLE orase (
     id SERIAL PRIMARY KEY,
     nume VARCHAR(100) UNIQUE NOT NULL
 );
 
--- TABELA LOCALITATI
 CREATE TABLE localitati (
     id SERIAL PRIMARY KEY,
     nume VARCHAR(100) NOT NULL,
@@ -29,10 +21,8 @@ CREATE TABLE localitati (
     UNIQUE(nume, oras_id)
 );
 
--- Index pentru performanta
 CREATE INDEX idx_localitati_oras ON localitati(oras_id);
 
--- TABELA PRINCIPALA: ANUNTURI
 CREATE TABLE anunturi (
     id SERIAL PRIMARY KEY,
     id_user INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
@@ -50,7 +40,6 @@ CREATE TABLE anunturi (
     data_publicare TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Index pentru performanta
 CREATE INDEX idx_anunturi_user ON anunturi(id_user);
 CREATE INDEX idx_anunturi_oras ON anunturi(oras_id);
 CREATE INDEX idx_anunturi_localitate ON anunturi(localitate_id);
@@ -58,7 +47,6 @@ CREATE INDEX idx_anunturi_tip_imobil ON anunturi(tip_imobil);
 CREATE INDEX idx_anunturi_tip_oferta ON anunturi(tip_oferta);
 CREATE INDEX idx_anunturi_pret ON anunturi(pret);
 
--- TABELA IMAGINI (MAXIM 16 IMAGINI / ANUNT)
 CREATE TABLE imagini (
     id SERIAL PRIMARY KEY,
     anunt_id INTEGER NOT NULL REFERENCES anunturi(id) ON DELETE CASCADE,
@@ -67,10 +55,8 @@ CREATE TABLE imagini (
     UNIQUE(anunt_id, ordine)
 );
 
--- Index pentru performanta
 CREATE INDEX idx_imagini_anunt ON imagini(anunt_id);
 
--- TABELA SPECIFICA: APARTAMENTE
 CREATE TABLE apartamente (
     anunt_id INTEGER PRIMARY KEY REFERENCES anunturi(id) ON DELETE CASCADE,
     nr_camere INTEGER,
@@ -82,7 +68,6 @@ CREATE TABLE apartamente (
     suprafata_utila NUMERIC(10,2)
 );
 
--- TABELA SPECIFICA: CASE
 CREATE TABLE casee (
     anunt_id INTEGER PRIMARY KEY REFERENCES anunturi(id) ON DELETE CASCADE,
     nr_camere INTEGER,
@@ -92,7 +77,6 @@ CREATE TABLE casee (
     suprafata_teren NUMERIC(10,2)
 );
 
--- TABELA SPECIFICA: TERENURI
 CREATE TABLE terenuri (
     anunt_id INTEGER PRIMARY KEY REFERENCES anunturi(id) ON DELETE CASCADE,
     suprafata_teren NUMERIC(10,2),
@@ -101,7 +85,6 @@ CREATE TABLE terenuri (
     front_stradal NUMERIC(10,2)
 );
 
--- TABELA SPECIFICA: SPATII COMERCIALE
 CREATE TABLE spatii_comerciale (
     anunt_id INTEGER PRIMARY KEY REFERENCES anunturi(id) ON DELETE CASCADE,
     suprafata_utila NUMERIC(10,2),
@@ -110,7 +93,6 @@ CREATE TABLE spatii_comerciale (
     an_constructie INTEGER
 );
 
--- TABELA LIKES (pentru favorite)
 CREATE TABLE likes (
     user_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     anunt_id INTEGER NOT NULL REFERENCES anunturi(id) ON DELETE CASCADE,
@@ -118,6 +100,5 @@ CREATE TABLE likes (
     PRIMARY KEY (user_id, anunt_id)
 );
 
--- Index pentru performanta
 CREATE INDEX idx_likes_user ON likes(user_id);
 CREATE INDEX idx_likes_anunt ON likes(anunt_id);

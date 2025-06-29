@@ -85,7 +85,9 @@ function initializeAdd() {
 
   async function uploadImages(anuntId) {
     const uploadPromises = terenImages.map((file, index) => {
+      
       const formData = new FormData();
+      
       formData.append('anunt_id', anuntId);
       formData.append('ordine', index + 1);
       formData.append('imagine', file);
@@ -104,7 +106,9 @@ function initializeAdd() {
         console.error('Unele imagini nu au fost incarcate:', failedUploads);
         return false;
       }
+
       return true;
+
     } catch (error) {
       console.error('Eroare la incarcarea imaginilor:', error);
       return false;
@@ -268,11 +272,10 @@ function initializeAdd() {
     };
 
     try {
-      // Adauga anuntul in baza de date
       const response = await fetch(BACKEND_URL + API_IMOBILE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        credentials: 'include', // IMPORTANT: Include cookies
+        credentials: 'include',
         body: JSON.stringify(anunt)
       });
 

@@ -24,10 +24,10 @@ async function obtineImobil(id) {
 }
 
 // Obtine imaginile pentru imobil
-async function obtineImagini(id) {
+async function obtineImagini(idAnunt) {
   let imagini = [];
   try {
-    const resImg = await fetch(`${BACKEND_URL}${API_IMAGINI}/${id}`);
+    const resImg = await fetch(`${BACKEND_URL}${API_IMAGINI}?id=${idAnunt}`);
     imagini = await resImg.json();
   } catch {}
   return imagini;
@@ -218,9 +218,7 @@ async function incarcaAnunturiRelevante(idCurent, cardCurent) {
   ).slice(0, 4);
 
   const htmlRelevante = relevante.map(r => {
-    const imagePath = r.imagine
-      ? `${BACKEND_URL}/${r.imagine}`
-      : `${BACKEND_URL}${API_IMAGES}/casa1.jpg`;
+    const imagePath = `${BACKEND_URL}/${r.imagine}`;
     const price = r.pret ? `${r.pret} €` : 'Pret la cerere';
     const transactionType = r.tip_oferta === 'vanzare'
       ? 'De vanzare'

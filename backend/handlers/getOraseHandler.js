@@ -12,4 +12,4 @@ function handleOraseGet(req, res) {
         });
 }
 
-module.exports = { handleOraseGet };
+module.exports = handleOraseGet;

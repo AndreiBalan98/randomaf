@@ -101,7 +101,7 @@ async function checkLikeStatus(anuntId) {
             return false; // Daca nu e conectat, sigur nu are like
         }
         
-        const response = await fetch(`${BACKEND_URL}${API_LIKES}/${anuntId}`, {
+        const response = await fetch(`${BACKEND_URL}${API_LIKES}?anuntId=${anuntId}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -118,7 +118,7 @@ async function checkLikeStatus(anuntId) {
 
 async function toggleLike(anuntId, buttonElement) {
     try {
-        const response = await fetch(`${BACKEND_URL}${API_LIKES}/${anuntId}`, {
+        const response = await fetch(`${BACKEND_URL}${API_LIKES}?anuntId=${anuntId}`, {
             method: 'POST',
             credentials: 'include'
         });
