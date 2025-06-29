@@ -1,5 +1,3 @@
-/* CSS AUTENTIFICARE SIMPLIFICAT */
-
 :root {
     --auth-primary: #431164;
     --auth-primary-light: rgba(67, 17, 100, 0.1);
@@ -46,7 +44,7 @@
     background: #c82333;
 }
 
-/* Auth Container - Toate stilurile sunt scopate */
+/* Auth Container */
 .auth-container {
     max-width: 400px;
     margin: 40px auto;

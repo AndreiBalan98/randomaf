@@ -1,21 +1,16 @@
-// SISTEM AUTENTIFICARE CU COOKIES SI SESIUNI
-
 let currentMode = 'signin';
-let currentUser = null; // Variabila globala pentru user-ul conectat
+let currentUser = null;
 
-// Initializare
 function initializeAuthentication() {
     setupEventListeners();
-    checkCurrentUser(); // Verifica daca exista user conectat
-    console.log('Sistem autentificare initializat');
+    checkCurrentUser();
 }
 
-// Verifica user-ul conectat la incarcarea paginii
 async function checkCurrentUser() {
     try {
         const response = await fetch(`${API_BASE_URL}/api/auth/current-user`, {
             method: 'GET',
-            credentials: 'include' // Include cookies
+            credentials: 'include'
         });
         
         const result = await response.json();
