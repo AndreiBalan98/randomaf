@@ -1,11 +1,7 @@
-// ...existing code...
-
-// Functie pentru a extrage orasele unice din lista de imobile
 function getUniqueCities(imobile) {
     const citySet = new Set();
     imobile.forEach(imobil => {
         if (imobil.localizare) {
-            // Extrage primul cuvant (orasul) din localizare
             const oras = imobil.localizare.split(',')[0].trim();
             if (oras) citySet.add(oras);
         }
@@ -13,7 +9,6 @@ function getUniqueCities(imobile) {
     return Array.from(citySet);
 }
 
-// Functie pentru a obtine coordonatele unui oras (media tuturor anunturilor din acel oras)
 function getCityCoords(imobile, oras) {
     const coords = imobile
         .filter(imobil => imobil.localizare && imobil.localizare.split(',')[0].trim() === oras)
@@ -23,15 +18,15 @@ function getCityCoords(imobile, oras) {
         }))
         .filter(coord => !isNaN(coord.lat) && !isNaN(coord.lng));
     if (coords.length === 0) return null;
-    // Media coordonatelor
+
     const avgLat = coords.reduce((sum, c) => sum + c.lat, 0) / coords.length;
     const avgLng = coords.reduce((sum, c) => sum + c.lng, 0) / coords.length;
+
     return [avgLat, avgLng];
 }
 
 // Modifica initializeMap pentru a adauga filtrul de orase
 async function initializeMap() {
-    const API_BASE_URL = 'http://localhost:3001';
     const mapElement = document.getElementById('map');
     if (!mapElement) {
         console.error('Elementul cu id="map" nu a fost gasit');
@@ -55,7 +50,7 @@ async function initializeMap() {
     }).addTo(map);
 
     try {
-        const imobileResponse = await fetch(`${API_BASE_URL}/api/imobile`);
+        const imobileResponse = await fetch(`${BACKEND_URL}${API_IMOBILE}`);
         const imobile = await imobileResponse.json();
 
         // === ADAUGA BUTONUL DE FILTRU ORASE ===
@@ -160,8 +155,7 @@ async function initializeMap() {
 
 // Functie pentru a construi cardul de anunt pentru popup
 function createImobilCard(imobil) {
-    const API_BASE_URL = 'http://localhost:3001';
-    const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
+    const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${BACKEND_URL}${API_IMAGES}/casa1.jpg`;
     const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
     const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
     const surface = imobil.tip_imobil === 'teren' ? 

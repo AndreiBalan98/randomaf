@@ -1,13 +1,11 @@
 const bcrypt = require('bcrypt');
 const crypto = require('crypto');
-
-// Store pentru sesiuni in memorie (pentru dezvoltare)
-const activeSessions = new Map();
+const pool = require('../config/database');
 
 function handleSignIn(req, res) {
-    const pool = require('../config/database');
     
     let body = '';
+    
     req.on('data', chunk => {
         body += chunk.toString();
     });
@@ -125,18 +123,4 @@ function handleSignIn(req, res) {
     });
 }
 
-// Functie helper pentru verificarea sesiunii
-function getActiveSession(sessionToken) {
-    return activeSessions.get(sessionToken) || null;
-}
-
-// Functie helper pentru stergerea sesiunii
-function deleteSession(sessionToken) {
-    return activeSessions.delete(sessionToken);
-}
-
-module.exports = { 
-    handleSignIn, 
-    getActiveSession, 
-    deleteSession 
-};
+module.exports = handleSignIn;

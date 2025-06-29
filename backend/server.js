@@ -1,3 +1,5 @@
+require('./config/urls.js');
+
 const http                  = require('http');
 const handleImobileGet      = require('./handlers/imobileGetHandler');
 const handleImobileAdd      = require('./handlers/imobileAddHandler');
@@ -5,20 +7,17 @@ const handleImagesStatic    = require('./handlers/imagesStaticHandler');
 const handleImageUpload     = require('./handlers/imageUploadHandler');
 const handleImagesGet       = require('./handlers/imagesGetHandler');
 const handleSignUp          = require('./handlers/signUpHandler');
-const { handleSignIn }      = require('./handlers/signInHandler');
+const handleSignIn          = require('./handlers/signInHandler');
 const { handleLikeToggle, handleGetFavorites }  = require('./handlers/likesHandler');
 const { handleGetCurrentUser, handleLogout }    = require('./handlers/getCurrentUserHandler');
 const { handleOraseGet } = require('./handlers/getOraseHandler');
 const { handleLocalitatiGet } = require('./handlers/getLocalitatiHandler');
 
-const hostname              = 'localhost';
-const port                  = 3001;
-
 const server = http.createServer((req, res) => {
     console.log('Cerere primita:', req.method, req.url);
     
     // CORS
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8000');
+    res.setHeader('Access-Control-Allow-Origin', FRONTEND_URL);
     res.setHeader('Access-Control-Allow-Credentials', 'true');
     res.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS');
     res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Cookie');
@@ -31,33 +30,33 @@ const server = http.createServer((req, res) => {
     }
 
     // Routing
-    if (req.method === 'GET' && req.url.startsWith('/api/imobile')) {
+    if (req.method === 'GET' && req.url.startsWith(API_IMOBILE)) {
         handleImobileGet(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/imobile') {
+    } else if (req.method === 'POST' && req.url === API_IMOBILE) {
         handleImobileAdd(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/api/imagini/')) {
+    } else if (req.method === 'GET' && req.url.startsWith(API_IMAGINI + '/')) {
         handleImagesGet(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/upload-imagine') {
+    } else if (req.method === 'POST' && req.url === API_UPLOAD_IMAGINE) {
         handleImageUpload(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/images/')) {
+    } else if (req.method === 'GET' && req.url.startsWith(API_IMAGES + '/')) {
         handleImagesStatic(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/auth/register') {
+    } else if (req.method === 'POST' && req.url === API_AUTH_REGISTER) {
         handleSignUp(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/auth/login') {
+    } else if (req.method === 'POST' && req.url === API_AUTH_LOGIN) {
         handleSignIn(req, res);
-    } else if (req.method === 'GET' && req.url === '/api/auth/current-user') {
+    } else if (req.method === 'GET' && req.url === API_AUTH_CURRENT_USER) {
         handleGetCurrentUser(req, res);
-    } else if (req.method === 'POST' && req.url === '/api/auth/logout') {
+    } else if (req.method === 'POST' && req.url === API_AUTH_LOGOUT) {
         handleLogout(req, res);
-    } else if (req.method === 'POST' && req.url.startsWith('/api/likes/')) {
+    } else if (req.method === 'POST' && req.url.startsWith(API_LIKES + '/')) {
         handleLikeToggle(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/api/likes/')) {
+    } else if (req.method === 'GET' && req.url.startsWith(API_LIKES + '/')) {
         handleLikeToggle(req, res);
-    } else if (req.method === 'GET' && req.url === '/api/favorites') {
+    } else if (req.method === 'GET' && req.url === API_FAVORITES) {
         handleGetFavorites(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/api/orase')) {
+    } else if (req.method === 'GET' && req.url.startsWith(API_ORASE)) {
         handleOraseGet(req, res);
-    } else if (req.method === 'GET' && req.url.startsWith('/api/localitati')) {
+    } else if (req.method === 'GET' && req.url.startsWith(API_LOCALITATI)) {
         handleLocalitatiGet(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
@@ -65,6 +64,6 @@ const server = http.createServer((req, res) => {
     }
 });
 
-server.listen(port, hostname, () => {
-  console.log(`Serverul ruleaza pe http://${hostname}:${port}`);
+server.listen(BACKEND_PORT, BACKEND_HOST, () => {
+    console.log(`Serverul ruleaza pe ${BACKEND_URL}`);
 });

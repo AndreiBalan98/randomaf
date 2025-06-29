@@ -1,16 +1,13 @@
-// Elemente DOM
 let navbar = null;
 let menuBtn = null;
 let mainDiv = null;
 
-// Incarcare continut dinamic cu istoric
 function loadContent(file, push = true) {
   fetch(file)
     .then(res => res.text())
     .then(html => {
       document.getElementById("content").innerHTML = html;
 
-      // Executa initializarea dupa incarcarea HTML-ului
       if (file.includes('home.html')) {
         initializeHome();
       }
@@ -30,7 +27,6 @@ function loadContent(file, push = true) {
         initializeFavorites();
       }
 
-      // Adauga in istoric daca e nevoie
       if (push) {
         history.pushState({ file }, '', '#' + file);
       }
@@ -38,13 +34,12 @@ function loadContent(file, push = true) {
     .catch(err => console.error("Eroare la incarcarea fisierului:", err));
 }
 
-// Modifica checkAuthAndLoad sa transmita push=false la back/forward
 async function checkAuthAndLoad(file, push = true) {
   const protectedPages = ['add-imobile.html', 'favorites.html', 'profile.html'];
   const needsAuth = protectedPages.some(page => file.includes(page));
   if (needsAuth) {
     try {
-      const response = await fetch('http://localhost:3001/api/auth/current-user', {
+      const response = await fetch(BACKEND_URL + API_AUTH_CURRENT_USER, {
         method: 'GET',
         credentials: 'include'
       });
@@ -64,7 +59,6 @@ async function checkAuthAndLoad(file, push = true) {
   }
 }
 
-// La incarcare, incarca din hash daca exista
 window.addEventListener('DOMContentLoaded', function() {
   navbar = document.getElementById('navbar');
   menuBtn = document.getElementById('menuBtn');
@@ -81,7 +75,6 @@ window.addEventListener('DOMContentLoaded', function() {
   initializeMenuState();
   window.addEventListener('resize', handleResize);
 
-  // Incarca pagina din hash daca exista
   const hash = window.location.hash.replace('#', '');
   if (hash) {
     if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
@@ -95,28 +88,24 @@ window.addEventListener('DOMContentLoaded', function() {
 });
 
 
-let menuOpen = window.innerWidth > 768; // meniu deschis pe desktop, închis pe mobil
+let menuOpen = window.innerWidth > 768;
 let menuOverlay = null;
 
-// Afișează meniu 
 function showMenuAndShrinkContent() {
   if (window.innerWidth <= 768) {
-    // Pe mobil - folosește slide animation
+
     const navUl = navbar.querySelector('ul');
     navUl.classList.add('show');
     
-    // Creează overlay dacă nu există
     if (!menuOverlay) {
       menuOverlay = document.createElement('div');
       menuOverlay.className = 'menu-overlay';
       document.body.appendChild(menuOverlay);
       
-      // Adaugă event listener pentru închidere la click pe overlay
       menuOverlay.addEventListener('click', hideMenuAndExpandContent);
     }
     menuOverlay.classList.add('show');
   } else {
-    // Pe desktop - comportament normal
     navbar.style.display = 'block';
     if(mainDiv) {
       mainDiv.style.marginLeft = '15%';
@@ -126,17 +115,14 @@ function showMenuAndShrinkContent() {
   menuOpen = true;
 }
 
-// Ascunde meniu
 function hideMenuAndExpandContent() {
   if (window.innerWidth <= 768) {
-    // Pe mobil - ascunde slide animation
     const navUl = navbar.querySelector('ul');
     navUl.classList.remove('show');
     if (menuOverlay) {
       menuOverlay.classList.remove('show');
     }
   } else {
-    // Pe desktop - comportament normal
     navbar.style.display = 'none';
     if(mainDiv) {
       mainDiv.style.marginLeft = '0';
@@ -146,7 +132,6 @@ function hideMenuAndExpandContent() {
   menuOpen = false;
 }
 
-// Toggle meniu
 function toggleMenu() {
   if (!menuOpen) {
     showMenuAndShrinkContent();
@@ -155,30 +140,26 @@ function toggleMenu() {
   }
 }
 
-// Activare link navigatie
 function activateNavLink(clickedLink) {
   document.querySelectorAll('nav li a').forEach(l => l.classList.remove('active'));
   clickedLink.classList.add('active');
-  // Închide meniul pe mobil după click pe link
+
   if (window.innerWidth <= 768) {
     hideMenuAndExpandContent();
   }
 }
 
-// Initializare stare meniu
 function initializeMenuState() {
   const navUl = navbar.querySelector('ul');
   if (window.innerWidth > 768) {
-    // Pe desktop - afișează meniul
     navbar.style.display = 'block';
-    navUl.classList.remove('show'); // Asigură-te că nu are clasa mobile
+    navUl.classList.remove('show');
     if (menuOverlay) {
       menuOverlay.classList.remove('show');
     }
     menuOpen = true;
   } else {
-    // Pe mobil - ascunde meniul
-    navbar.style.display = 'block'; // Păstrează display block pentru slide animation
+    navbar.style.display = 'block';
     navUl.classList.remove('show');
     if (menuOverlay) {
       menuOverlay.classList.remove('show');
@@ -187,11 +168,9 @@ function initializeMenuState() {
   }
 }
 
-// Adaptare redimensionare
 function handleResize() {
   const navUl = navbar.querySelector('ul');
   if (window.innerWidth > 768) {
-    // Trecem la desktop - afișează meniul normal
     navbar.style.display = 'block';
     navUl.classList.remove('show');
     if (menuOverlay) {
@@ -202,7 +181,6 @@ function handleResize() {
     }
     menuOpen = true;
   } else {
-    // Trecem la mobil - resetează starea
     navbar.style.display = 'block';
     navUl.classList.remove('show');
     if (menuOverlay) {
@@ -215,7 +193,6 @@ function handleResize() {
   }
 }
 
-// La incarcare, incarca din hash daca exista
 window.addEventListener('DOMContentLoaded', function() {
   navbar = document.getElementById('navbar');
   menuBtn = document.getElementById('menuBtn');
@@ -232,7 +209,6 @@ window.addEventListener('DOMContentLoaded', function() {
   initializeMenuState();
   window.addEventListener('resize', handleResize);
 
-  // Incarca pagina din hash daca exista
   const hash = window.location.hash.replace('#', '');
   if (hash) {
     if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
@@ -245,7 +221,6 @@ window.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Navigare cu back/forward in browser
 window.onpopstate = function(event) {
   const hash = window.location.hash.replace('#', '');
   if (hash) {

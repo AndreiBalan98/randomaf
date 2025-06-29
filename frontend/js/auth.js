@@ -8,7 +8,7 @@ function initializeAuthentication() {
 
 async function checkCurrentUser() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/current-user`, {
+        const response = await fetch(`${BACKEND_URL}${API_AUTH_CURRENT_USER}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -204,11 +204,11 @@ async function handleSubmit(e) {
     setLoading(true);
     
     try {
-        const endpoint = currentMode === 'signin' ? '/api/auth/login' : '/api/auth/register';
-        const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+        const endpoint = currentMode === 'signin' ? API_AUTH_LOGIN : API_AUTH_REGISTER;
+        const response = await fetch(`${BACKEND_URL}${endpoint}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            credentials: 'include', // Include cookies
+            credentials: 'include',
             body: JSON.stringify(data)
         });
         
@@ -245,7 +245,7 @@ async function handleSubmit(e) {
 // Handle logout
 async function handleLogout() {
     try {
-        const response = await fetch(`${API_BASE_URL}/api/auth/logout`, {
+        const response = await fetch(`${BACKEND_URL}${API_AUTH_LOGOUT}`, {
             method: 'POST',
             credentials: 'include'
         });

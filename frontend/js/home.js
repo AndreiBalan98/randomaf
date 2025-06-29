@@ -1,10 +1,4 @@
-// ========================================
-// CONSTANTE SI CONFIGURATII
-// ========================================
 
-const API_BASE_URL = 'http://localhost:3001';
-
-// Optiuni pentru selectoarele din filtre
 const FILTER_OPTIONS = {
   tip: [
     { value: 'apartament', text: 'Apartament' },
@@ -18,7 +12,6 @@ const FILTER_OPTIONS = {
   ]
 };
 
-// Straturi disponibile pentru harta
 const AVAILABLE_LAYERS = [
   { id: 'poluare', name: 'Poluare' },
   { id: 'aglomeratie', name: 'Aglomeratie' },
@@ -29,29 +22,16 @@ const AVAILABLE_LAYERS = [
   { id: 'magazine', name: 'Magazine' }
 ];
 
-// ========================================
-// FUNCTII DE INITIALIZARE
-// ========================================
-
-/**
- * Initializeaza aplicatia cand DOM-ul este incarcat
- */
 function initializeHome() {
   console.log('Initializare aplicatie home...');
   
-  // Initializeaza componentele
   initializeFilterSelects();
   initializeLayers();
   initializeLocationFilters();
   initializeFormHandlers();
-  
-  // Incarca datele
   loadImobileData();
 }
 
-/**
- * Initializeaza selectoarele din filtre cu optiuni
- */
 function initializeFilterSelects() {
   console.log('Initializare selectoare filtre...');
   
@@ -68,9 +48,6 @@ function initializeFilterSelects() {
   });
 }
 
-/**
- * Initializeaza straturile pentru harta
- */
 function initializeLayers() {
   console.log('Initializare straturi...');
   
@@ -102,7 +79,7 @@ async function initializeLocationFilters() {
 
   // Populează orașele din backend
   try {
-    const oraseResponse = await fetch('http://localhost:3001/api/orase');
+    const oraseResponse = await fetch(BACKEND_URL + API_ORASE);
     const orase = await oraseResponse.json();
     orasSelect.innerHTML = '<option value="">Alege orasul</option>';
     orase.forEach(oras => {
@@ -122,7 +99,7 @@ async function initializeLocationFilters() {
     localitateSelect.disabled = true;
     if (selectedOrasId) {
       try {
-        const localitatiResponse = await fetch(`http://localhost:3001/api/localitati?oras_id=${selectedOrasId}`);
+        const localitatiResponse = await fetch(`${BACKEND_URL}${API_LOCALITATI}?oras_id=${selectedOrasId}`);
         const localitati = await localitatiResponse.json();
         localitati.forEach(loc => {
           const option = document.createElement('option');
@@ -138,9 +115,6 @@ async function initializeLocationFilters() {
   });
 }
 
-/**
- * Initializeaza gestionarea formularelor
- */
 function initializeFormHandlers() {
   console.log('Initializare gestionare formulare...');
   
@@ -150,19 +124,12 @@ function initializeFormHandlers() {
   }
 }
 
-// ========================================
-// FUNCTII PENTRU GESTIONAREA DATELOR
-// ========================================
-
-/**
- * Incarca datele imobilelor de la server
- */
 async function loadImobileData(filters = {}) {
   console.log('Incarcare date imobile...');
  
   try {
     const queryParams = new URLSearchParams(filters).toString();
-    const response = await fetch(`${API_BASE_URL}/api/imobile?${queryParams}`);
+    const response = await fetch(`${BACKEND_URL}${API_IMOBILE}?${queryParams}`);
    
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
@@ -194,22 +161,16 @@ async function renderImobileCards(imobileData) {
   
   container.innerHTML = '';
   
-  // Genereaza cardurile fara verificarea like-ului (se va face in addLikeEventListeners)
   imobileData.forEach((imobil, index) => {
-    const cardHTML = createImobilCard(imobil, false); // Mereu false aici
+    const cardHTML = createImobilCard(imobil, false);
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
   
-  // Adauga event listeners pentru butoanele de detalii
   addCardEventListeners(imobileData);
   
-  // Adauga event listeners pentru butoanele de like (si verifica statusul)
   await addLikeEventListeners();
 }
 
-/**
- * Creeaza HTML-ul pentru un card de imobil
- */
 function createImobilCard(imobil, isLiked = false) {
   const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
   const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
@@ -245,22 +206,12 @@ function createImobilCard(imobil, isLiked = false) {
   `;
 }
 
-// ========================================
-// FUNCTII HELPER
-// ========================================
-
-/**
- * Formateaza numele unui oras pentru afisare
- */
 function formatCityName(citySlug) {
   return citySlug.split('-').map(word => 
     word.charAt(0).toUpperCase() + word.slice(1)
   ).join(' ');
 }
 
-/**
- * Actualizeaza selectorul de localitati in functie de orasul selectat
- */
 function updateLocalitateSelect(selectedCity, localitateSelect) {
   localitateSelect.innerHTML = '<option value="">Alege localitatea</option>';
   
@@ -277,9 +228,6 @@ function updateLocalitateSelect(selectedCity, localitateSelect) {
   }
 }
 
-/**
- * Returneaza textul pentru tipul de tranzactie
- */
 function getTransactionTypeText(tranzactie) {
   switch(tranzactie) {
     case 'vanzare':
@@ -291,9 +239,6 @@ function getTransactionTypeText(tranzactie) {
   }
 }
 
-/**
- * Afiseaza mesaj de eroare
- */
 function displayError(message) {
   const container = document.getElementById('imobileCards');
   if (container) {
@@ -301,10 +246,9 @@ function displayError(message) {
   }
 }
 
-// Functii pentru like
 async function toggleLike(anuntId, buttonElement) {
     try {
-        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+        const response = await fetch(`${BACKEND_URL}${API_LIKES}/${anuntId}`, {
             method: 'POST',
             credentials: 'include'
         });
@@ -319,7 +263,6 @@ async function toggleLike(anuntId, buttonElement) {
         
         const result = await response.json();
         
-        // Update visual al butonului
         if (result.liked) {
             buttonElement.classList.add('liked');
         } else {
@@ -335,10 +278,10 @@ async function checkLikeStatus(anuntId) {
     try {
         const user = JSON.parse(sessionStorage.getItem('currentUser'));
         if (!user) {
-            return false; // Daca nu e conectat, sigur nu are like
+            return false;
         }
         
-        const response = await fetch(`http://localhost:3001/api/likes/${anuntId}`, {
+        const response = await fetch(`${BACKEND_URL}${API_LIKES}/${anuntId}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -353,7 +296,6 @@ async function checkLikeStatus(anuntId) {
     return false;
 }
 
-// Modifica renderImobileCards pentru a include like listeners
 function renderImobileCards(imobileData) {
   console.log('Renderizare carduri imobile...', imobileData.length);
   
@@ -372,24 +314,19 @@ function renderImobileCards(imobileData) {
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
   
-  // Adauga event listeners pentru butoanele de detalii
   addCardEventListeners(imobileData);
   
-  // Adauga event listeners pentru butoanele de like
   addLikeEventListeners();
 }
 
 async function addLikeEventListeners() {
     const likeButtons = document.querySelectorAll('.imobil-like-btn');
     
-    // Pentru fiecare buton, verifica statusul de like
     for (const btn of likeButtons) {
         const anuntId = btn.getAttribute('data-anunt-id');
         
-        // IMPORTANT: Reseteaza clasa inainte de verificare
         btn.classList.remove('liked');
         
-        // Verifica daca user-ul este conectat
         const user = JSON.parse(sessionStorage.getItem('currentUser'));
         if (user) {
             const isLiked = await checkLikeStatus(anuntId);
@@ -398,7 +335,6 @@ async function addLikeEventListeners() {
             }
         }
         
-        // Adauga event listener pentru click
         btn.addEventListener('click', async function(e) {
             e.stopPropagation();
             const anuntId = this.getAttribute('data-anunt-id');
@@ -407,13 +343,6 @@ async function addLikeEventListeners() {
     }
 }
 
-// ========================================
-// EVENT HANDLERS
-// ========================================
-
-/**
- * Gestioneaza schimbarea straturilor
- */
 function handleLayerChange(event) {
   if (event.target.classList.contains('layer-checkbox')) {
     const label = document.querySelector(`label[for="${event.target.id}"]`);
@@ -427,9 +356,6 @@ function handleLayerChange(event) {
   }
 }
 
-/**
- * Gestioneaza submisia formularului de filtre
- */
 function handleFormSubmit(event) {
   event.preventDefault();
  
@@ -448,9 +374,6 @@ function handleFormSubmit(event) {
   loadImobileData(filters);
 }
 
-/**
- * Adauga event listeners pentru butoanele de detalii
- */
 function addCardEventListeners(imobileData) {
   const detailButtons = document.querySelectorAll('.imobil-detalii-btn');
   detailButtons.forEach((btn, index) => {

@@ -18,7 +18,7 @@ async function initializeDetalii(id) {
 
 // Obtine datele imobilului dupa ID
 async function obtineImobil(id) {
-  const res = await fetch(`${API_BASE_URL}/api/imobile`);
+  const res = await fetch(`${BACKEND_URL}${API_IMOBILE}`);
   const anunturi = await res.json();
   return anunturi.find(c => c.id == id);
 }
@@ -27,7 +27,7 @@ async function obtineImobil(id) {
 async function obtineImagini(id) {
   let imagini = [];
   try {
-    const resImg = await fetch(`${API_BASE_URL}/api/imagini/${id}`);
+    const resImg = await fetch(`${BACKEND_URL}${API_IMAGINI}/${id}`);
     imagini = await resImg.json();
   } catch {}
   return imagini;
@@ -144,7 +144,7 @@ function afiseazaDetaliiImobil(card, imagini) {
     let current = idx;
 
     function showImg(i) {
-      modalImg.src = imagini[i].url.startsWith('http') ? imagini[i].url : `${API_BASE_URL}/${imagini[i].url}`;
+      modalImg.src = imagini[i].url.startsWith('http') ? imagini[i].url : `${BACKEND_URL}/${imagini[i].url}`;
       console.log("Modal: " + modalImg.src);
       modalImg.dataset.idx = i;
     }
@@ -209,7 +209,7 @@ function configureazaGalerieModal() {
 
 // Incarca si afiseaza anunturile relevante
 async function incarcaAnunturiRelevante(idCurent, cardCurent) {
-  const res = await fetch(`${API_BASE_URL}/api/imobile`);
+  const res = await fetch(`${BACKEND_URL}${API_IMOBILE}`);
   const anunturi = await res.json();
 
   const locatieCurenta = cardCurent.localizare || cardCurent.locatie || '';
@@ -219,8 +219,8 @@ async function incarcaAnunturiRelevante(idCurent, cardCurent) {
 
   const htmlRelevante = relevante.map(r => {
     const imagePath = r.imagine
-      ? `${API_BASE_URL}/${r.imagine}`
-      : `${API_BASE_URL}/images/casa1.jpg`;
+      ? `${BACKEND_URL}/${r.imagine}`
+      : `${BACKEND_URL}${API_IMAGES}/casa1.jpg`;
     const price = r.pret ? `${r.pret} €` : 'Pret la cerere';
     const transactionType = r.tip_oferta === 'vanzare'
       ? 'De vanzare'

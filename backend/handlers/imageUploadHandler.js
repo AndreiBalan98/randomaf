@@ -1,3 +1,5 @@
+require('../config/urls');
+
 async function handleImageUpload(req, res) {
     const fs = require('fs');
     const path = require('path');
@@ -56,7 +58,7 @@ async function handleImageUpload(req, res) {
                 fs.writeFileSync(filePath, fileBuffer);
                 
                 // Salveaza in baza de date cu URL-ul complet
-                const fullImageUrl = `http://localhost:3001/images/${newFileName}`;
+                const fullImageUrl = `${BACKEND_URL}${API_IMAGES}/${newFileName}`;
                 await pool.query(
                     'INSERT INTO imagini (anunt_id, url, ordine) VALUES ($1, $2, $3)',
                     [anunt_id, fullImageUrl, ordine]

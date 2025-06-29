@@ -90,7 +90,7 @@ function initializeAdd() {
       formData.append('ordine', index + 1);
       formData.append('imagine', file);
       
-      return fetch('http://localhost:3001/api/upload-imagine', {
+      return fetch(BACKEND_URL + API_UPLOAD_IMAGINE, {
         method: 'POST',
         body: formData
       }).then(res => res.json());
@@ -269,7 +269,7 @@ function initializeAdd() {
 
     try {
       // Adauga anuntul in baza de date
-      const response = await fetch('http://localhost:3001/api/imobile', {
+      const response = await fetch(BACKEND_URL + API_IMOBILE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include', // IMPORTANT: Include cookies
