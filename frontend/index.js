@@ -59,36 +59,7 @@ async function checkAuthAndLoad(file, push = true) {
   }
 }
 
-window.addEventListener('DOMContentLoaded', function() {
-  navbar = document.getElementById('navbar');
-  menuBtn = document.getElementById('menuBtn');
-  mainDiv = document.getElementById('content');
-
-  menuBtn.addEventListener('click', toggleMenu);
-
-  document.querySelectorAll('nav li a').forEach(link => {
-    link.addEventListener('click', function() {
-      activateNavLink(this);
-    });
-  });
-
-  initializeMenuState();
-  window.addEventListener('resize', handleResize);
-
-  const hash = window.location.hash.replace('#', '');
-  if (hash) {
-    if (hash.includes('add-imobile.html') || hash.includes('favorites.html') || hash.includes('profile.html')) {
-      checkAuthAndLoad(hash, false);
-    } else {
-      loadContent(hash, false);
-    }
-  } else {
-    loadContent('html/home.html', false);
-  }
-});
-
-
-let menuOpen = window.innerWidth > 768;
+let menuOpen = window.innerWidth > 768; // meniu deschis pe desktop, închis pe mobil
 let menuOverlay = null;
 
 function showMenuAndShrinkContent() {
@@ -149,50 +120,18 @@ function activateNavLink(clickedLink) {
   }
 }
 
-function initializeMenuState() {
-  const navUl = navbar.querySelector('ul');
-  if (window.innerWidth > 768) {
-    navbar.style.display = 'block';
-    navUl.classList.remove('show');
-    if (menuOverlay) {
-      menuOverlay.classList.remove('show');
-    }
-    menuOpen = true;
-  } else {
-    navbar.style.display = 'block';
-    navUl.classList.remove('show');
-    if (menuOverlay) {
-      menuOverlay.classList.remove('show');
-    }
-    menuOpen = false;
-  }
-}
-
+// Adaptare redimensionare
 function handleResize() {
-  const navUl = navbar.querySelector('ul');
   if (window.innerWidth > 768) {
-    navbar.style.display = 'block';
-    navUl.classList.remove('show');
-    if (menuOverlay) {
-      menuOverlay.classList.remove('show');
-    }
-    if(mainDiv) {
-      mainDiv.style.marginLeft = '15%';
-    }
-    menuOpen = true;
+    // Trecem la desktop - afișează meniul normal
+    showMenuAndShrinkContent();
   } else {
-    navbar.style.display = 'block';
-    navUl.classList.remove('show');
-    if (menuOverlay) {
-      menuOverlay.classList.remove('show');
-    }
-    if(mainDiv) {
-      mainDiv.style.marginLeft = '0';
-    }
-    menuOpen = false;
+    // Trecem la mobil - resetează starea
+    hideMenuAndExpandContent();
   }
 }
 
+// La incarcare, incarca din hash daca exista
 window.addEventListener('DOMContentLoaded', function() {
   navbar = document.getElementById('navbar');
   menuBtn = document.getElementById('menuBtn');
@@ -206,7 +145,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  initializeMenuState();
+  handleResize(); // Initializeaza starea meniului
   window.addEventListener('resize', handleResize);
 
   const hash = window.location.hash.replace('#', '');
