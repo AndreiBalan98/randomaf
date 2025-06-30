@@ -145,8 +145,6 @@ async function loadImobileData(filters = {}) {
  * Renderizeaza cardurile de imobile
  */
 async function renderImobileCards(imobileData) {
-  console.log('Renderizare carduri imobile...', imobileData.length);
-  
   const container = document.getElementById('imobileCards');
   if (!container) return;
   
@@ -158,6 +156,7 @@ async function renderImobileCards(imobileData) {
   container.innerHTML = '';
   
   imobileData.forEach((imobil, index) => {
+    console.log("imobile: " + imobil);
     const cardHTML = createImobilCard(imobil, false);
     container.insertAdjacentHTML('beforeend', cardHTML);
   });
@@ -168,7 +167,12 @@ async function renderImobileCards(imobileData) {
 }
 
 function createImobilCard(imobil, isLiked = false) {
+
+  console.log('Renderizare carduri imobile...', imobileData.length);
+  console.log('PRIMUL IMOBIL COMPLET:', JSON.stringify(imobileData[0], null, 2));
+
   const imagePath = imobil.imagini[0].url;
+  const localizare = imobil.strada || 'Strada nedisponibilă';
   const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
   const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
   const surface = imobil.tip_imobil === 'teren' ? 
@@ -190,7 +194,7 @@ function createImobilCard(imobil, isLiked = false) {
         <div class="imobil-titlu">${imobil.titlu}</div>
         <div class="imobil-locatie">
           <span class="icon-locatie">📍</span>
-          ${imobil.localizare}
+          ${localizare}
         </div>
         <div class="imobil-info">
           <span class="imobil-mp">${surface} mp</span>
