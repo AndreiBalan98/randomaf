@@ -11,7 +11,7 @@
     padding: 20px;
     max-width: 1200px;
     margin: 0 auto;
-    position: relative; /* ADĂUGAT pentru poziționare absolută a butonului */
+    position: relative;
 }
 
 .leaflet-popup-content {
@@ -61,7 +61,6 @@
     background: #fff;
 }
 
-/* Pentru mobile responsiveness */
 @media (max-width: 768px) {
     .map-container {
         padding: 10px;
