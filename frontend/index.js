@@ -59,7 +59,7 @@ async function checkAuthAndLoad(file, push = true) {
   }
 }
 
-let menuOpen = window.innerWidth > 768; // meniu deschis pe desktop, închis pe mobil
+let menuOpen = window.innerWidth > 768;
 let menuOverlay = null;
 
 function showMenuAndShrinkContent() {
@@ -120,18 +120,14 @@ function activateNavLink(clickedLink) {
   }
 }
 
-// Adaptare redimensionare
 function handleResize() {
   if (window.innerWidth > 768) {
-    // Trecem la desktop - afișează meniul normal
     showMenuAndShrinkContent();
   } else {
-    // Trecem la mobil - resetează starea
     hideMenuAndExpandContent();
   }
 }
 
-// La incarcare, incarca din hash daca exista
 window.addEventListener('DOMContentLoaded', function() {
   navbar = document.getElementById('navbar');
   menuBtn = document.getElementById('menuBtn');
@@ -145,7 +141,7 @@ window.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  handleResize(); // Initializeaza starea meniului
+  handleResize();
   window.addEventListener('resize', handleResize);
 
   const hash = window.location.hash.replace('#', '');

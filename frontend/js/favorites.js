@@ -1,5 +1,6 @@
 async function initializeFavorites() {
     const user = JSON.parse(sessionStorage.getItem('currentUser'));
+
     if (!user) {
         loadContent('html/auth.html');
         setTimeout(() => initializeAuthentication(), 100);
@@ -22,7 +23,6 @@ async function loadFavorites() {
         
         const favorites = await response.json();
         
-        // Pentru fiecare favorit, incarca imaginile
         const favoritesWithImages = await Promise.all(
             favorites.map(async (favorite) => {
                 try {
@@ -53,13 +53,9 @@ function renderFavoriteCards(favorites) {
         return;
     }
     
-    // SCHIMBAREA IMPORTANTA: Nu mai fortam isLiked = true
     container.innerHTML = favorites.map(favorite => createImobilCard(favorite, false)).join('');
-    
-    // Event listeners pentru butoanele de detalii
     addCardEventListeners(favorites);
     
-    // Event listeners pentru butoanele de like
     addLikeEventListeners();
 }
 
@@ -70,8 +66,8 @@ async function addLikeEventListeners() {
         const cardElement = btn.closest('.imobil-card');
         const anuntId = cardElement.querySelector('.imobil-detalii-btn').getAttribute('data-id');
         
-        // SCHIMBAREA IMPORTANTA: Verifica statusul real in loc sa fortezi liked
         const user = JSON.parse(sessionStorage.getItem('currentUser'));
+
         if (user) {
             const isLiked = await checkLikeStatus(anuntId);
             if (isLiked) {
@@ -87,8 +83,6 @@ async function addLikeEventListeners() {
             const anuntId = cardElement.querySelector('.imobil-detalii-btn').getAttribute('data-id');
             
             await toggleLike(anuntId, this);
-            
-            // Refresh favorites dupa unlike
             setTimeout(() => loadFavorites(), 500);
         });
     }
@@ -98,7 +92,7 @@ async function checkLikeStatus(anuntId) {
     try {
         const user = JSON.parse(sessionStorage.getItem('currentUser'));
         if (!user) {
-            return false; // Daca nu e conectat, sigur nu are like
+            return false;
         }
         
         const response = await fetch(`${BACKEND_URL}${API_LIKES}?anuntId=${anuntId}`, {
@@ -133,7 +127,6 @@ async function toggleLike(anuntId, buttonElement) {
         
         const result = await response.json();
         
-        // Update visual al butonului
         if (result.liked) {
             buttonElement.classList.add('liked');
         } else {
@@ -152,5 +145,4 @@ function displayFavoritesError(message) {
     }
 }
 
-// Export global
 window.initializeFavorites = initializeFavorites;

@@ -18,11 +18,9 @@ async function checkCurrentUser() {
         if (result.success && result.user) {
             currentUser = result.user;
             console.log('User conectat:', currentUser.username);
-            
-            // Salveaza si in sessionStorage pentru acces rapid
+
             sessionStorage.setItem('currentUser', JSON.stringify(currentUser));
             
-            // Daca user-ul este conectat, redirecteaza la profil
             showUserProfile();
         } else {
             currentUser = null;
@@ -36,7 +34,6 @@ async function checkCurrentUser() {
     }
 }
 
-// Afiseaza profilul user-ului conectat
 function showUserProfile() {
     if (!currentUser) return;
     
@@ -55,24 +52,17 @@ function showUserProfile() {
         </div>
     `;
     
-    // Event listener pentru logout
     document.getElementById('logout-btn')?.addEventListener('click', handleLogout);
 }
 
-// Event listeners
 function setupEventListeners() {
-    // Toggle buttons
     document.querySelectorAll('.toggle-btn').forEach(btn => {
         btn.addEventListener('click', () => setMode(btn.dataset.mode));
     });
     
-    // Password visibility toggle
     document.querySelector('.toggle-password')?.addEventListener('click', togglePassword);
-    
-    // Form submit
     document.getElementById('auth-form')?.addEventListener('submit', handleSubmit);
     
-    // Real-time validation
     ['username', 'email', 'password'].forEach(id => {
         const input = document.getElementById(id);
         if (input) {
@@ -82,23 +72,20 @@ function setupEventListeners() {
     });
 }
 
-// Set authentication mode
 function setMode(mode) {
     currentMode = mode;
     
-    // Update toggle buttons
     document.querySelectorAll('.toggle-btn').forEach(btn => {
         btn.classList.toggle('active', btn.dataset.mode === mode);
     });
     
-    // Update UI
     const isSignup = mode === 'signup';
     document.getElementById('auth-title').textContent = isSignup ? 'Inregistreaza-te' : 'Conecteaza-te';
     document.getElementById('submit-text').textContent = isSignup ? 'Inregistreaza-te' : 'Conecteaza-te';
     
-    // Show/hide email field
     const emailField = document.getElementById('email-field');
     const emailInput = document.getElementById('email');
+
     if (isSignup) {
         emailField.classList.remove('hidden');
         emailInput.required = true;
@@ -111,7 +98,6 @@ function setMode(mode) {
     resetForm();
 }
 
-// Toggle password visibility
 function togglePassword() {
     const input = document.getElementById('password');
     const btn = document.querySelector('.toggle-password');
@@ -125,7 +111,6 @@ function togglePassword() {
     }
 }
 
-// Field validation
 function validateField(fieldId) {
     const input = document.getElementById(fieldId);
     const value = input.value.trim();
@@ -146,10 +131,8 @@ function validateField(fieldId) {
             break;
     }
     
-    // Update input style
     input.classList.toggle('error', !!error);
     
-    // Show/hide field error
     let errorEl = input.parentNode.querySelector('.field-error');
     if (error) {
         if (!errorEl) {
@@ -165,7 +148,6 @@ function validateField(fieldId) {
     return !error;
 }
 
-// Form validation
 function validateForm() {
     const fields = ['username', 'password'];
     if (currentMode === 'signup') fields.push('email');
@@ -184,7 +166,6 @@ function validateForm() {
     return isValid;
 }
 
-// Handle form submit
 async function handleSubmit(e) {
     e.preventDefault();
     
@@ -242,7 +223,6 @@ async function handleSubmit(e) {
     }
 }
 
-// Handle logout
 async function handleLogout() {
     try {
         const response = await fetch(`${BACKEND_URL}${API_AUTH_LOGOUT}`, {
@@ -256,19 +236,16 @@ async function handleLogout() {
             currentUser = null;
             sessionStorage.removeItem('currentUser');
             
-            // Reincarca pagina de autentificare
             location.reload();
         }
     } catch (error) {
         console.error('Eroare logout:', error);
-        // Forteaza logout local chiar daca server-ul nu raspunde
         currentUser = null;
         sessionStorage.removeItem('currentUser');
         location.reload();
     }
 }
 
-// Utility functions
 function showMessage(text, type) {
     const container = document.getElementById('messages');
     if (container) {
@@ -304,7 +281,6 @@ function setLoading(loading) {
     }
 }
 
-// Functii globale pentru accesul la user-ul conectat
 function getCurrentUser() {
     return currentUser;
 }
@@ -313,7 +289,6 @@ function isUserLoggedIn() {
     return currentUser !== null;
 }
 
-// Export pentru utilizare globala
 window.initializeAuthentication = initializeAuthentication;
 window.getCurrentUser = getCurrentUser;
 window.isUserLoggedIn = isUserLoggedIn;
