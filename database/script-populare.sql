@@ -1,5 +1,7 @@
+-- CURĂȚĂ BAZA DE DATE (opțional)
 TRUNCATE imagini, apartamente, casee, terenuri, spatii_comerciale, anunturi, localitati, orase, users RESTART IDENTITY CASCADE;
 
+-- 1. USERS
 INSERT INTO users (id, username, email, password_hash) VALUES
 (1, 'alex123', 'alex@example.com', '$2b$10$wQy2QwQwQwQwQwQwQwQwQeQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQw'),
 (2, 'maria89', 'maria@example.com', '$2b$10$wQy2QwQwQwQwQwQwQwQwQeQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQw'),
@@ -7,87 +9,162 @@ INSERT INTO users (id, username, email, password_hash) VALUES
 (4, 'cristina_m', 'cristina@example.com', '$2b$10$wQy2QwQwQwQwQwQwQwQwQeQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQw'),
 (5, 'geo2025', 'geo@example.com', '$2b$10$wQy2QwQwQwQwQwQwQwQwQeQwQwQwQwQwQwQwQwQwQwQwQwQwQwQwQw');
 
+-- 2. ORASE
 INSERT INTO orase (id, nume) VALUES
 (1, 'Bucuresti'),
 (2, 'Cluj-Napoca'),
-(3, 'Iasi'),
-(4, 'Timisoara');
+(3, 'Iasi');
 
+-- 3. LOCALITATI
 INSERT INTO localitati (id, nume, oras_id) VALUES
 (1, 'Sector 1', 1),
 (2, 'Sector 2', 1),
-(3, 'Sector 3', 1),
-(4, 'Manastur', 2),
-(5, 'Gheorgheni', 2),
-(6, 'Copou', 3),
-(7, 'Tatarasi', 3),
-(8, 'Galata', 3),
-(9, 'Pacurari', 3),
-(10, 'Lipovei', 4),
-(11, 'Fabric', 4),
-(12, 'Mehala', 4);
+(3, 'Manastur', 2),
+(4, 'Gheorgheni', 2),
+(5, 'Copou', 3),
+(6, 'Tatarasi', 3);
 
+-- 4. ANUNTURI - Apartamente
 INSERT INTO anunturi (id, id_user, tip_imobil, tip_oferta, titlu, pret, comision, oras_id, localitate_id, strada, latitudine, longitudine, descriere) VALUES
-(1, 1, 'apartament', 'vanzare', 'Apartament 3 camere modern, Sector 1', 125000, 2.5, 1, 1, 'Str. Aviatorilor 15', 44.4582, 26.0776, 'Apartament cu 3 camere decomandat, complet renovat in anul 2023. Situată într-o zonă liniștită și elegantă din Sectorul 1, proprietatea beneficiază de finisaje de lux, pardoseală din parchet masiv de stejar, gresie și faianță de calitate superioară în băi. Bucătăria este complet utilată cu electrocasnice integrate de ultimă generație. Apartamentul dispune de aer condiționat în toate camerele, termopane cu geam triplu pentru izolație fonică și termică optimă. Balconul este închis și amenajat ca winter garden. Se vinde mobilat și utilat complet. Parcare în subteran inclusă în preț.'),
+(1, 1, 'apartament', 'vanzare', 'Apartament 2 camere, renovat', 85000, 2.5, 1, 1, 'Str. Aviatorilor 12', 44.4582, 26.0776, 'Apartament cu 2 camere decomandat, complet renovat.'),
+(2, 2, 'apartament', 'inchiriat', 'Apartament 3 camere modern', 500, 0, 2, 3, 'Str. Observatorului 45', 46.7653, 23.5899, 'Apartament spatios, complet mobilat.'),
+(3, 3, 'apartament', 'vanzare', 'Garsoniera confort 1', 45000, 1.5, 3, 5, 'Bd. Carol 78', 47.1642, 27.5823, 'Garsoniera luminoasa, aproape de centru.'),
+(4, 4, 'apartament', 'vanzare', 'Apartament 4 camere, Copou', 115000, 2.0, 3, 5, 'Str. Universitatii 10', 47.1751, 27.5749, 'Ideal familie numeroasa, langa parc.'),
+(5, 5, 'apartament', 'inchiriat', 'Apartament cu vedere la parc', 600, 0, 1, 2, 'Str. Dacia 123', 44.4421, 26.1210, 'Foarte aproape de metrou, vedere superba.');
 
-(2, 2, 'apartament', 'inchiriat', 'Garsoniera ultramoderna, Manastur Cluj', 420, 0, 2, 4, 'Str. Mehedinti 22', 46.7653, 23.5899, 'Garsonieră de lux recent renovată, situată în cea mai căutată zonă din Mănăștur. Spațiul este optimizat inteligent cu mobilier pe comandă care maximizează fiecare metru pătrat. Bucătăria este complet echipată cu frigider, aragaz, cuptor cu microunde și mașină de spălat vase. Baia este modernă cu cabină de duș cu hidromasaj. Apartamentul beneficiază de internet de mare viteză fibră optică, televizor LED 55 inch, aer condiționat inverter și încălzire în pardoseală. Zonă cu acces rapid la transportul în comun, supermarketuri, farmacii și centre comerciale. Ideal pentru profesioniști sau studenți.'),
-
-(3, 3, 'apartament', 'vanzare', 'Apartament 2 camere, vedere la parc, Copou Iasi', 89000, 2.0, 3, 6, 'Bd. Carol I 45', 47.1642, 27.5823, 'Apartament deosebit de încântător cu 2 camere în inima cartierului Copou, cu vedere spectaculoasă la Parcul Copou și în apropierea Universității. Proprietatea a fost complet renovată cu materiale de calitate: parchet laminat în camere, gresie antiderapantă în bucătărie și baie, zugrăveală lavabilă în culori calde. Bucătăria este separată și complet utilată cu electrocasnice noi. Balconul este orientat spre parc, oferind o priveliște relaxantă și aer curat. Apartamentul se află la etajul 3 dintr-un bloc reabilitat termic. Zona este foarte bine deservită de transport în comun, cu acces rapid la centrul istoric al Iașiului.'),
-
-(4, 4, 'apartament', 'vanzare', 'Apartament 4 camere, Sector 3 Bucuresti', 155000, 2.8, 1, 3, 'Calea Vitan 123', 44.4200, 26.1300, 'Apartament spațios cu 4 camere decomandat, ideal pentru familie numeroasă. Situat într-un bloc din 1985 reabilitat complet în 2020, cu lift nou și fațada refăcută. Apartamentul beneficiază de 2 băi complet renovate cu finisaje premium, bucătărie separată mare cu ieșire la balcon, living generos cu acces la o terasă de 15 mp. Toate camerele sunt luminoase cu ferestre mari și orientare favorabilă. Parchetul din toate camerele a fost șlefuit și vitrificat recent. Apartamentul dispune de 2 locuri de parcare în curtea blocului și o cameră de depozitare la subsol. Zona foarte bine dezvoltată cu școli, grădinițe, magazine și transport în comun la 2 minute.'),
-
-(5, 5, 'apartament', 'inchiriat', 'Apartament de lux 2 camere, Lipovei Timisoara', 580, 0, 4, 10, 'Str. Lipovei 67', 45.7600, 21.2400, 'Apartament premium cu 2 camere în una dintre cele mai selecte zone din Timișoara. Situat la etajul 6 dintr-un bloc nou, cu lift rapid și hol elegant. Apartamentul este mobilat și utilat complet cu cele mai noi tendințe în design interior: mobilier italian, electrocasnice Bosch și AEG, aer condiționat Daikin în toate camerele. Baia este echipată cu jacuzzi și cabină de duș separată. Living-ul este open space cu bucătăria, care dispune de insulă centrală din granit. Balconul are 8 mp și oferă o vedere frumoasă asupra orașului. Inclusă în preț: curățenie săptămânală, internet gigabit și toate utilitățile except consumul personal de electricitate. Parcare subterană cu telecomandă.');
-
+-- 4a. Detalii apartamente
 INSERT INTO apartamente (anunt_id, nr_camere, nr_bai, compartimentare, confort, etaj, an_constructie, suprafata_utila) VALUES
-(1, 3, 2, 'decomandat', '1', 4, 2010, 78.5),
-(2, 1, 1, 'decomandat', '1', 2, 2018, 35.0),
-(3, 2, 1, 'semidecomandat', '1', 3, 1995, 52.3),
-(4, 4, 2, 'decomandat', '1', 8, 1985, 95.7),
-(5, 2, 1, 'decomandat', '1', 6, 2021, 61.2);
+(1, 2, 1, 'decomandat', '1', 3, 2008, 55.4),
+(2, 3, 2, 'semidecomandat', '1', 5, 2015, 78.2),
+(3, 1, 1, 'nedecomandat', '2', 2, 1990, 30.0),
+(4, 4, 2, 'decomandat', '1', 1, 2020, 95.0),
+(5, 2, 1, 'decomandat', '1', 6, 2012, 60.3);
 
+-- 5. ANUNTURI - Case
 INSERT INTO anunturi (id, id_user, tip_imobil, tip_oferta, titlu, pret, comision, oras_id, localitate_id, strada, latitudine, longitudine, descriere) VALUES
-(6, 1, 'casa', 'vanzare', 'Vila moderna cu piscina, Gheorgheni Cluj', 285000, 3.5, 2, 5, 'Str. Pasteur 8', 46.7722, 23.6093, 'Vilă de excepție construită în 2019 conform standardelor europene de eficiență energetică A+. Casa dispune de 5 camere generoase distribuite pe parter și etaj, 3 băi complete cu finisaje italiene, bucătărie mare open space cu living de peste 45 mp. Materialele utilizate sunt de cea mai înaltă calitate: parchet masiv de stejar în toate camerele, gresie și faianță din Italia, tâmplărie premium cu geam triplu. În curte se află o piscină încălzită de 8x4m cu sistem de filtrare automat, zonă de relaxare cu pergolă și grădină amenajată cu sistem de irigații automat. Garajul poate găzdui 2 mașini și dispune de stație de încărcare pentru mașini electrice. Casa este complet inteligentă cu sistem de supraveghere, alarmă și control climatic prin aplicație.'),
+(6, 1, 'casa', 'vanzare', 'Casa cu 4 camere si curte', 145000, 3.0, 1, 1, 'Str. Florilor 10', 44.4599, 26.0799, 'Casa individuala, 400mp teren.'),
+(7, 2, 'casa', 'inchiriat', 'Vila ultramoderna', 1200, 0, 2, 3, 'Str. Trandafirilor 30', 46.7702, 23.5984, 'Curte, garaj, terasa.'),
+(8, 3, 'casa', 'vanzare', 'Casa batraneasca', 58000, 0, 3, 6, 'Str. Costache Negruzzi', 47.1623, 27.5900, 'Necesita renovare.'),
+(9, 4, 'casa', 'vanzare', 'Duplex nou', 98000, 1.2, 2, 4, 'Str. Nasaud 9', 46.7722, 23.6093, 'Duplex in constructie noua.'),
+(10, 5, 'casa', 'inchiriat', 'Casa mobilata modern', 950, 0, 1, 2, 'Str. Barbu Vacarescu', 44.4411, 26.1170, 'Complet utilata, zona linistita.');
 
-(7, 2, 'casa', 'inchiriat', 'Casa traditionala renovata, Tatarasi Iasi', 750, 0, 3, 7, 'Str. Ciric 12', 47.1800, 27.6000, 'Casă tradițională moldovenească complet renovată cu respectarea arhitecturii originale dar cu toate facilitățile moderne. Casa păstrează farmecul autentical cu grinzi de lemn aparente, sobă teracotă în living, dar beneficiază de încălzire centrală modernă cu centrală termică condensație. Dispune de 4 camere spațioase, 2 băi renovate, bucătărie rustică complet utilată cu electrocasnice integrate. Curtea de 400 mp este amenajată cu zonă de grătar, fântână decorativă și grădină cu pomi fructiferi. În spatele casei se află o anexă transformată în atelier/birou. Zona este liniștită, cu acces ușor la centrul Iașiului și aproape de pădure pentru plimbări relaxante.'),
-
-(8, 3, 'casa', 'vanzare', 'Casa cu potential, Sector 2 Bucuresti', 180000, 2.5, 1, 2, 'Str. Stefan cel Mare 89', 44.4400, 26.1100, 'Casă cu arhitectură interbelică situată pe o stradă liniștită din Sectorul 2, cu potențial deosebit pentru renovare sau reconstrucție. Structura este solidă, cu ziduri groase de cărămidă, iar dispunerea camerelor permite multiple variante de amenajare. Momentan casa are 6 camere pe parter și etaj, necesitând modernizare completă la instalațiile electrice, sanitare și termice. Terenul de 320 mp oferă spațiu generos pentru extindere sau amenajare grădină. Poziția este excelentă cu acces rapid la mijloacele de transport în comun, școli renumite și zone comerciale. Reprezintă o oportunitate rară de investiție într-o zonă în continuă dezvoltare cu valoare în creștere.'),
-
-(9, 4, 'casa', 'vanzare', 'Casa noua, Fabric Timisoara', 195000, 2.0, 4, 11, 'Str. Combinatului 45', 45.7300, 21.2100, 'Casă nouă construită în 2022 cu tehnologii moderne și materiale de calitate. Proiectul arhitectural combină stilul contemporan cu funcționalitatea, rezultând spații luminoase și bine organizate. Casa are 4 camere distribuite pe parter și mansardă, 2 băi și jumătate, bucătărie mare cu ieșire la terasa acoperită. Sistemul de încălzire este pe gaz cu centrală termică condensație și panouri radiante în pardoseală la parter. Terasa de la etaj de 25 mp oferă o vedere frumoasă asupra cartierului. Finisajele includ gresie și faianță Villeroy & Boch, parchet laminat clasa 33, tâmplărie PVC cu geam triplu. Curtea de 280 mp este nivelată și pregătită pentru amenajare. Cartierul Fabric este în plină revitalizare cu investiții importante în infrastructură.'),
-
-(10, 5, 'casa', 'inchiriat', 'Vila cu gradina mare, Galata Iasi', 920, 0, 3, 8, 'Str. Grigore Alexandrescu 23', 47.1950, 27.5600, 'Vilă impresionantă construită în stil neoclasic cu elemente arhitecturale deosebite: coloane la intrare, balustrade ornamentale și cornișe decorative. Interiorul a fost amenajat cu gust rafinat combinând clasicul cu modernul. Cele 6 camere sunt generoase și luminoase, cu tecturi înalte de 3.2m și șemineu în livingul principal. Bucătăria profesională este complet echipată pentru gatit la nivel înalt. Sunt 3 băi complete plus o toaletă pentru invitați. Vila dispune de sistem de alarmă, supraveghere video și poartă automată. Grădina de 650 mp este amenajată peisagistic cu sistem de irigații automat, zonă de joacă pentru copii, teren de badminton și seră pentru legume. Garajul poate adăposti 3 mașini. Poziție excelentă cu acces rapid la centru și zone comerciale.');
-
+-- 5a. Detalii case
 INSERT INTO casee (anunt_id, nr_camere, nr_bai, an_constructie, suprafata_utila, suprafata_teren) VALUES
-(6, 5, 3, 2019, 165.0, 450.0),
-(7, 4, 2, 1965, 110.0, 400.0),
-(8, 6, 2, 1938, 140.0, 320.0),
-(9, 4, 2, 2022, 125.0, 280.0),
-(10, 6, 3, 2005, 185.0, 650.0);
+(6, 4, 2, 2000, 120.5, 400.0),
+(7, 5, 3, 2018, 150.0, 250.0),
+(8, 3, 1, 1975, 90.0, 500.0),
+(9, 4, 2, 2023, 110.0, 300.0),
+(10, 4, 2, 2010, 100.0, 350.0);
 
+-- 6. ANUNTURI - Terenuri
 INSERT INTO anunturi (id, id_user, tip_imobil, tip_oferta, titlu, pret, comision, oras_id, localitate_id, strada, latitudine, longitudine, descriere) VALUES
-(11, 1, 'teren', 'vanzare', 'Teren intravilan premium, Mehala Timisoara', 85000, 2.8, 4, 12, 'Str. Mehala 156', 45.7200, 21.1950, 'Teren intravilan exceptional situat în zona rezidențială exclusivistă Mehala, cu vedere panoramică și orientare perfectă. Suprafața de 680 mp permite construirea unei vile generoase cu grădină mare. Terenul are front stradal de 22 metri la o stradă asfaltată cu trotuare și iluminat public. Toate utilitățile sunt disponibile: curent electric 220V/380V, gaz metan, apă și canalizare la stradă. Zona este în plină dezvoltare cu vile noi construite în proximitate, ceea ce garantează creșterea valorii investiției. Documentația este completă cu certificat de urbanism favorabil pentru construcție rezidențială. Accesul la centrul Timișoarei se face în 15 minute cu mașina. Poziție liniștită dar cu acces rapid la școli de calitate, centre comerciale și spitale.'),
+(11, 1, 'teren', 'vanzare', 'Teren intravilan 500mp', 40000, 2.0, 3, 6, 'Str. Verde 33', 47.1690, 27.5871, 'Ideal constructie casa.'),
+(12, 2, 'teren', 'vanzare', 'Teren agricol 1000mp', 30000, 1.5, 2, 3, 'Str. Campului 88', 46.7750, 23.6000, 'Situat la marginea orasului.'),
+(13, 3, 'teren', 'vanzare', 'Teren industrial', 80000, 2.5, 1, 2, 'Str. Fabricii', 44.4500, 26.1222, 'Aproape de sosea nationala.'),
+(14, 4, 'teren', 'inchiriat', 'Teren parcare auto', 700, 0, 3, 5, 'Str. Lunca', 47.1700, 27.5911, 'Ideal parcare.'),
+(15, 5, 'teren', 'vanzare', 'Teren pentru hale', 60000, 3.0, 2, 4, 'Str. Depozitelor', 46.7766, 23.6111, 'Zona industriala.');
 
-(12, 2, 'teren', 'vanzare', 'Teren agricol cu potential, Pacurari Iasi', 45000, 1.8, 3, 9, 'Drumul Păcurari km 3', 47.1400, 27.6200, 'Teren agricol cu suprafața de 1200 mp situat în zona de expansiune a Iașiului, cu potențial mare de dezvoltare viitoare. Terenul se află în apropierea planurilor de extindere urbană și beneficiază de o poziție strategică pe drumul principal către Păcurari. Solul este fertil, ideal pentru agricultură în prezent sau investiție pe termen lung. Există posibilitatea conectării la rețeaua electrică situată la 150m distanță. Documentația este în regulă cu carte funciară. Accesul se face pe drum pietruit în stare bună. Zona oferă liniște și aer curat, fiind departe de agitația urbană dar suficient de aproape pentru acces rapid la oraș. Reprezintă o oportunitate excelentă pentru investitori care urmăresc dezvoltarea pe termen mediu și lung a zonei periferice.'),
-
-(13, 3, 'teren', 'vanzare', 'Teren industrial cu hala, Sector 2 Bucuresti', 320000, 3.2, 1, 2, 'Soseaua Colentina 234', 44.4600, 26.1400, 'Teren industrial de 1800 mp cu o hală existentă de 450 mp, situat în zona industrială dezvoltată din Sectorul 2. Hala este construită din structură metalică cu înălțime utilă de 6 metri, poduri rulante și acces pentru camioane. Terenul este complet împrejmuit cu gard din panouri metalice și poartă automată. Există toate utilitățile necesare: curent electric trifazat 100 kW, gaz metan industrial, apă și canalizare, internet fibră optică. Zona beneficiază de acces excelent la șoselele de centură și autostrăzi, fiind ideală pentru activități de producție, depozitare sau logistică. Documentația este completă pentru activități industriale și comerciale. Investiția permite extinderea sau modernizarea facilităților existente. Zona este în continuă dezvoltare cu multe companii care s-au stabilit în proximitate.'),
-
-(14, 4, 'teren', 'inchiriat', 'Teren parcare centru, Cluj-Napoca', 850, 0, 2, 4, 'Str. Horea 89', 46.7700, 23.5950, 'Teren amenajat pentru parcare situată în zona ultracentrală a Cluj-Napocii, la doar 300m de Piața Unirii. Suprafața de 420 mp poate găzdui aproximativ 18 locuri de parcare pentru autoturisme. Terenul este asfaltat și marcat corespunzător, cu iluminat nocturne LED și sistem de supraveghere video 24/7. Accesul se face prin poartă automată cu control de acces prin carduri sau aplicație mobilă. Este ideal pentru închiriere individuală de locuri de parcare sau pentru companii care au nevoie de spații de parcare pentru angajați. Zona este extrem de căutată datorită proximității centrului istoric, instituțiilor publice, băncilor și restaurantelor. Tariful de închiriere include întreținerea, securitatea și curățenia. Contracte flexibile de la o lună la mai mulți ani. Locație premium cu venituri garantate din închirierea locurilor individuale.'),
-
-(15, 5, 'teren', 'vanzare', 'Teren constructii rezidentiale, Copou Iasi', 95000, 2.2, 3, 6, 'Aleea Sadoveanu 12', 47.1750, 27.5700, 'Teren intravilan premium situat în cea mai prestigioasă zonă din Iași - Copou, în proximitatea Universității și a Parcului Copou. Suprafața de 540 mp permite construirea unei vile cu arhitectură deosebită în zona cu cele mai frumoase proprietăți din oraș. Terenul are o configurație rectangulară ideală cu front de 18 metri la stradă pavată și trotuare. Toate utilitățile sunt la stradă: electricitate, gaz metan, apă, canalizare și fibră optică. Zona este exclusiv rezidențială cu vile noi și renovate, garantând menținerea caracterului select al cartierului. Certificatul de urbanism permite construcție P+1+M cu înălțimea maxima 12 metri. Investiția în această locație oferă garanția creșterii valorii datorită poziției unice și cererii mari pentru proprietăți în Copou. Acces rapid la centrul istoric, teatre, muzee și restaurante de lux.');
-
+-- 6a. Detalii terenuri
 INSERT INTO terenuri (anunt_id, suprafata_teren, tip_teren, clasificare, front_stradal) VALUES
-(11, 680.0, 'intravilan', 'rezidential', 22.0),
-(12, 1200.0, 'agricol', 'extravilan', 25.0),
-(13, 1800.0, 'industrial', 'intravilan', 35.0),
-(14, 420.0, 'parcare', 'intravilan', 20.0),
-(15, 540.0, 'constructii', 'intravilan', 18.0);
+(11, 500.0, 'intravilan', 'rezidential', 18.0),
+(12, 1000.0, 'agricol', 'extravilan', 20.0),
+(13, 800.0, 'industrial', 'intravilan', 25.0),
+(14, 300.0, 'parcare', 'intravilan', 15.0),
+(15, 1200.0, 'constructii', 'intravilan', 30.0);
 
+-- 7. ANUNTURI - Spatii comerciale
 INSERT INTO anunturi (id, id_user, tip_imobil, tip_oferta, titlu, pret, comision, oras_id, localitate_id, strada, latitudine, longitudine, descriere) VALUES
-(16, 1, 'spatiu_comercial', 'vanzare', 'Spatiu comercial premium, Sector 1 Bucuresti', 195000, 3.5, 1, 1, 'Bd. Aviatorilor 28', 44.4650, 26.0850, 'Spațiu comercial de excepție situat pe una dintre cele mai tranzitate artere din Sectorul 1, cu vizibilitate extraordinară și trafic pietonal intens. Proprietatea de 95 mp se află la parterul unui imobil de birouri modern cu fațadă de sticlă și finisaje premium. Spațiul este complet amenajat cu pardoseală din granit, tavan fals cu corpuri de iluminat LED, aer condiționat central și sistem de încălzire independent. Vitrina largă de 8 metri oferă expunere maximă pentru orice tip de business. Există grupuri sanitare separate pentru personal și clienți, plus un depozit de 15 mp. Zonă cu flux mare de potentiali clienți: birouri, hoteluri, restaurante și magazine de lux în proximitate. Perfecta pentru showroom auto, bancă, farmacie, clinică medicală sau magazin premium. Investiție cu randament garantat într-o locație care va crește în valoare.'),
+(16, 2, 'spatiu_comercial', 'vanzare', 'Spatiu comercial zona centrala', 130000, 3.0, 1, 1, 'Bd. Magheru 22', 44.4382, 26.0960, 'Vitrina la strada.'),
+(17, 3, 'spatiu_comercial', 'inchiriat', 'Spatiu birouri 100mp', 850, 0, 2, 4, 'Str. Calea Turzii', 46.7688, 23.6065, 'Zona ultracentrala.'),
+(18, 4, 'spatiu_comercial', 'inchiriat', 'Salon de infrumusetare', 600, 0, 3, 6, 'Str. Independentei', 47.1671, 27.5765, 'Renovat recent.'),
+(19, 5, 'spatiu_comercial', 'vanzare', 'Spatiu depozit', 110000, 2.0, 1, 2, 'Str. Viitorului 88', 44.4433, 26.1241, 'Spatiu generos.');
 
-(17, 2, 'spatiu_comercial', 'inchiriat', 'Birou modern open space, Gheorgheni Cluj', 720, 0, 2, 5, 'Str. Friedrich Schiller 15', 46.7750, 23.6100, 'Spațiu de birouri ultramodern în clădire de birouri clasa A, ideal pentru companii IT, consultanță sau servicii profesionale. Open space de 85 mp poate fi configurat flexibil pentru 8-12 locuri de muncă. Clădirea beneficiază de toate facilitățile moderne: lift rapid, climatizare centrală, internet gigabit, sistem de securitate 24/7 și recepție. Spațiul este mobilat cu mobilier ergonomic de birou, are separații din sticlă pentru sali de meeting și o mică bucătărie echipată. Două grupuri sanitare moderne deservesc etajul. Sunt incluse în preț: curățenie zilnică, utilități, internet, parcare pentru 3 mașini în subteran. Locație strategică cu acces rapid la centru și aeroport. În zonă există numeroase restaurante, cafenele și servicii pentru angajați. Contracte flexibile, posibilitate de extindere pe spații adiacente.'),
+-- 7a. Detalii spatii comerciale
+INSERT INTO spatii_comerciale (anunt_id, suprafata_utila, nr_camere, nr_bai, an_constructie) VALUES
+(16, 85.0, 4, 1, 2005),
+(17, 100.0, 5, 2, 2015),
+(18, 65.0, 3, 1, 2021),
+(19, 150.0, 1, 1, 2010);
 
-(18, 3, 'spatiu_comercial', 'inchiriat', 'Salon infrumusetare echipat, Tatarasi Iasi', 480, 0, 3, 7, 'Str. Hatman Boldur 67', 47.1850, 27.5950, 'Salon de înfrumusețare complet echipat și amenajat, gata pentru deschiderea imediată a afacerii. Spațiul de 65 mp este împărțit optim în: zona de recepție elegantă, 3 cabine pentru tratamente, zona pentru manichiură/pedichiură și depozit. Toate echipamentele sunt profesionale și în stare perfectă: scaune hidraulice, aparatură pentru tratamente faciale, sterilizator UV, aspirator profesional. Finisajele sunt de calitate cu gresie antibacteriană, iluminat LED reglabil și sistem de ventilație performant. Salonul are clientelă stabilă și recenzii excelente online. Zonă rezidențială densă cu putere de cumpărare ridicată, parcare largă în fața spațiului. Chiria include toate utilitățile și întreținerea echipamentelor. Perfecta pentru cosmeticiană cu experiență care dorește să preia o afacere funcțională.'),
+-- 8. IMAGINI - pentru toate anunturile valide (1..19)
+INSERT INTO imagini (anunt_id, url, ordine) VALUES
+-- Anunt 1
+(1, 'http://localhost:3001/images/image3.jpg', 1),
+(1, 'http://localhost:3001/images/image7.jpg', 2),
+(1, 'http://localhost:3001/images/image1.jpg', 3),
+-- Anunt 2
+(2, 'http://localhost:3001/images/image9.jpg', 1),
+(2, 'http://localhost:3001/images/image2.jpg', 2),
+(2, 'http://localhost:3001/images/image5.jpg', 3),
+-- Anunt 3
+(3, 'http://localhost:3001/images/image8.jpg', 1),
+(3, 'http://localhost:3001/images/image4.jpg', 2),
+(3, 'http://localhost:3001/images/image10.jpg', 3),
+-- Anunt 4
+(4, 'http://localhost:3001/images/image6.jpg', 1),
+(4, 'http://localhost:3001/images/image1.jpg', 2),
+(4, 'http://localhost:3001/images/image3.jpg', 3),
+-- Anunt 5
+(5, 'http://localhost:3001/images/image2.jpg', 1),
+(5, 'http://localhost:3001/images/image8.jpg', 2),
+(5, 'http://localhost:3001/images/image9.jpg', 3),
+-- Anunt 6
+(6, 'http://localhost:3001/images/image4.jpg', 1),
+(6, 'http://localhost:3001/images/image7.jpg', 2),
+(6, 'http://localhost:3001/images/image5.jpg', 3),
+-- Anunt 7
+(7, 'http://localhost:3001/images/image10.jpg', 1),
+(7, 'http://localhost:3001/images/image6.jpg', 2),
+(7, 'http://localhost:3001/images/image2.jpg', 3),
+-- Anunt 8
+(8, 'http://localhost:3001/images/image1.jpg', 1),
+(8, 'http://localhost:3001/images/image9.jpg', 2),
+(8, 'http://localhost:3001/images/image7.jpg', 3),
+-- Anunt 9
+(9, 'http://localhost:3001/images/image5.jpg', 1),
+(9, 'http://localhost:3001/images/image3.jpg', 2),
+(9, 'http://localhost:3001/images/image8.jpg', 3),
+-- Anunt 10
+(10, 'http://localhost:3001/images/image4.jpg', 1),
+(10, 'http://localhost:3001/images/image10.jpg', 2),
+(10, 'http://localhost:3001/images/image1.jpg', 3),
+-- Anunt 11
+(11, 'http://localhost:3001/images/image6.jpg', 1),
+(11, 'http://localhost:3001/images/image2.jpg', 2),
+(11, 'http://localhost:3001/images/image9.jpg', 3),
+-- Anunt 12
+(12, 'http://localhost:3001/images/image7.jpg', 1),
+(12, 'http://localhost:3001/images/image5.jpg', 2),
+(12, 'http://localhost:3001/images/image3.jpg', 3),
+-- Anunt 13
+(13, 'http://localhost:3001/images/image8.jpg', 1),
+(13, 'http://localhost:3001/images/image1.jpg', 2),
+(13, 'http://localhost:3001/images/image4.jpg', 3),
+-- Anunt 14
+(14, 'http://localhost:3001/images/image10.jpg', 1),
+(14, 'http://localhost:3001/images/image6.jpg', 2),
+(14, 'http://localhost:3001/images/image2.jpg', 3),
+-- Anunt 15
+(15, 'http://localhost:3001/images/image9.jpg', 1),
+(15, 'http://localhost:3001/images/image7.jpg', 2),
+(15, 'http://localhost:3001/images/image5.jpg', 3),
+-- Anunt 16
+(16, 'http://localhost:3001/images/image3.jpg', 1),
+(16, 'http://localhost:3001/images/image8.jpg', 2),
+(16, 'http://localhost:3001/images/image1.jpg', 3),
+-- Anunt 17
+(17, 'http://localhost:3001/images/image4.jpg', 1),
+(17, 'http://localhost:3001/images/image10.jpg', 2),
+(17, 'http://localhost:3001/images/image6.jpg', 3),
+-- Anunt 18
+(18, 'http://localhost:3001/images/image2.jpg', 1),
+(18, 'http://localhost:3001/images/image9.jpg', 2),
+(18, 'http://localhost:3001/images/image7.jpg', 3),
+-- Anunt 19
+(19, 'http://localhost:3001/images/image5.jpg', 1),
+(19, 'http://localhost:3001/images/image3.jpg', 2),
+(19, 'http://localhost:3001/images/image8.jpg', 3);
 
-(19, 4, 'spatiu_comercial', 'vanzare', 'Magazin alimentar cu clientela, Mehala Timisoara', 125000, 2.5, 4, 12, 'Str. Primaverii 34', 45.7150, 21.1900, 'Magazin alimentar cu suprafața de 75 mp situat în inima cartierului Mehala, cu clientelă fidelă construită în ultimii 8 ani. Spațiul este complet amenajat cu rafturi profesionale, vitrine frigorifice, case de marcat fiscale și sistem de supraveghere. Magazinul beneficiază de toate autorizațiile necesare pentru comerțul cu produse alimentare și băuturi. Stocul de marfă în valoare de 15.000 euro poate fi preluat separat. Zona nu are concurență directă într-o rază de 500m, deservind un cartier cu peste 2000 familii. Cifra de afaceri lunară este stabilă cu tendință de creștere. Există relații comerciale stabilite cu furnizorii principali. Programul de lucru flexibil permite o gestiune familie friendly. Oportunitate rară pentru preluarea unei afaceri profitabile cu investiție rapidă amortizată. Documentația comercială completă, fără datorii către furnizori.'),
+SELECT * FROM users;
 
-(20, 5, 'spatiu_comercial', 'vanzare', 'Spatiu depozit si birouri, Galata Iasi', 165000, 2.8, 3, 8, 'Str. Industriilor 78', 47.2000, 27.5500, 'Complex comercial compus din depozit de 180 mp și birouri de 45 mp, ideal pentru activități de distribuție, logistică sau producție mică. Depozitul are înălțime utilă de 4.5 metri, poduri rulante, rampă de încărcare și acces pentru camioane. Spațiul de birouri este amenajat modern cu 4 camere, grupuri sanitare și bucătărie. Complexul este situat pe un teren de 350 mp complet împrejmuit cu poartă automată și sistem de alarmă. Toate utilitățile sunt disponibile: curent trifazat, gaz, apă, canalizare și internet. Zona industrială este în dezvoltare cu acces rapid la drumurile europene. Documentația permite desfășurarea oricăror activități comerciale sau industriale. Investiția oferă flexibilitate maximă: folosire proprie sau închiriere cu randament de 8% anual. Potențial de extindere pe orizontală sau verticală conform reglementărilor urbanistice.');
+SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));

@@ -68,9 +68,6 @@ function initializeLayers() {
   layersContainer.addEventListener('change', handleLayerChange);
 }
 
-/**
- * Initializeaza filtrele de localizare (oras si localitate)
- */
 async function initializeLocationFilters() {
   console.log('Initializare filtre localizare dinamic...');
   const orasSelect = document.getElementById('orasSelect');
@@ -172,7 +169,7 @@ async function renderImobileCards(imobileData) {
 }
 
 function createImobilCard(imobil, isLiked = false) {
-  const imagePath = imobil.imagini && imobil.imagini.length > 0 ? imobil.imagini[0].url : `${API_BASE_URL}/images/casa1.jpg`;
+  const imagePath = imobil.imagini[0].url;
   const price = imobil.pret ? `${imobil.pret} €` : 'Pret la cerere';
   const transactionType = imobil.tip_oferta === 'vanzare' ? 'Vanzare' : 'Inchiriere';
   const surface = imobil.tip_imobil === 'teren' ? 

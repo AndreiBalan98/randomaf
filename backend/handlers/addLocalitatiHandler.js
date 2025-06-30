@@ -25,16 +25,8 @@ function handleLocalitatiAdd(req, res) {
                     res.end(JSON.stringify(result.rows[0]));
                 })
                 .catch(err => {
-                    if (err.code === '23505') { 
-                        res.writeHead(409, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Localitatea exista deja in acest oras' }));
-                    } else if (err.code === '23503') {
-                        res.writeHead(400, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Orasul specificat nu exista' }));
-                    } else {
-                        res.writeHead(500, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Eroare la crearea localitatii' }));
-                    }
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Eroare la crearea localitatii' }));
                 });
         } catch (err) {
             res.writeHead(400, { 'Content-Type': 'application/json' });

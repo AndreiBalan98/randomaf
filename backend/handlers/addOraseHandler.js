@@ -24,13 +24,8 @@ function handleOraseAdd(req, res) {
                     res.end(JSON.stringify(result.rows[0]));
                 })
                 .catch(err => {
-                    if (err.code === '23505') { 
-                        res.writeHead(409, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Orasul exista deja' }));
-                    } else {
-                        res.writeHead(500, { 'Content-Type': 'application/json' });
-                        res.end(JSON.stringify({ error: 'Eroare la crearea orasului' }));
-                    }
+                    res.writeHead(500, { 'Content-Type': 'application/json' });
+                    res.end(JSON.stringify({ error: 'Eroare la crearea orasului' }));
                 });
         } catch (err) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
