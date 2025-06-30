@@ -11,7 +11,9 @@ const handleSignIn          = require('./handlers/signInHandler');
 const handleLogout          = require('./handlers/logoutHandler');
 const handleGetCurrentUser  = require('./handlers/getCurrentUserHandler');
 const handleOraseGet        = require('./handlers/getOraseHandler');
+const handleOraseAdd        = require('./handlers/addOraseHandler.js');
 const handleLocalitatiGet   = require('./handlers/getLocalitatiHandler');
+const handleLocalitatiAdd   = require('./handlers/addLocalitatiHandler.js');
 const { handleLikeToggle, handleGetFavorites }  = require('./handlers/likesHandler');
 
 const server = http.createServer((req, res) => {
@@ -55,8 +57,12 @@ const server = http.createServer((req, res) => {
         handleGetFavorites(req, res);
     } else if (req.method === 'GET' && req.url.startsWith(API_ORASE)) {
         handleOraseGet(req, res);
+    } else if (req.method === 'POST' && req.url.startsWith(API_ORASE)) {
+        handleOraseAdd(req, res);
     } else if (req.method === 'GET' && req.url.startsWith(API_LOCALITATI)) {
         handleLocalitatiGet(req, res);
+    } else if (req.method === 'POST' && req.url.startsWith(API_LOCALITATI)) {
+        handleLocalitatiAdd(req, res);
     } else {
         res.writeHead(404, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ status: 'error', mesaj: 'Not found' }));

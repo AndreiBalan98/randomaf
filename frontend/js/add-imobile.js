@@ -1,5 +1,4 @@
 function initializeAdd() {
-  // === ELEMENTE DOM ===
   const terenRadio = document.getElementById('teren');
   const terenExtra = document.getElementById('terenExtraOptions');
   const allTypeRadios = document.querySelectorAll('input[name="propertyType"]');
@@ -9,13 +8,11 @@ function initializeAdd() {
   const menuBtn = document.getElementById('menuBtn');
   const mainContent = document.getElementById('mainContent');
 
-  // === VARIABILE GLOBALE ===
   let terenImages = [];
   let addPropertyMap;
   let selectedMarker;
   let selectedCoords = null;
 
-  // === FUNCTII HELPER ===
   function checkTeren() {
     terenExtra.style.display = terenRadio.checked ? 'flex' : 'none';
   }
@@ -26,6 +23,98 @@ function initializeAdd() {
       const types = el.getAttribute('data-property-type').split(',').map(t => t.trim());
       el.style.display = types.includes(selected) ? '' : 'none';
     });
+  }
+
+  function formatName(name) {
+    if (!name) return '';
+    return name.toLowerCase().split(' ').map(word => 
+      word.charAt(0).toUpperCase() + word.slice(1)
+    ).join(' ');
+  }
+
+  async function getOrCreateOras(numeOras) {
+    if (!numeOras) return null;
+    
+    const formattedName = formatName(numeOras.trim());
+    
+    try {
+      let response = await fetch(BACKEND_URL + API_ORASE, {
+        method: 'GET',
+        credentials: 'include'
+      });
+      
+      if (!response.ok) throw new Error('Eroare la obtinerea oraselor');
+      
+      let orase = await response.json();
+      
+      let orasExistent = orase.find(oras => 
+        oras.nume.toLowerCase() === formattedName.toLowerCase()
+      );
+      
+      if (orasExistent) {
+        return orasExistent.id;
+      }
+      
+      response = await fetch(BACKEND_URL + API_ORASE, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ nume: formattedName })
+      });
+      
+      if (!response.ok) throw new Error('Eroare la crearea orasului');
+      
+      const nouOras = await response.json();
+      return nouOras.id;
+      
+    } catch (error) {
+        console.error('Eroare la procesarea orasului:', error);
+      return null;
+    }
+  }
+
+  async function getOrCreateLocalitate(numeLocalitate, orasId) {
+    if (!numeLocalitate || !orasId) return null;
+    
+    const formattedName = formatName(numeLocalitate.trim());
+    
+    try {
+      let response = await fetch(`${BACKEND_URL}${API_LOCALITATI}?oras_id=${orasId}`, {
+        method: 'GET',
+        credentials: 'include'
+      });
+      
+      if (!response.ok) throw new Error('Eroare la obtinerea localitatilor');
+      
+      let localitati = await response.json();
+      
+      let localitateExistenta = localitati.find(localitate => 
+        localitate.nume.toLowerCase() === formattedName.toLowerCase()
+      );
+      
+      if (localitateExistenta) {
+        return localitateExistenta.id;
+      }
+      
+      response = await fetch(BACKEND_URL + API_LOCALITATI, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
+        body: JSON.stringify({ 
+          nume: formattedName,
+          oras_id: orasId 
+        })
+      });
+      
+      if (!response.ok) throw new Error('Eroare la crearea localitatii');
+      
+      const nouaLocalitate = await response.json();
+      return nouaLocalitate.id;
+      
+    } catch (error) {
+      console.error('Eroare la procesarea localitatii:', error);
+      return null;
+    }
   }
 
   function handleFiles(files) {
@@ -120,13 +209,12 @@ function initializeAdd() {
     if (!mapElement || typeof L === 'undefined') return;
 
     if (addPropertyMap) {
-        addPropertyMap.remove(); // Sterge harta daca exista
+        addPropertyMap.remove();
         addPropertyMap = null;
         selectedMarker = null;
         selectedCoords = null;
     }
 
-    // Creează harta centrată pe Iași
     addPropertyMap = L.map('add-property-map', {
         center: [47.1585, 27.6014], // Coordonatele Iașului
         zoom: 13,
@@ -134,39 +222,31 @@ function initializeAdd() {
         scrollWheelZoom: true
     });
 
-    // Adaugă layer-ul de hartă
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
     }).addTo(addPropertyMap);
 
-    // Event listener pentru click pe hartă
     addPropertyMap.on('click', function(e) {
         const lat = e.latlng.lat;
         const lng = e.latlng.lng;
         
-        // Șterge markerul anterior dacă există
         if (selectedMarker) {
             addPropertyMap.removeLayer(selectedMarker);
         }
         
-        // Adaugă noul marker
         selectedMarker = L.marker([lat, lng]).addTo(addPropertyMap);
-        
-        // Salvează coordonatele
         selectedCoords = { lat: lat, lng: lng };
         
         console.log('Coordonate selectate:', selectedCoords);
     });
   }
 
-  // === EVENT LISTENERS ===
   allTypeRadios.forEach(radio => {
     radio.addEventListener('change', checkTeren);
     radio.addEventListener('change', updatePropertyTypeSections);
   });
 
-  // Drag & drop pentru imagini
   terenDropzone.onclick = () => terenImageInput.click();
   terenDropzone.ondragover = (e) => {
     e.preventDefault();
@@ -180,7 +260,6 @@ function initializeAdd() {
   };
   terenImageInput.onchange = (e) => handleFiles(e.target.files);
 
-  // Comision selector
   document.getElementById('comisionSelect').addEventListener('change', function() {
     const input = document.getElementById('comisionCumparator');
     if (this.value === 'nu') {
@@ -191,87 +270,99 @@ function initializeAdd() {
     }
   });
 
-  // Menu toggle
   if (menuBtn && mainContent) {
     menuBtn.addEventListener('click', function() {
       mainContent.classList.toggle('menu-active');
     });
   }
 
-  // Form submit
   document.getElementById('adauga-imobil-form').addEventListener('submit', async function(e) {
     e.preventDefault();
 
-    // Colecteaza campurile
     const titlu = document.getElementById('terenTitlu')?.value.trim();
     const pret = parseFloat(document.getElementById('terenPret')?.value.trim()) || 0;
-    const locatie = document.getElementById('terenLocalizare')?.value.trim();
+    const orasInput = document.getElementById('terenOras')?.value.trim();
+    const localitateInput = document.getElementById('terenLocalitate')?.value.trim();
+    const strada = document.getElementById('terenStrada')?.value.trim();
     const descriere = document.getElementById('terenDescriere')?.value.trim();
     const tip = document.querySelector('input[name="propertyType"]:checked')?.value || '';
     const tranzactie = document.querySelector('input[name="terenType"]:checked')?.value || '';
     
     const comisionSelect = document.getElementById('comisionSelect')?.value;
-    const comisionValue = comisionSelect === 'nu' ? 0 : parseFloat(document.getElementById('comisionCumparator')?.value.trim()) || 0;
+    const comisionValue = comisionSelect === 'nu' ? null : parseFloat(document.getElementById('comisionCumparator')?.value.trim()) || null;
 
-    // Colecteaza campuri specifice pe tip
     let detaliiSpecifice = {};
     
     if (tip === 'apartament') {
       detaliiSpecifice = {
-        nr_camere: parseInt(document.getElementById('nrCamere')?.value.trim()) || 0,
-        nr_bai: parseInt(document.getElementById('nrBai')?.value.trim()) || 0,
-        compartimentare: document.getElementById('compartimentare')?.value.trim(),
-        confort: document.getElementById('confort')?.value.trim(),
-        etaj: parseInt(document.getElementById('etaj')?.value.trim()) || 0,
-        an_constructie: parseInt(document.getElementById('anConstructieApartament')?.value.trim()) || 0,
-        suprafata_utila: parseFloat(document.getElementById('suprafataUtilaApartament')?.value.trim()) || 0
+        nr_camere: parseInt(document.getElementById('nrCamere')?.value) || null,
+        nr_bai: parseInt(document.getElementById('nrBai')?.value) || null,
+        compartimentare: document.getElementById('compartimentare')?.value || null,
+        confort: document.getElementById('confort')?.value || null,
+        etaj: document.getElementById('etaj')?.value || null,
+        an_constructie: parseInt(document.getElementById('anConstructieApartament')?.value) || null,
+        suprafata_utila: parseFloat(document.getElementById('suprafataUtilaApartament')?.value) || null
       };
     } else if (tip === 'casa') {
       detaliiSpecifice = {
-        nr_camere: parseInt(document.getElementById('nrCamere')?.value.trim()) || 0,
-        nr_bai: parseInt(document.getElementById('nrBai')?.value.trim()) || 0,
-        an_constructie: parseInt(document.getElementById('anConstructieCasa')?.value.trim()) || 0,
-        suprafata_utila: parseFloat(document.getElementById('suprafataUtilaCasa')?.value.trim()) || 0,
-        suprafata_teren: parseFloat(document.getElementById('suprafataTerenCasa')?.value.trim()) || 0,
-        alte_dotari: document.getElementById('alteDotari')?.value.trim()
+        nr_camere: parseInt(document.getElementById('nrCamere')?.value) || null,
+        nr_bai: parseInt(document.getElementById('nrBai')?.value) || null,
+        an_constructie: parseInt(document.getElementById('anConstructieCasa')?.value) || null,
+        suprafata_utila: parseFloat(document.getElementById('suprafataUtilaCasa')?.value) || null,
+        suprafata_teren: parseFloat(document.getElementById('suprafataTerenCasa')?.value) || null
       };
     } else if (tip === 'teren') {
       detaliiSpecifice = {
-        suprafata_teren: parseFloat(document.getElementById('suprafataTerenTeren')?.value.trim()) || 0,
-        tip_teren: document.getElementById('terenTipSelect')?.value.trim(),
-        clasificare: document.getElementById('terenClasificare')?.value.trim(),
-        front_stradal: parseFloat(document.getElementById('terenFrontStradal')?.value.trim()) || 0
+        suprafata_teren: parseFloat(document.getElementById('suprafataTerenTeren')?.value) || null,
+        tip_teren: document.getElementById('terenTipSelect')?.value || null,
+        clasificare: document.getElementById('terenClasificare')?.value || null,
+        front_stradal: parseFloat(document.getElementById('terenFrontStradal')?.value) || null
       };
     } else if (tip === 'spatiu-comercial') {
       detaliiSpecifice = {
-        suprafata_utila: parseFloat(document.getElementById('suprafataUtilaSpatiu')?.value.trim()) || 0,
-        alte_dotari: document.getElementById('alteDotariSpatiu')?.value.trim()
+        suprafata_utila: parseFloat(document.getElementById('suprafataUtilaSpatiu')?.value) || null,
+        nr_camere: null,
+        nr_bai: null,
+        an_constructie: null
       };
     }
 
-    // Validare de baza
-    if (!titlu || !pret || !locatie || !descriere || !tip || !tranzactie || terenImages.length === 0 || !selectedCoords) {
+    if (!titlu || !pret || !orasInput || !descriere || !tip || !tranzactie || terenImages.length === 0 || !selectedCoords) {
       alert('Completeaza toate campurile obligatorii, adauga cel putin o imagine si selecteaza locatia pe harta!');
       return;
     } 
 
-    // Creeaza obiectul anunt
-    const anunt = {
-      tip_imobil: tip === 'spatiu-comercial' ? 'spatiu_comercial' : tip,
-      tip_oferta: tranzactie,
-      titlu: titlu,
-      pret: pret,
-      comision: comisionValue,
-      localizare: locatie,
-      descriere: descriere,
-      data_publicare: new Date().toISOString(),
-      detalii_specifice: detaliiSpecifice,
-      // ADAUGĂ ACESTE LINII:
-      latitudine: selectedCoords ? selectedCoords.lat : null,
-      longitudine: selectedCoords ? selectedCoords.lng : null
-    };
-
     try {
+      const orasId = await getOrCreateOras(orasInput);
+      if (!orasId) {
+        alert('Eroare la procesarea orasului!');
+        return;
+      }
+
+      let localitateId = null;
+      if (localitateInput) {
+        localitateId = await getOrCreateLocalitate(localitateInput, orasId);
+        if (!localitateId) {
+          alert('Eroare la procesarea localitatii!');
+          return;
+        }
+      }
+
+      const anunt = {
+        tip_imobil: tip === 'spatiu-comercial' ? 'spatiu_comercial' : tip,
+        tip_oferta: tranzactie,
+        titlu: titlu,
+        pret: pret,
+        comision: comisionValue,
+        oras_id: orasId,
+        localitate_id: localitateId,
+        strada: strada || null,
+        latitudine: selectedCoords.lat,
+        longitudine: selectedCoords.lng,
+        descriere: descriere,
+        detalii_specifice: detaliiSpecifice
+      };
+
       const response = await fetch(BACKEND_URL + API_IMOBILE, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -282,16 +373,20 @@ function initializeAdd() {
       const data = await response.json();
       
       if (data.status === 'success' && data.id) {
-        // Upload imaginile cu noul ID
         const uploadSuccess = await uploadImages(data.id);
         
         if (uploadSuccess) {
           alert('Anuntul si imaginile au fost adaugate cu succes!');
-          // Reset form
           document.getElementById('adauga-imobil-form').reset();
           terenImages = [];
           updateImageList();
-          // Navigheaza la pagina de detalii a anuntului nou creat
+          
+          if (selectedMarker) {
+            addPropertyMap.removeLayer(selectedMarker);
+            selectedMarker = null;
+            selectedCoords = null;
+          }
+          
           loadContent(`html/detalii.html?id=${data.id}`);
           initializeDetalii(data.id);
         } else {
@@ -306,7 +401,6 @@ function initializeAdd() {
     }
   });
 
-  // === INITIALIZARE ===
   checkTeren();
   updatePropertyTypeSections();
   setTimeout(() => {
@@ -314,5 +408,4 @@ function initializeAdd() {
   }, 100);
 }
 
-// Export global
 window.initializeAdd = initializeAdd;
