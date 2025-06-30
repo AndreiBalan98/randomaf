@@ -5,12 +5,20 @@ const { parseCookies } = require('../utils/helperFunctions');
 async function handleLikeToggle(req, res) {
     try {
         const url = new URL(req.url, `http://${req.headers.host}`);
-        const anuntId = parseInt(url.searchParams.get('anuntId'));
+        let anuntId;
         
-        if (!anuntId) {
+        const pathParts = url.pathname.split('/');
+        const likesIndex = pathParts.indexOf('likes');
+
+        if (likesIndex !== -1 && pathParts[likesIndex + 1]) {
+            anuntId = parseInt(pathParts[likesIndex + 1]);
+        } else {
+            anuntId = parseInt(url.searchParams.get('anuntId'));
+        }
+        
+        if (!anuntId || isNaN(anuntId)) {
             res.writeHead(400, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ error: 'ID anunt invalid' }));
-
             return;
         }
         
@@ -21,7 +29,6 @@ async function handleLikeToggle(req, res) {
         if (!userSession || !userSession.id) {
             res.writeHead(401, { 'Content-Type': 'application/json' });
             res.end(JSON.stringify({ error: 'Neautentificat' }));
-
             return;
         }
         
@@ -38,14 +45,12 @@ async function handleLikeToggle(req, res) {
                     'DELETE FROM likes WHERE user_id = $1 AND anunt_id = $2',
                     [userSession.id, anuntId]
                 );
-
                 liked = false;
             } else {
                 await pool.query(
                     'INSERT INTO likes (user_id, anunt_id) VALUES ($1, $2)',
                     [userSession.id, anuntId]
                 );
-
                 liked = true;
             }
             

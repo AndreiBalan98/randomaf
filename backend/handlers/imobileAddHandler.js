@@ -46,7 +46,7 @@ async function handleImobileAdd(req, res) {
                 anunt.longitudine || null,
                 anunt.descriere || null
             ];
-            
+
             const anuntResult = await pool.query(anuntSql, anuntParams);
             const anuntId = anuntResult.rows[0].id;
             

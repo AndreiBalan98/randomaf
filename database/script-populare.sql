@@ -165,6 +165,9 @@ INSERT INTO imagini (anunt_id, url, ordine) VALUES
 (19, 'http://localhost:3001/images/image3.jpg', 2),
 (19, 'http://localhost:3001/images/image8.jpg', 3);
 
-SELECT * FROM users;
-
-SELECT setval('users_id_seq', (SELECT MAX(id) FROM users));
+-- Resetare secvențe cu COALESCE pentru a gestiona tabelele goale
+SELECT setval('users_id_seq', COALESCE((SELECT MAX(id) FROM users), 0));
+SELECT setval('orase_id_seq', COALESCE((SELECT MAX(id) FROM orase), 0));
+SELECT setval('localitati_id_seq', COALESCE((SELECT MAX(id) FROM localitati), 0));
+SELECT setval('anunturi_id_seq', COALESCE((SELECT MAX(id) FROM anunturi), 0));
+SELECT setval('imagini_id_seq', COALESCE((SELECT MAX(id) FROM imagini), 0));

@@ -1,4 +1,3 @@
-
 const FILTER_OPTIONS = {
   tip: [
     { value: 'apartament', text: 'Apartament' },

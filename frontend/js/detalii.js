@@ -6,7 +6,7 @@ async function initializeDetalii(id) {
   if (!card) return;
 
   // Incarca imaginile imobilului
-  const imagini = await obtineImagini(id);
+  const imagini = card.imagini || [];
 
   // Genereaza si afiseaza continutul
   afiseazaDetaliiImobil(card, imagini);
@@ -70,7 +70,7 @@ function genereazaDetaliiDeBaza(card) {
     <h2 class="detalii-titlu">${card.titlu}</h2>
     <p><strong>Tip:</strong> ${card.tip_imobil || card.tip || '-'}</p>
     <p><strong>Tranzactie:</strong> ${tranzactie === 'vanzare' ? 'De vanzare' : tranzactie === 'inchiriat' ? 'De inchiriat' : ''}</p>
-    <p><strong>Locatie:</strong> ${locatie}</p>
+    <p><strong>Locatie:</strong> ${card.strada || locatie}</p>
     <p><strong>Suprafata:</strong> ${card.detalii_specifice?.suprafata_utila ? card.detalii_specifice.suprafata_utila + ' mp' : (card.suprafata ? card.suprafata + ' mp' : '-')}</p>
     <p><strong>Descriere:</strong> ${card.descriere}</p>
   `;
@@ -144,7 +144,7 @@ function afiseazaDetaliiImobil(card, imagini) {
     let current = idx;
 
     function showImg(i) {
-      modalImg.src = imagini[i].url.startsWith('http') ? imagini[i].url : `${BACKEND_URL}/${imagini[i].url}`;
+      modalImg.src = imagini[i].url;
       console.log("Modal: " + modalImg.src);
       modalImg.dataset.idx = i;
     }
