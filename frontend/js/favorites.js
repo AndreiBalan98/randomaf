@@ -23,20 +23,7 @@ async function loadFavorites() {
         
         const favorites = await response.json();
         
-        const favoritesWithImages = await Promise.all(
-            favorites.map(async (favorite) => {
-                try {
-                    const imgResponse = await fetch(`${BACKEND_URL}${API_IMAGINI}/${favorite.id}`);
-                    const imagini = await imgResponse.json();
-                    return { ...favorite, imagini };
-                } catch (error) {
-                    console.error(`Eroare incarcare imagini pentru ${favorite.id}:`, error);
-                    return { ...favorite, imagini: [] };
-                }
-            })
-        );
-        
-        renderFavoriteCards(favoritesWithImages);
+        renderFavoriteCards(favorites);
         
     } catch (error) {
         console.error('Eroare la incarcarea favoritelor:', error);
@@ -95,7 +82,7 @@ async function checkLikeStatus(anuntId) {
             return false;
         }
         
-        const response = await fetch(`${BACKEND_URL}${API_LIKES}?anuntId=${anuntId}`, {
+        const response = await fetch(`${BACKEND_URL}${API_LIKES}/${anuntId}`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -112,7 +99,7 @@ async function checkLikeStatus(anuntId) {
 
 async function toggleLike(anuntId, buttonElement) {
     try {
-        const response = await fetch(`${BACKEND_URL}${API_LIKES}?anuntId=${anuntId}`, {
+        const response = await fetch(`${BACKEND_URL}${API_LIKES}/${anuntId}`, {
             method: 'POST',
             credentials: 'include'
         });

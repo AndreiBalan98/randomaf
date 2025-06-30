@@ -54,6 +54,22 @@ async function initializeMap() {
         const imobileResponse = await fetch(`${BACKEND_URL}${API_IMOBILE}`);
         const imobile = await imobileResponse.json();
 
+        const oraseResponse = await fetch(`${BACKEND_URL}${API_ORASE}`);
+        const orase = await oraseResponse.json();
+
+        const orasMap = {};
+        orase.forEach(oras => {
+            orasMap[oras.id] = oras.nume;
+        });
+
+        const oraseIdUnice = [...new Set(imobile
+        .filter(imobil => imobil.oras_id)
+        .map(imobil => imobil.oras_id))];
+
+        const oraseUnice = oraseIdUnice
+        .map(id => ({ id: id, nume: orasMap[id] }))
+        .filter(oras => oras.nume); 
+
         // === ADAUGA BUTONUL DE FILTRU ORASE ===
         let filterContainer = document.getElementById('map-city-filter');
         if (!filterContainer) {
@@ -103,16 +119,18 @@ async function initializeMap() {
             <label for="citySelect" style="font-weight:bold;">Alege orasul: </label>
             <select id="citySelect" style="padding:4px 10px; border-radius:6px;">
                 <option value="">Toate orasele</option>
-                ${cities.map(oras => `<option value="${oras}">${oras}</option>`).join('')}
+                ${oraseUnice.map(oras => `<option value="${oras.id}">${oras.nume}</option>`).join('')}
             </select>
         `;
         const citySelect = filterContainer.querySelector('#citySelect');
         citySelect.addEventListener('change', function () {
-            const selectedCity = this.value;
-            if (selectedCity) {
-                const coords = getCityCoords(imobile, selectedCity);
-                if (coords) {
-                    map.setView(coords, 13); // Zoom pe oras
+            const selectedCityId = this.value;
+            if (selectedCityId) {
+                const imobileDinOras = imobile.filter(im => im.oras_id == selectedCityId);
+                if (imobileDinOras.length > 0) {
+                    const avgLat = imobileDinOras.reduce((sum, im) => sum + parseFloat(im.latitudine), 0) / imobileDinOras.length;
+                    const avgLng = imobileDinOras.reduce((sum, im) => sum + parseFloat(im.longitudine), 0) / imobileDinOras.length;
+                    map.setView([avgLat, avgLng], 13);
                 }
             } else {
                 map.setView([44.4268, 26.1025], 10); // Reset la Bucuresti
